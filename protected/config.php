@@ -22,6 +22,7 @@ return [
         'bootstrap' => [
         ],
         'ckeditor' => [
+            'location' => 'local'
         ],
     ],
 ];
