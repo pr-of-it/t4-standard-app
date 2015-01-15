@@ -21,5 +21,7 @@ return [
         ],
         'bootstrap' => [
         ],
+        'ckeditor' => [
+        ],
     ],
 ];

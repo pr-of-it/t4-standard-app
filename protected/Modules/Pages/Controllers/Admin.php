@@ -2,6 +2,7 @@
 
 namespace App\Modules\Pages\Controllers;
 
+use App\Modules\Pages\Models\Page;
 use T4\Mvc\Controller;
 
 class Admin
@@ -10,7 +11,25 @@ class Admin
 
     public function actionDefault()
     {
-
+        $this->data->pages = Page::findAll();
     }
 
-} 
+    public function actionEdit($id)
+    {
+        $this->data->page = Page::findByPK($id);
+    }
+
+    public function actionSave()
+    {
+        $id = $this->app->request->post->id;
+        if (!empty($id)) {
+            $page = Page::findByPK($id);
+        } else {
+            $page = new Page();
+        }
+        $page->fill($this->app->request->post);
+        $page->save();
+        $this->redirect('/pages/admin/');
+    }
+
+}
