@@ -31,5 +31,17 @@ class Admin
         $page->save();
         $this->redirect('/pages/admin/');
     }
+    
+    public function actionDelete($id)
+    {
+        $item = $this->data->page;
+        $item= Page::findByPK($id);
+        if($item)
+        {
+            $item->delete($id);
+        }
+        $this->redirect('/pages/admin/');
+
+    }
 
 }
