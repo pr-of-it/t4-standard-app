@@ -9,6 +9,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="/admin/">Админ-панель</a></li>
                 <li class="active"><a href="/pages/admin/">Страницы</a></li>
+                <li><a href="/pages/admin/edit?id=null">Внести новую статью</a></li>
             </ul>
 
         </div>
@@ -20,6 +21,7 @@
                     <th>URL</th>
                     <th>Заголовок</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 {% for page in pages %}
                 <tr>
@@ -27,6 +29,7 @@
                     <td>{{page.url}}</td>
                     <td>{{page.title}}</td>
                     <td><a href="/pages/admin/edit?id={{page.Pk}}">Редактировать</a></td>
+                    <td><a href="/pages/admin/delete?id={{page.Pk}}">Удалить статью</a></td>
                 </tr>
                 {% endfor %}
             </table>
