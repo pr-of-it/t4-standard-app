@@ -31,7 +31,7 @@ class Admin
         $page->save();
         $this->redirect('/pages/admin/');
     }
-    
+
     public function actionDelete($id)
     {
         $item = $this->data->page;
