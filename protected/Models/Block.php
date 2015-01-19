@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use T4\Mvc\Application;
+use T4\Mvc\Route;
 use T4\Mvc\Router;
 use T4\Orm\Model;
 
@@ -22,7 +23,7 @@ class Block
 
     public function getAllTemplates()
     {
-        $route = Router::getInstance()->splitInternalPath($this->path);
+        $route = new Route($this->path, false);
         $controller = Application::getInstance()->createController($route->module, $route->controller);
         $templates = [];
         foreach ($controller->getTemplatePaths() as $path) {
