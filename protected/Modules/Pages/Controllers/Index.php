@@ -14,7 +14,7 @@ class Index
     {
         $page = Page::findByUrl($url);
         $this->data->page = $page;
-        if (empty($this->data-page)) {
+        if (empty($this->data->page)) {
             throw new E404Exception;
         }
     }
