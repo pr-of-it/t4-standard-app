@@ -18,6 +18,7 @@ return [
                 'model' => 'App\Modules\Pages\Models\Page',
                 'default' => 'index',
             ]
-        ]
+        ],
+        'cache' => ['time' => 60],
     ],
 ];
