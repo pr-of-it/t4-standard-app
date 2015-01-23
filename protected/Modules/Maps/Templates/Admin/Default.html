@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends 'Admin.html' %}
 
-</body>
-</html>
+{% block namepage %}Карты сайта{% endblock %}
+{% block content %}
+{% for map in maps %}
+        <div>
+            <h2>#{{map.Pk}} {{map.title}}</h2>
+            <p><img src="//static-maps.yandex.ru/1.x/?ll={{map.longitude}},{{map.latitude}}&size={{map.width}},{{map.height}}&z={{map.zoom}}&l={{map.layer}}&pt={{map.ptLongitude}},{{map.ptLatitude}},{{map.ptStyle}}"></p>
+        </div>
+{% endfor %}
+{% endblock %}

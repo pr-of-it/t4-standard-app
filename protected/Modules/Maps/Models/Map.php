@@ -9,6 +9,7 @@ class Map
 {
     static protected $schema = [
         'columns' => [
+            'title' => ['type' => 'string'],
             'longitude' => ['type' => 'float', 'dimension' => '8,6'],
             'latitude' => ['type' => 'float', 'dimension' => '8,6'],
             'width' => ['type' => 'integer'],
