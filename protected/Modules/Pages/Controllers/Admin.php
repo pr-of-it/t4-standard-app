@@ -8,6 +8,17 @@ use T4\Mvc\Controller;
 class Admin
     extends Controller
 {
+    protected function access($action)
+    {
+        return !empty($this->app->user);
+    }
+
+    protected $access = [
+        'Default' => ['role.name' => 'admin'],
+        'Edit'    => ['role.name' => 'admin'],
+        'Save'    => ['role.name' => 'admin'],
+        'Delete'  => ['role.name' => 'admin'],
+    ];
 
     public function actionDefault()
     {
@@ -34,11 +45,10 @@ class Admin
 
     public function actionDelete($id)
     {
-        $item = $this->data->page;
         $item= Page::findByPK($id);
         if($item)
         {
-            $item->delete($id);
+            $item->delete();
         }
         $this->redirect('/pages/admin/');
 
