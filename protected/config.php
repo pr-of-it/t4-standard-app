@@ -24,5 +24,7 @@ return [
         'ckeditor' => [
             'location' => 'local'
         ],
+        'sxgeo' => [
+        ],
     ],
 ];
