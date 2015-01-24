@@ -1,0 +1,21 @@
+{% extends 'Admin.html' %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel=stylesheet href="{{ asset('/Modules/Maps/Templates/assets/css/mapsadmin.css') }}">
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="{{ asset('/Modules/Maps/Templates/assets/js/maps.js') }}"></script>
+{% endblock %}
+
+{% block namepage %}
+    {{ map ? 'Редактировать карту' : 'Создать карту' }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">здесь карта</div>
+            <div class="col-md-4">здесь форма</div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,11 +1,19 @@
 {% extends 'Admin.html' %}
 
+{% block head %}
+    {{ parent() }}
+    <link rel=stylesheet href="{{ asset('/Modules/Maps/Templates/assets/css/mapsadmin.css') }}">
+{% endblock %}
+
 {% block namepage %}Карты сайта{% endblock %}
+
 {% block content %}
 {% for map in maps %}
-        <div>
-            <h2>#{{map.Pk}} {{map.title}}</h2>
-            <p><img src="//static-maps.yandex.ru/1.x/?ll={{map.longitude}},{{map.latitude}}&size={{map.width}},{{map.height}}&z={{map.zoom}}&l={{map.layer}}&pt={{map.ptLongitude}},{{map.ptLatitude}},{{map.ptStyle}}"></p>
-        </div>
+    <div class="map">
+        <h2 class="pull-left">#{{map.Pk}} {{map.title}}</h2>
+        <a class="btn btn-info btn-sm" role="button" href="/maps/admin/edit?id={{map.Pk}}">Редактировать</a>
+        <div class="clearfix"></div>
+        <p><img src="//static-maps.yandex.ru/1.x/?ll={{map.longitude}},{{map.latitude}}&size={{map.width}},{{map.height}}&z={{map.zoom}}&l={{map.layer}}&pt={{map.ptLongitude}},{{map.ptLatitude}},{{map.ptStyle}}"></p>
+    </div>
 {% endfor %}
 {% endblock %}

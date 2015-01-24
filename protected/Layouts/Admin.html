@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+{% block head %}
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +14,7 @@
 
     <script src="{{ asset('/Layouts/assets/js/menu.js') }}"></script>
 </head>
+{% endblock %}
 <body>
     <div class="container">
         <h1 class="text-right">{% block namepage %}Страницы сайта{% endblock %}</h1>
@@ -23,7 +25,7 @@
                     <li><a href="/pages/admin/">Страницы</a></li>
                     <li><a href="/pages/admin/edit?id=null">Создать статью</a></li>
                     <li><a href="/maps/admin/">Карты</a></li>
-                    <li><a href="#">Создать карту</a></li>
+                    <li><a href="/maps/admin/edit?id=null">Создать карту</a></li>
                 </ul>
             </div>
             <div class="col-md-9">

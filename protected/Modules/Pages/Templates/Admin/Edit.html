@@ -1,6 +1,9 @@
 {% extends 'Admin.html' %}
 
-{% block namepage %}Создание статьи{% endblock %}
+{% block namepage %}
+    {{ page ? 'Редактировать статью' : 'Создать статью' }}
+{% endblock %}
+
 {% block content %}
 <form class="form-horizontal" action="/pages/admin/save" method="post">
     {% if not page.isNew() %}
