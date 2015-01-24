@@ -21,9 +21,6 @@ class Admin
     public function actionEdit($id)
     {
         $this->data->page = Page::findByPK($id);
-
-        //$item = $this->data->item;
-        //var_dump($this->data->item);
     }
 
     public function actionSave()
@@ -36,8 +33,6 @@ class Admin
         }
         $page->fill($this->app->request->post);
         $page->save();
-       // $item = $this->data->item;
-       // var_dump($this->data->item');
         $this->redirect('/pages/admin/');
     }
 

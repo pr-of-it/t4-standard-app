@@ -14,6 +14,13 @@ class Index
     {
     }
 
+    public function  actionMobile()
+    {
+
+    }
+
+
+
     public function actionLogin($email = null, $password = null)
     {
         if (!empty($this->app->user)) {

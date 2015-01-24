@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>{% block title %}T4 Site{% endblock %}</title>
+
+
+    {{ publishCss() }}
+    {{ publishJs() }}
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-#-12 " style="height:50px; background:#9acfea;">
+            <p class="text-center" >Логотип</p>
+        </div>
+
+         <div class="col-#-12 " style="height:auto; background:#ffffff;">
+             {% block content %}{% endblock %}
+         </div>
+
+        <div class="col-#-12 " style="height:auto; background:#ffffff;">
+            <div class="btn-group btn-group-vertical btn-block ">
+                <button class="btn btn-primary" ><p><strong>Главная</strong></p></button>
+                <button class="btn btn-primary">Услуги</button>
+                <button class="btn btn-primary">О нас</button>
+            </div>
+
+            <div class="col-#-12 " style="height:200px; background:#ffffff;">
+                реклама
+                </div>
+
+        </div>
+
+        <div class="col-#-12 " style="height:30px; background:dimgray;">
+            <footer>
+                <p>&copy; T4 Development 2014</p>
+            </footer>
+         </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>
