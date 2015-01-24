@@ -1,7 +1,7 @@
 {% extends 'Admin.html' %}
 
 {% block namepage %}
-    {{ page.url ? 'Редактировать статью' : 'Создать статью' }}
+    {{ page ? 'Редактировать статью' : 'Создать статью' }}
 {% endblock %}
 
 {% block content %}

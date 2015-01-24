@@ -13,7 +13,7 @@
         <h2 class="pull-left">#{{map.Pk}} {{map.title}}</h2>
         <a class="btn btn-info btn-sm" role="button" href="/maps/admin/edit?id={{map.Pk}}">Редактировать</a>
         <div class="clearfix"></div>
-        <p><img src="//static-maps.yandex.ru/1.x/?ll={{map.longitude}},{{map.latitude}}&size={{map.width}},{{map.height}}&z={{map.zoom}}&l={{map.layer}}&pt={{map.ptLongitude}},{{map.ptLatitude}},{{map.ptStyle}}"></p>
+        <p><img src="//static-maps.yandex.ru/1.x/?ll={{map.latitude}},{{map.longitude}}&size={{map.width}},{{map.height}}&z={{map.zoom}}&l={{map.layer}}&pt={{map.ptLatitude}},{{map.ptLongitude}},{{map.ptStyle}}"></p>
     </div>
 {% endfor %}
 {% endblock %}
