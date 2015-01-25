@@ -10,16 +10,18 @@ class Index
     extends Controller
 {
 
+
     public function actionDefault()
     {
     }
 
-    public function  actionMobile()
+    public function  actionMobile($map_id=0)
     {
+        if($map_id!=0){
 
+            $this->data->map_id=$map_id;
+        }
     }
-
-
 
     public function actionLogin($email = null, $password = null)
     {
