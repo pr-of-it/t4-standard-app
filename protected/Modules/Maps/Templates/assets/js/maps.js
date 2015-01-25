@@ -46,11 +46,11 @@ function init () {
 
 function savecoordinats (){
     myPlacemark.geometry.setCoordinates(coords);
-    $('#ptLatitude').val(coords[1].toFixed(6));
-    $('#ptLongitude').val(coords[0].toFixed(6));
+    $('#ptLatitude').val(coords[0].toFixed(6));
+    $('#ptLongitude').val(coords[1].toFixed(6));
     var zoom = myMap.getZoom();
     $('#zoom').val(zoom);
     var center = myMap.getCenter();
-    $('#latitude').val(center[1].toFixed(6));
-    $('#longitude').val(center[0].toFixed(6));
+    $('#latitude').val(center[0].toFixed(6));
+    $('#longitude').val(center[1].toFixed(6));
 }
