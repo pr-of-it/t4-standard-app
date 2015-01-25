@@ -28,12 +28,6 @@ function init () {
         savecoordinats();
     });
 
-    var SearchControl = myMap.controls.get('searchControl');
-    SearchControl.events.add("resultselect", function (e) {
-        coords = SearchControl.getResultsArray()[e.get('resultIndex')].geometry.getCoordinates();
-        savecoordinats();
-    });
-
     myMap.events.add('boundschange', function (event) {
         if (event.get('newZoom') != event.get('oldZoom')) {
             savecoordinats();
