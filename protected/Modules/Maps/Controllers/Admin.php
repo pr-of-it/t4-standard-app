@@ -35,4 +35,13 @@ class Admin
         $map->save();
         $this->redirect('/maps/admin/');
     }
-} 
+
+    public function actionDelete($id)
+    {
+        $map = Map::findByPK($id);
+        if ($map) {
+            $map->delete();
+        }
+        $this->redirect('/maps/admin/');
+    }
+}
