@@ -16,8 +16,22 @@
 </head>
 
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2" style="height:50px; background:#9acfea;">
+            <h2>Логотип</h2>
+        </div>
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="col-md-10" style="height:50px;background:aqua;">
+            <h2>Название</h2>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+
+<div class="navbar navbar-default navbar-fixed-default navbar-inverse" role="navigation" ">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -29,7 +43,7 @@
             <a class="navbar-brand" href="/">T4 Site</a>
             {% if app.user %}
             <a class="navbar-brand" href="/pages/admin/">Админ-панель</a>
-            <a class="navbar-brand" href="/mobile">Версия главной страницы</a>
+            <a class="navbar-brand" href="/mobile">Мобильная версия</a>
 
 
             {% endif %}
@@ -52,41 +66,24 @@
         </div><!--/.navbar-collapse -->
     </div>
 </div>
+
 <hr>
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
-    <div class="container">
+    <div class="container-fluid">
         {% block content %}{% endblock %}
     </div>
 </div>
 
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Heading 1</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading 2</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading 3</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-12" style="height:50px; background:dimgray;">
+        <footer><p>&copy; T4 Development 2014</p></footer>
     </div>
+</div>
 
-    <hr>
-
-    <footer>
-        <p>&copy; T4 Development 2014</p>
-    </footer>
-</div> <!-- /container -->
+</div>
 
 </body>
 </html>
