@@ -33,44 +33,42 @@
         </div> -->
 
         <div class="col-md-12">
-            <div class="row">
                 <form class="navbar-search pull-right navbar-inverse ">
                     <input type="text" class="search-query" placeholder="Поиск по сайту">
                 </form>
-            </row>
         </div>
 
-         <div class="col-#-12 " style="height:auto; background:#ffffff;">
-             {% block content %}{% endblock %}
-         </div>
 
-        <div class="col-#-12 " style="height:auto; background:#ffffff;">
+
+        <div class="col-md-2 " style="height:auto; background:#ffffff;">
             <div class="btn-group btn-group-vertical btn-block btn-left  ">
                 <a href="/" class="btn btn-primary "  ><p><strong>Основной сайт</strong></p></a>
                 <a href="/mobile" class="btn btn-primary" ><p><strong>Главная</strong></p></a>
                 <a href="#" class="btn btn-primary" disabled="disabled">Услуги</button></a>
                 <a href="/mobile?map_id=4" class="btn btn-primary">Карта</a>
-                <a href="#" class="btn btn-primary" disabled="disabled" >О нас</button></a>
+                <a href="#" class="btn btn-primary " disabled="disabled" >О нас</button></a>
+            </div>
+        </div>
+
+            <div class="col-md-10 " style="height:auto; background:#ffffff;">
+                {% block content %}{% endblock %}
             </div>
 
-            <div class="col-#-12 " style="height:200px; background:#ffffff;">
+            <div class="col-md-12 " style="height:200px; background:aquamarine;">
                 реклама
                 </div>
 
-        </div>
 
-        <div class="col-#-12 " style="height:30px; background:dimgray;">
+        <div class="col-md-12 " style="height:30px; background:#a0a6ad;">
             <footer>
                 <p>&copy; T4 Development 2014</p>
             </footer>
          </div>
+     </div>
+  </div>
 
-        </div>
 
 
-    </div>
-
-</div>
 
 </body>
 </html>
