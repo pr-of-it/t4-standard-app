@@ -15,12 +15,14 @@ class Index
     {
     }
 
-    public function  actionMobile($map_id=0)
+    public function  actionMobile($map_id=0,$page_id=1)
     {
         if($map_id!=0){
 
             $this->data->map_id=$map_id;
         }
+
+         $this->data->page_id=$page_id;
     }
 
     public function actionLogin($email = null, $password = null)

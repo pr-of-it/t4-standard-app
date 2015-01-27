@@ -29,12 +29,20 @@
             <a class="navbar-brand" href="/">T4 Site</a>
             {% if app.user %}
             <a class="navbar-brand" href="/pages/admin/">Админ-панель</a>
-            <a class="navbar-brand" href="/mobile">Версия главной страницы</a>
-
-
             {% endif %}
+
         </div>
         <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Варианты главной страницы <b class="caret"></b></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="Mobile?page_id=1">Вариант1</a></li>
+                        <li><a href="Mobile?page_id=2">Вариант2</a></li>
+                    </ul>
+                </li>
+            </ul>
+
             {% if not app.user %}
             <form class="navbar-form navbar-right" role="form" action="/login.html" method="post">
                 <div class="form-group">
