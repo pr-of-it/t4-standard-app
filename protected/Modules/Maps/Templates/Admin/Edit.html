@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block namepage %}
-    {{ map ? 'Редактировать карту' : 'Создать карту' }}
+    {{ map ? 'Редактировать карту #' : 'Создать карту' }} {{map.Pk}}
 {% endblock %}
 
 {% block content %}
