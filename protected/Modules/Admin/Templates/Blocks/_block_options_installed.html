@@ -1,0 +1,28 @@
+<form class="form-horizontal" role="form">
+    {% for name, value in block.getAllOptions %}
+    <div class="form-group">
+        <label class="col-sm-4 control-label">{{blocksAvailable[block.path].options[name].title}}</label>
+        <div class="col-sm-8">
+            {{ blockOptionInput(name, blocksAvailable[block.path].options[name], value) }}
+        </div>
+    </div>
+    {% endfor %}
+    {% if block.allTemplates %}
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Шаблон блока</label>
+        <div class="col-sm-8">
+            <select name="template">
+                <option value="">--</option>
+                {% for template in block.allTemplates %}
+                <option value="{{template}}"{% if template==block.template %} selected="selected"{% endif %}>{{template}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    {% endif %}
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <input type="submit" value="Сохранить" class="btn btn-default">
+        </div>
+    </div>
+</form>

@@ -1,0 +1,33 @@
+<article class="col-xs-12 col-sm-6 col-md-4 col-lg-3" data-block-id="{{block.PK}}">
+    <!-- Widget ID (each widget will need unique ID)-->
+    <div class="jarviswidget" id="block-installed-section-{{sectionId}}-wid-{{loop.index0}}" role="widget">
+        <!-- widget options:
+            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+            data-widget-colorbutton="false"
+            data-widget-editbutton="false"
+            data-widget-togglebutton="false"
+            data-widget-deletebutton="false"
+            data-widget-fullscreenbutton="false"
+            data-widget-custombutton="false"
+            data-widget-collapsed="true"
+            data-widget-sortable="false"
+        -->
+        <header role="heading">
+            <div class="jarviswidget-ctrls" role="menu">
+                <a href="#" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Удалить"><i class="fa fa-times"></i></a>
+            </div>
+        </header>
+        <!-- widget div-->
+        <div>
+            <!-- widget content -->
+            <div class="widget-body">
+                <h6 style="margin-top:0"><strong>{{block.title}}</strong></h6>
+                <p>{{block.desc}}</p>
+                <div>{% include '_block_options_installed.html' %}</div>
+            </div>
+            <!-- end widget content -->
+        </div>
+        <!-- end widget div -->
+    </div>
+    <!-- end widget -->
+</article>

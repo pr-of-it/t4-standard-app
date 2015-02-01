@@ -1,0 +1,69 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li>Новости</li>
+</ol>
+{% endblock %}
+
+{% block pagehead %}
+<div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark"><i class="fa fa-file-text-o fa-fw "></i> Новости </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        <ul id="sparks" class="">
+            <li class="sparks-info">
+                <h5> Всего новостей <span class="txt-color-blue">{{itemsCount}}</span></h5>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+
+    <div class="row"><div class="pull-right"><a class="btn btn-primary btn-lg" href="/admin/news/edit?id=new">Добавить новость</a></div></div>
+    <hr>
+
+    <table class="table table-striped table-hover table-condensed">
+        <tr>
+            <th>#</th>
+            <th>Раздел</th>
+            <th>Заголовок</th>
+            <th>Фото</th>
+            <th>Опубликовано</th>
+            <th></th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td><a href="/admin/news/edit/?id={{item.Pk}}">{{item.Pk}}</a></td>
+            <td>{{item.topic.title}}</td>
+            <td><a href="/admin/news/edit/?id={{item.Pk}}">{{item.title}}</a></td>
+            <td>{% if item.image %}<i class="fa fa-picture-o"></i>{% endif %}</td>
+            <td>{{item.published|date('d.m.Y')}}</td>
+            <td style="white-space: nowrap">
+                <a href="/admin/news/edit/?id={{item.Pk}}"><i class="fa fa-edit"></i></a>
+                <a href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/news/?page=%d'})}}
+
+</section>
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function() {
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+    });
+</script>
+{% endblock %}

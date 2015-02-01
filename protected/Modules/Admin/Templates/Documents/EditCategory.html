@@ -1,0 +1,55 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/documents/categories/">Категории документов</a></li>
+    <li>{% if item.isNew %}Добавление категории{% else %}Редактирование категории{% endif %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+    <form class="smart-form" method="post" action="/admin/documents/saveCategory">
+        {% if item.isNew %}
+        <header>Добавление категории</header>
+        {% else %}
+        <input type="hidden" name="__id" value="{{item.Pk}}">
+        <header>Редактирование категории</header>
+        {% endif %}
+        <fieldset>
+            <section>
+                <label class="label">Родительская категория</label>
+                <label class="select">
+                    {% if item.isNew %}
+                    {{ selectTreeByModel("App\\Modules\\Documents\\Models\\Category", 0, {"null":true}, {"name":"parent"}) }}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Modules\\Documents\\Models\\Category", item.parent.Pk, {"null":true, 'disabled':[item.Pk]}, {"name":"parent"}) }}
+                    {% endif %}
+                    <i></i>
+                </label>
+            </section>
+            <section>
+                <label class="label">Название категории</label>
+                <label class="input">
+                    <input type="text" name="title" value="{{item.title}}">
+                </label>
+            </section>
+            <section>
+                <label class="label">URL (адрес)</label>
+                <label class="input">
+                    <div class="input-group">
+                        <input type="text" name="url" value="{{item.url}}">
+                        <span class="input-group-addon">.html</span>
+                    </div>
+                </label>
+            </section>
+        </fieldset>
+        <footer>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+        </footer>
+    </form>
+</section>
+
+{% endblock %}

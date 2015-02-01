@@ -1,0 +1,12 @@
+<form class="form-horizontal" role="form">
+    {% for name, option in block.options %}
+    <div class="form-group">
+
+        <label class="col-sm-4 control-label">{{option.title}}</label>
+        <div class="col-sm-8">
+            {{ blockOptionInput(name, option, null, ['disabled']) }}
+        </div>
+
+    </div>
+    {% endfor %}
+</form>

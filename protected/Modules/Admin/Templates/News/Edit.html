@@ -1,0 +1,131 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/news/">Новости</a></li>
+    <li>{% if item.isNew %}Добавление новости{% else %}Редактирование новости{% endif %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+    <form class="smart-form" method="post" enctype="multipart/form-data" action="/admin/news/save">
+        {% if item.isNew %}
+        <header>Добавление новости</header>
+        {% else %}
+        <input type="hidden" name="__id" value="{{item.Pk}}">
+        <header>Редактирование новости</header>
+        {% endif %}
+        <fieldset>
+            <section>
+                <label class="label">Заголовок новости</label>
+                <label class="input">
+                    <input type="text" name="title" value="{{item.title}}">
+                </label>
+            </section>
+            <section>
+                <label class="label">Раздел</label>
+                <label class="select">
+                    {% if item.isNew %}
+                    {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", 0, {"null":true}, {"name":"topic"}) }}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", item.topic.Pk, {"null":true, 'disabled':[item.Pk]}, {"name":"topic"}) }}
+                    {% endif %}
+                    <i></i>
+                </label>
+            </section>
+            <section>
+                <label class="label">Lead (введение)</label>
+                <label class="textarea textarea-resizable">
+                    <t4:editor name="lead">{{item.lead}}</t4:editor>
+                </label>
+            </section>
+            <section>
+                <label class="label">Главное фото</label>
+                <label class="input">
+                    {% if item.image %}
+                    <p class="image">
+                        <img src="{{item.image}}" class="img-responsive" style="max-width: 200px; max-height: 200px;">
+                        <a href="#" class="item-image-delete" data-id="{{item.Pk}}"><i class="fa fa-trash-o fa-2x text-danger"></i>&nbsp;</a>
+                    </p>
+                    {% endif %}
+                </label>
+                {{element('file', 'image', {'text':'Выберите файл'})}}
+            </section>
+            <section>
+                <label class="label">Текст новости</label>
+                <label class="textarea textarea-resizable">
+                    <t4:editor name="text">{{item.text}}</t4:editor>
+                </label>
+            </section>
+            <section>
+                <label class="label">Файлы</label>
+
+                <div class="row" style="margin: inherit">
+                    {% for file in item.files %}
+                    <div class="col-sm-3" style="padding: 2em;">
+                        <a href="#" class="item-file-delete" data-id="{{file.Pk}}"><i class="fa fa-trash-o fa-2x text-danger"></i>&nbsp;</a>
+                        <a href="{{file.file}}" target="_blank"><i class="fa fa-file-o fa-2x"></i> {{file.file}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <ul class="list-group" id="uploads">
+                    <li class="list-group-item reserve" style="display: none">{{element('file', 'files[]', {'text':'Выберите файл'})}}</li>
+                    <li class="list-group-item">{{element('file', 'files[]', {'text':'Выберите файл'})}}</li>
+                </ul>
+                <a href="#" onclick="$('#uploads li.reserve').clone().removeClass('reserve').appendTo('#uploads').show();return false;">
+                    <button type="button" class="btn btn-info"><i class="fa fa-plus-circle"></i> Еще один файл</button>
+                </a>
+            </section>
+        </fieldset>
+        <footer>
+            <input id="redirectAfterSave" type="hidden" name="redirect" value="0" />
+            <button type="submit" class="btn btn-primary" onclick="$('#redirectAfterSave').val(1)">Сохранить и посмотреть</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            <a href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>
+        </footer>
+    </form>
+</section>
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function () {
+
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+        $('.item-image-delete').click( function () {
+            var $this = $(this);
+            var id = $this.attr('data-id');
+            if (0 != id) {
+                $.post('/admin/news/deleteImage.json', {"id":id}, function (r) {
+                    if (r.result) {
+                        $this.parent().remove();
+                    }
+                });
+            }
+            return false;
+        });
+
+        $('.item-file-delete').click( function () {
+            var $this = $(this);
+            var id = $this.attr('data-id');
+            if (0 != id) {
+                $.post('/admin/news/deleteFile.json', {"id":id}, function (r) {
+                    if (r.result) {
+                        $this.parent().remove();
+                    }
+                });
+            }
+            return false;
+        });
+
+    });
+</script>
+{% endblock %}

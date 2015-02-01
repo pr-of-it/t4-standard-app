@@ -5,14 +5,21 @@ namespace App\Controllers;
 use App\Components\Auth\Identity;
 use T4\Core\Std;
 use T4\Mvc\Controller;
+use App\Modules\Pages\Models;
 
 class Index
     extends Controller
 {
 //for commit
 
-    public function actionDefault()
+    public function actionDefault($url='')
     {
+        if($url!=''){
+            $this->data->url=$url;
+        } else {
+
+            $this->data->url='index';
+        }
     }
 
     public function  actionMobile($map_id=0,$page_id=1)
@@ -23,6 +30,15 @@ class Index
         }
 
          $this->data->page_id=$page_id;
+    }
+
+    public function actionThemes($theme_id=0)
+    {
+        switch($theme_id){
+            case $theme_id==1: $this->app->assets->registerCssUrl('//bootswatch.com/darkly/bootstrap.min.css');
+                var_dump($this->app->assets->getPublishedCss());
+
+        }
     }
 
     public function actionLogin($email = null, $password = null)
@@ -50,6 +66,11 @@ class Index
         $identity = new Identity();
         $identity->logout();
         $this->redirect('/');
+    }
+
+    public function actionMenu()
+    {
+        $this->data->items = \App\Modules\Pages\Models\Page::findAllTree();
     }
 
 }

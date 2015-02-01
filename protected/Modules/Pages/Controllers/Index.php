@@ -10,7 +10,12 @@ use T4\Mvc\Controller;
 class Index
     extends Controller
 {
-    public $ip;
+
+    public function actionDefault()
+    {
+
+    }
+
     public function actionPageByUrl($url)
     {
 

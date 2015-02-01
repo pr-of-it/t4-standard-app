@@ -1,0 +1,124 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/pages/">Страницы</a></li>
+    <li>{% if item.isNew %}Добавление страницы{% else %}Редактирование страницы{% endif %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+    <form class="smart-form" method="post" action="/admin/pages/save" enctype="multipart/form-data">
+        {% if item.isNew %}
+        <header>Добавление страницы</header>
+        {% else %}
+        <input type="hidden" name="__id" value="{{item.__id}}">
+        <header>Редактирование страницы</header>
+        {% endif %}
+        <fieldset>
+            <section>
+                <label class="label">Заголовок страницы</label>
+                <label class="input">
+                    <input type="text" name="title" value="{{item.title}}">
+                </label>
+            </section>
+            <section>
+                <label class="label">Родительская страница</label>
+                <label class="select">
+                    {% if item.isNew %}
+                        {% if item.parent %}
+                        {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", item.parent.Pk, {"null":true}, {"name":"parent"}) }}
+                        {% else %}
+                        {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", 0, {"null":true}, {"name":"parent"}) }}
+                        {% endif %}
+                    {% else %}
+                        {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent"}) }}
+                    {% endif %}
+                    <i></i>
+                </label>
+            </section>
+            <section>
+                <label class="label">URL (адрес страницы)</label>
+                <label class="input">
+                    <div class="input-group">
+                        <input type="text" name="url" value="{{item.url}}">
+                        <span class="input-group-addon">.html</span>
+                    </div>
+                </label>
+            </section>
+            <section>
+                <label class="label">Тип страницы (шаблон)</label>
+                <label class="select">
+                    <select name="template">
+                        <option value=""{% if item.template=='' or item.template=='default' %} selected="selected"{% endif %}>---</option>
+                        <option value="list"{% if item.template=='list' %} selected="selected"{% endif %}>list</option>
+                    </select>
+                    <i></i>
+                </label>
+            </section>
+            <section>
+                <label class="label">Текст страницы</label>
+                <label class="textarea textarea-resizable">
+                    <t4:editor name="text">{{item.text}}</t4:editor>
+                </label>
+            </section>
+            <section>
+                <label class="label">Файлы</label>
+
+                <div class="row" style="margin: inherit">
+                    {% for file in item.files %}
+                    <div class="col-sm-3" style="padding: 2em;">
+                        <a href="#" class="item-file-delete" data-id="{{file.Pk}}"><i class="fa fa-trash-o fa-2x text-danger"></i>&nbsp;</a>
+                        <a href="{{file.file}}" target="_blank"><i class="fa fa-file-o fa-2x"></i> {{file.file}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <ul class="list-group" id="uploads">
+                    <li class="list-group-item reserve" style="display: none">{{element('file', 'files[]', {'text':'Выберите файл'})}}</li>
+                    <li class="list-group-item">{{element('file', 'files[]', {'text':'Выберите файл'})}}</li>
+                </ul>
+                <a href="#" onclick="$('#uploads li.reserve').clone().removeClass('reserve').appendTo('#uploads').show();return false;">
+                    <button type="button" class="btn btn-info"><i class="fa fa-plus-circle"></i> Еще один файл</button>
+                </a>
+            </section>
+        </fieldset>
+        <footer>
+            <input id="redirectAfterSave" type="hidden" name="redirect" value="0" />
+            <button type="submit" class="btn btn-primary" onclick="$('#redirectAfterSave').val(1)">Сохранить и посмотреть</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            <a href="/admin/pages/delete/?id={{item.Pk}}" class="confirmable">
+                <button type="button" class="btn btn-danger">Удалить</button>
+            </a>
+        </footer>
+    </form>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function () {
+
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+        $('.item-file-delete').click( function () {
+            var $this = $(this);
+            var id = $this.attr('data-id');
+            if (0 != id) {
+                $.post('/admin/pages/deleteFile.json', {"id":id}, function (r) {
+                    if (r.result) {
+                        $this.parent().remove();
+                    }
+                });
+            }
+            return false;
+        });
+
+    });
+</script>
+{% endblock %}

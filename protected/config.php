@@ -20,9 +20,15 @@ return [
         'jquery' => [
         ],
         'bootstrap' => [
+            'location' => 'local',
+            'theme' => 'cosmo',
         ],
         'ckeditor' => [
-            'location' => 'local'
+            'location' => 'local',
+            'autoload' => false,
+        ],
+        'ckfinder' => [
+            'autoload' => false,
         ],
         'sxgeo' => [
         ],

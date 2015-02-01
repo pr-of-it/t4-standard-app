@@ -1,0 +1,67 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/documents/">Документы</a></li>
+    <li>{% if item.isNew %}Добавление документа{% else %}Редактирование документа{% endif %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+    <form class="smart-form" method="post" enctype="multipart/form-data" action="/admin/documents/save">
+        {% if item.isNew %}
+        <header>Добавление документа</header>
+        {% else %}
+        <input type="hidden" name="__id" value="{{item.Pk}}">
+        <header>Редактирование документа</header>
+        {% endif %}
+        <fieldset>
+            <section>
+                <label class="label">Заголовок документа</label>
+                <label class="input">
+                    <input type="text" name="title" value="{{item.title}}">
+                </label>
+            </section>
+            <section>
+                <label class="label">Категория</label>
+                <label class="select">
+                    {% if item.isNew %}
+                    {{ selectTreeByModel("App\\Modules\\Documents\\Models\\Category", 0, {"null":true}, {"name":"category"}) }}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Modules\\Documents\\Models\\Category", item.category.Pk, {"null":true}, {"name":"category"}) }}
+                    {% endif %}
+                    <i></i>
+                </label>
+            </section>
+            <section>
+                <label class="label">Текст документа</label>
+                <label class="textarea textarea-resizable">
+                    <t4:editor name="text">{{item.text}}</t4:editor>
+                </label>
+            </section>
+        </fieldset>
+        <footer>
+            <input id="redirectAfterSave" type="hidden" name="redirect" value="0" />
+            <button type="submit" class="btn btn-primary" onclick="$('#redirectAfterSave').val(1)">Сохранить и посмотреть</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            <a href="/admin/documents/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>
+        </footer>
+    </form>
+</section>
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function () {
+
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+    });
+</script>
+{% endblock %}

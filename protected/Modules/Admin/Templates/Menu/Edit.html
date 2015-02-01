@@ -1,0 +1,55 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/pages/">Меню</a></li>
+    <li>{% if item.isNew %}Добавление элемента{% else %}Редактирование элемента{% endif %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+    <form class="smart-form" method="post" action="/admin/menu/save">
+        {% if item.isNew %}
+        <header>Добавление элемента</header>
+        {% else %}
+        <input type="hidden" name="__id" value="{{item.Pk}}">
+        <header>Редактирование элемента</header>
+        {% endif %}
+        <fieldset>
+            <section>
+                <label class="label">Заголовок элемента</label>
+                <label class="input">
+                    <input type="text" name="title" value="{{item.title}}">
+                </label>
+            </section>
+            <section>
+                <label class="label">Родительский элемент</label>
+                <label class="select">
+                    {% if item.isNew %}
+                    {% if item.parent %}
+                    {{ selectTreeByModel("App\\Models\\\Menu", item.parent.Pk, {"null":true}, {"name":"parent"}) }}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Models\\\Menu", 0, {"null":true}, {"name":"parent"}) }}
+                    {% endif %}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Models\\\Menu", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent"}) }}
+                    {% endif %}
+                    <i></i>
+                </label>
+            </section>
+            <section>
+                <label class="label">URL (адрес ссылки)</label>
+                <label class="input">
+                    <input type="text" name="url" value="{{item.url}}">
+                </label>
+            </section>
+        </fieldset>
+        <footer>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+        </footer>
+    </form>
+</section>
+{% endblock %}

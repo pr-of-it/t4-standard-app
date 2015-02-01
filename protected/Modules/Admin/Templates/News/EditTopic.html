@@ -1,0 +1,46 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/news/">Новости</a></li>
+    <li>{% if item.isNew %}Добавление раздела{% else %}Редактирование раздела{% endif %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+    <form class="smart-form" method="post" action="/admin/news/saveTopic">
+        {% if item.isNew %}
+        <header>Добавление раздела</header>
+        {% else %}
+        <input type="hidden" name="__id" value="{{item.Pk}}">
+        <header>Редактирование раздела</header>
+        {% endif %}
+        <fieldset>
+            <section>
+                <label class="label">Название раздела</label>
+                <label class="input">
+                    <input type="text" name="title" value="{{item.title}}">
+                </label>
+            </section>
+            <section>
+                <label class="label">Родительский раздел</label>
+                <label class="select">
+                    {% if item.isNew %}
+                    {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", 0, {"null":true}, {"name":"parent"}) }}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", item.parent.Pk, {"null":true, 'disabled':[item.Pk]}, {"name":"parent"}) }}
+                    {% endif %}
+                    <i></i>
+                </label>
+            </section>
+        </fieldset>
+        <footer>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+        </footer>
+    </form>
+</section>
+
+{% endblock %}

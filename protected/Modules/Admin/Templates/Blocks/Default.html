@@ -1,0 +1,192 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li>Секции и блоки</li>
+</ol>
+{% endblock %}
+
+{% block pagehead %}
+<div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark"><i class="fa fa-desktop fa-fw "></i> Секции и блоки </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        <ul id="sparks" class="">
+            <li class="sparks-info">
+                <h5> Всего секций <span class="txt-color-blue">{{sections|length}}</span></h5>
+            </li>
+            <li class="sparks-info">
+                <h5> Доступно блоков <span class="txt-color-purple">{{blocksAvailable|length}}</span></h5>
+            </li>
+            <li class="sparks-info">
+                <h5> Установлено блоков <span class="txt-color-greenDark">{{blocksInstalledCount}}</span></h5>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    article header {
+        cursor: move;
+    }
+</style>
+
+<div class="row">
+
+    <h2 class="row-seperator-header"><i class="fa fa-th-list"></i> Размещенные на сайте </h2>
+
+    <div class="well col-sm-12 col-md-12 col-lg-12">
+        <div class="panel-group smart-accordion-default" id="accordion">
+
+            {% for sectionId, section in sections %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{sectionId}}">
+                            <i class="fa fa-lg fa-angle-down pull-right"></i>
+                            <i class="fa fa-lg fa-angle-up pull-right"></i>
+                            #{{sectionId}}&nbsp;&ndash; {{section.name}}
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse{{sectionId}}" class="panel-collapse collapse{%if 1==sectionId%} in{%endif%}">
+                    <div class="panel-body">
+
+                        <section id="section-{{sectionId}}" data-section-id="{{sectionId}}" class="well section block-drop-area" style="background-color: lightyellow; border: 1px dashed gray;">
+                            <div class="row" style="min-height: 100px;">
+                                {% for path, block in blocksInstalled[sectionId] %}
+                                {% include '_block_installed.html' %}
+                                {% endfor %}
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <h2 class="row-seperator-header"><i class="fa fa-th-list"></i> Доступные для размещения </h2>
+</div>
+
+<!-- widget grid -->
+<section id="widget-grid">
+    <!-- row -->
+    <div class="row">
+
+        {% for path, block in blocksAvailable %}
+        {% include '_block_available.html' %}
+        {% endfor %}
+
+    </div>
+    <!-- end row -->
+</section>
+<!-- end widget grid -->
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+
+    /**
+     * Удаление (деинсталляция) блока
+     */
+    uninstallBlock = function (button, event) {
+        event.preventDefault();
+        var block = button.parents("article");
+        var blockId = block.attr('data-block-id');
+        $.get('/admin/blocks/uninstallBlock.json', {
+            id: blockId
+        }, function (data) {
+            if (data.result) {
+                block.remove();
+            }
+        });
+    };
+    $("section.section article a.jarviswidget-delete-btn").click(function (event) {
+        uninstallBlock($(this), event);
+    });
+
+    /**
+     * Сохранение параметров блока
+     */
+    saveBlockOptions = function (button, event) {
+        event.preventDefault();
+        button.removeClass('btn-success');
+        button.addClass('btn-warning');
+        var blockId = button.parents("article").attr('data-block-id');
+        var data = button.parents("form").serializeArray();
+        $.get('/admin/blocks/updateBlockOptions.json', {
+            id: blockId,
+            options: data
+        }, function (data) {
+            button.removeClass('btn-warning');
+            button.addClass('btn-success');
+        });
+        return false;
+    };
+    $("section.section article form input[type='submit']").click(function (event) {
+        saveBlockOptions($(this), event);
+    });
+
+    /**
+     * Настройка изменения порядка блоков
+     */
+    $( ".block-drop-area .row" ).sortable({
+        handle: "header",
+        cursor: "move",
+        update: function( event, ui ) {
+            var sortedIDs = $(this).sortable("toArray", {attribute: "data-block-id"});
+            $.get('/admin/blocks/sortBlocks.json', {
+                ids: sortedIDs
+            }, function (data) {
+            });
+        }
+    });
+    $( ".block-drop-area .row" ).disableSelection();
+
+    /**
+     * Перенос блоков из доступных в секцию - установка блоков
+     */
+    $(".block-available-draggable").draggable({handle: "header", cursor: "move", revert: true});
+    $("section.block-drop-area .row").droppable({
+        accept: '.block-available-draggable',
+        drop: function (event, ui) {
+            var sectionId = $(this).parents('section.block-drop-area').attr('data-section-id');
+            var block = ui.draggable;
+            var blockPath = block.attr('data-block-path');
+            $.get('/admin/blocks/setupBlock.json', {
+                sectionId: sectionId,
+                blockPath: blockPath
+            }, function (data) {
+                if (data.result) {
+                    var installedBlock = block.clone();
+                    installedBlock.removeClass('ui-draggable').removeClass('ui-draggable-dragging').removeClass('block-available-draggable');
+                    installedBlock.removeAttr('style');
+                    installedBlock.removeAttr('data-block-path');
+                    installedBlock.attr('data-block-id', data.id);
+                    installedBlock.find('form :disabled').removeAttr('disabled');
+                    installedBlock.find('form').append('<div class="form-group"><div class="col-sm-offset-4 col-sm-8"><input type="submit" value="Сохранить" class="btn btn-default"></div></div>');
+                    installedBlock.find('header').append('<div class="jarviswidget-ctrls" role="menu"><a href="#" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Удалить"><i class="fa fa-times"></i></a></div>');
+                    $('#section-'+sectionId+' .row').append(installedBlock);
+                    installedBlock.find('form input[type=submit]').click(function (event) {
+                        saveBlockOptions($(this), event);
+                    });
+                    installedBlock.find('a.jarviswidget-delete-btn').click(function (event) {
+                        uninstallBlock($(this), event);
+                    });
+                };
+            });
+        }
+    });
+</script>
+{% endblock %}

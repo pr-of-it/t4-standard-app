@@ -1,0 +1,115 @@
+{% extends 'Admin/Smart/blank_.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li>Страницы</li>
+</ol>
+{% endblock %}
+
+{% block pagehead %}
+<div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark"><i class="fa fa-file-text-o fa-fw "></i> Страницы </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        <ul id="sparks" class="">
+            <li class="sparks-info">
+                <h5> Всего страниц <span class="txt-color-blue">{{items|length}}</span></h5>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<section class="well">
+    <div class="row"><div class="pull-right"><a class="btn btn-primary btn-lg" href="/admin/pages/edit?id=new">Добавить страницу</a></div></div>
+    <div class="row">
+
+        <div class="dd" id="tree-nestable" style="width: 100%; max-width: 100%">
+            {% set level = items[0].__lvl %}
+            {% set count = 0 %}
+            <ol class="dd-list">
+                {% for key, item in items %}
+
+                {% set current = item.__lvl %}
+
+                {% if current == level %}
+                {% if count > 0 %}</li>{% endif %}
+                {% endif %}
+
+                {% if current > level %}
+                <ol class="dd-list">
+                    {% set level = current %}
+                    {% endif %}
+
+                    {% if current < level %}
+                    {{"</li></ol>"|repeat(level-current)|raw}}</li>
+                {% set level = current %}
+                {% endif %}
+
+                <li class="dd-item dd3-item" data-id="{{item.__id}}">
+                    <div class="dd-handle dd3-handle" data-id="{{item.__id}}">Drag</div>
+                    <div class="dd3-content">
+                        <a href="/admin/pages/edit/?id={{item.__id}}">{{item.title}} [{{item.url}}.html]</a>
+                        <span class="pull-right">
+
+                            {% if items[key-1] is defined and items.existsElement({'__prt':item.__prt, '__lvl':item.__lvl})%}
+                            <a href="/admin/pages/up/?id={{item.__id}}"><i class="fa fa-arrow-up"></i></a>
+                            {% else %}
+                            <i class="fa fa-ellipsis-horizontal"></i>
+                            {% endif %}
+                            {% if items[key+1] is defined %}
+                            <a href="/admin/pages/down/?id={{item.__id}}"><i class="fa fa-arrow-down"></i></a>
+                            {% else %}
+                            <i class="fa fa-ellipsis-horizontal"></i>
+                            {% endif %}
+                            &nbsp;&nbsp;&nbsp;
+
+                            <a href="/admin/pages/edit/?id=new&parent={{item.Pk}}" class=""><i class="fa fa-plus"></i></a>
+                            <a href="/admin/pages/edit/?id={{item.Pk}}" class=""><i class="fa fa-edit"></i></a>
+                            <a href="/admin/pages/delete/?id={{item.Pk}}" class="confirmable"><i class="fa fa-trash-o"></i></a>
+                        </span>
+                    </div>
+                    {% set count = count + 1 %}
+                    {% endfor %}
+                    {{"</li></ol>"|repeat(current)|raw}}</li>
+            </ol>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function() {
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+        $('.dd-list').sortable({
+            handle: ".dd-handle",
+            axis: "y",
+            update: function( event, ui ) {
+                var prevSibling = ui.item.prev();
+                var nextSibling = ui.item.next()
+                if (!$.isEmptyObject(prevSibling) && undefined != prevSibling.attr('data-id')) {
+                    var url = '/admin/pages/moveAfter.json';
+                    var siblingId = prevSibling.attr('data-id');
+                } else {
+                    var url = '/admin/pages/moveBefore.json';
+                    var siblingId = nextSibling.attr('data-id');
+                }
+                $.post(url, {id: ui.item.attr('data-id') ,to: siblingId}, function (r) {
+                    if (!r.result) {
+                        alert('ERROR!!!');
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

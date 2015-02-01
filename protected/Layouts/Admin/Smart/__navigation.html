@@ -1,0 +1,66 @@
+<!-- NAVIGATION : This navigation is also responsive
+
+To make this navigation dynamic please make sure to link the node
+(the reference to the nav > ul) after page load. Or the navigation
+will not initialize.
+-->
+<nav>
+    <!-- NOTE: Notice the gaps after each icon usage <i></i>..
+    Please note that these links work a bit different than
+    traditional hre="" links. See documentation for details.
+    -->
+
+    <ul>
+        <li>
+            <a href="/admin/" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+        </li>
+        <li>
+            <a href="/admin/blocks/" title="Blocks"><i class="fa fa-lg fa-fw fa-sitemap"></i> <span
+                    class="menu-item-parent">Блоки</span></a>
+        </li>
+        <li>
+            <a href="/admin/menu/" title="Menu"><i class="fa fa-lg fa-fw fa-desktop"></i> <span
+                    class="menu-item-parent">Меню</span></a>
+        </li>
+        <li>
+            <a href="/admin/pages/" title="Pages"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span
+                    class="menu-item-parent">Страницы</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">Документы</span></a>
+            <ul>
+                <li>
+                    <a href="/admin/documents/categories/">Категории</a>
+                </li>
+                <li>
+                    <a href="/admin/documents/">Документы</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">Новости</span></a>
+            <ul>
+                <li>
+                    <a href="/admin/news/topics/">Разделы</a>
+                </li>
+                <li>
+                    <a href="/admin/news/">Новости</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<span class="minifyme"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+
+<script type="text/javascript">
+    $(function () {
+                var url = document.location.pathname;
+                $('nav ul li').each(function () {
+                    if ($(this).find('a').attr('href') == url) {
+                        $(this).addClass('active');
+                    }
+                });
+            }
+    );
+</script>
+<!-- END NAVIGATION -->

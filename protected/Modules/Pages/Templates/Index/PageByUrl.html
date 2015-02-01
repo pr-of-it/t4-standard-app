@@ -6,7 +6,7 @@
 <div class="container">
     <h2 class="text-center">{{page.title}}</h2>
     <p>
-        {{page.text}}
+        {{page.text | raw}}
     </p>
     <div class="alert alert-info">ID страницы: {{page.Pk}}, url страницы: {{page.url}}.html</div>
 </div>
