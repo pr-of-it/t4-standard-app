@@ -17,6 +17,15 @@
 
 <body>
 
+{#
+{% if app.flash.message is defined %}
+<div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+    {{app.flash.message}}
+</div>
+{% endif %}
+#}
+
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
