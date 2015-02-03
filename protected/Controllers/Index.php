@@ -9,7 +9,6 @@ use T4\Mvc\Controller;
 class Index
     extends Controller
 {
-//for commit
 
     public function actionDefault()
     {
@@ -27,10 +26,6 @@ class Index
 
     public function actionLogin($email = null, $password = null)
     {
-        if (!empty($this->app->user)) {
-            $this->redirect('/');
-        }
-
         if (!is_null($email) || !is_null($password)) {
             try {
                 $identity = new Identity();

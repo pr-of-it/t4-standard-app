@@ -31,7 +31,6 @@ class m_0000000001_CreateWebApp
             $this->createTable('__users', [
                 'email'     => ['type'=>'string'],
                 'password'  => ['type'=>'string'],
-                '__role_id' => ['type' => 'link'],
             ], [
                 ['columns' => ['email']],
             ]);
@@ -43,6 +42,11 @@ class m_0000000001_CreateWebApp
                 ['type' => 'unique', 'columns' => ['name']]
             ]);
 
+            $this->createTable('__user_roles_to___users', [
+                '__user_id' => ['type' => 'link'],
+                '__role_id' => ['type' => 'link'],
+            ]);
+
             $role = new Role();
             $role->name = 'admin';
             $role->title = 'Администратор';
@@ -51,7 +55,7 @@ class m_0000000001_CreateWebApp
             $user = new User();
             $user->email = 'admin@t4.org';
             $user->password = \T4\Crypt\Helpers::hashPassword('123456');
-            $user->role = $role;
+            $user->roles->append($role);
             $user->save();
 
             $this->createTable('__user_sessions', [
@@ -70,7 +74,11 @@ class m_0000000001_CreateWebApp
 
     public function down()
     {
-        return false;
+        $this->dropTable('__user_sessions');
+        $this->dropTable('__user_roles_to___users');
+        $this->dropTable('__user_roles');
+        $this->dropTable('__users');
+        $this->dropTable('__blocks');
     }
 
 }

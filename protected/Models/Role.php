@@ -15,7 +15,7 @@ class Role
             'title' => ['type' => 'string'],
         ],
         'relations' => [
-            'users' => ['type' => self::HAS_MANY, 'model' => User::class],
+            'users' => ['type' => self::MANY_TO_MANY, 'model' => User::class],
         ],
     ];
 
