@@ -10,10 +10,18 @@ class m_1422936021_migration_core
 
     public function up()
     {
+        $this->addColumn('__migrations', [
+           'module' => ['type' => 'string', 'default' => 'core'],
+        ]);
+
+        $this->addIndex('__migrations', [['columns' => ['module']]]);
     }
 
     public function down()
     {
+        $this->dropColumn('__migrations', [
+            'module'
+        ]);
     }
 
 }
