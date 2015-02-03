@@ -26,6 +26,9 @@ return [
         'ckeditor' => [
             'location' => 'local'
         ],
+        'jstree' => [
+            'autoload' => false,
+        ],
         'sxgeo' => [
         ],
     ],
