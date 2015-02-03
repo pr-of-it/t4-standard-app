@@ -2,16 +2,12 @@
 
 namespace App\Modules\Maps\Controllers;
 
+use App\Components\Admin\Controller;
 use App\Modules\Maps\Models\Map;
-use T4\Mvc\Controller;
 
 class Admin
     extends Controller
 {
-    protected function access($action)
-    {
-        return !empty($this->app->user);
-    }
 
     public function actionDefault()
     {
@@ -44,4 +40,5 @@ class Admin
         }
         $this->redirect('/maps/admin/');
     }
+
 }

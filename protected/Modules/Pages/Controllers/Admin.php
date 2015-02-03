@@ -2,16 +2,12 @@
 
 namespace App\Modules\Pages\Controllers;
 
+use App\Components\Admin\Controller;
 use App\Modules\Pages\Models\Page;
-use T4\Mvc\Controller;
 
 class Admin
     extends Controller
 {
-    protected function access($action)
-    {
-        return !empty($this->app->user);
-    }
 
     public function actionDefault()
     {
