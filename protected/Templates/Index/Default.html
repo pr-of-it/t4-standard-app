@@ -1,6 +1,13 @@
 {% extends "index.html" %}
 
 {% block content  %}
+<!--<ol class="breadcrumb">
+    <li><a href="/">Главная страница</a></li>
+    {% for subpage in item.breadCrumbs %}
+    <li><a href="/pages/{{subpage.url}}.html">{{subpage.title}}</a></li>
+    {% endfor %}
+    <li></li>
+</ol>-->
 
 <t4:block path="/Pages//PageByUrl" url="{{url}}" />
 
