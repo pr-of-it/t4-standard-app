@@ -21,6 +21,7 @@ return [
         ],
         'bootstrap' => [
 			'location' => 'local',
+            'theme' => 'cerulean',
         ],
         'ckeditor' => [
             'location' => 'local'
