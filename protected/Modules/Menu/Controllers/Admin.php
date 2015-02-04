@@ -40,7 +40,7 @@ class Admin
         if ($item->wasNew()) {
             $item->moveToFirstPosition();
         }
-        $this->redirect('/admin/menu/');
+        $this->redirect('/menu/admin/');
     }
 
     public function actionDelete($id)
@@ -48,31 +48,31 @@ class Admin
         $item = MenuModel::findByPK($id);
         if ($item)
             $item->delete();
-        $this->redirect('/admin/menu/');
+        $this->redirect('/menu/admin/');
     }
 
     public function actionUp($id)
     {
         $item = MenuModel::findByPK($id);
         if (empty($item))
-            $this->redirect('/admin/menu/');
+            $this->redirect('/menu/admin/');
         $sibling = $item->getPrevSibling();
         if (!empty($sibling)) {
             $item->insertBefore($sibling);
         }
-        $this->redirect('/admin/menu/');
+        $this->redirect('/menu/admin/');
     }
 
     public function actionDown($id)
     {
         $item = MenuModel::findByPK($id);
         if (empty($item))
-            $this->redirect('/admin/menu/');
+            $this->redirect('/menu/admin/');
         $sibling = $item->getNextSibling();
         if (!empty($sibling)) {
             $item->insertAfter($sibling);
         }
-        $this->redirect('/admin/menu/');
+        $this->redirect('/menu/admin/');
     }
 
     public function actionMoveBefore($id, $to)

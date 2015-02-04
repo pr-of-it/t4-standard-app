@@ -18,6 +18,7 @@ return [
     ],
     'extensions' => [
         'jquery' => [
+            'ui' => true,
         ],
         'bootstrap' => [
             'location' => 'local',
@@ -28,6 +29,9 @@ return [
             'autoload' => false,
         ],
         'ckfinder' => [
+            'autoload' => false,
+        ],
+        'jstree' => [
             'autoload' => false,
         ],
         'sxgeo' => [

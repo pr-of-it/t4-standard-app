@@ -16,19 +16,19 @@ class Identity
     public function authenticate($data)
     {
         if (empty($data->email)) {
-            throw new Exception('Empty email', self::ERROR_INVALID_EMAIL);
+            throw new Exception('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
         if (empty($data->password)) {
-            throw new Exception('Empty password', self::ERROR_INVALID_PASSWORD);
+            throw new Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }
 
         $user = User::findByEmail($data->email);
         if (empty($user)) {
-            throw new Exception('User with email ' . $data->email . ' does not exists', self::ERROR_INVALID_EMAIL);
+            throw new Exception('Пользователь с e-mail ' . $data->email . ' не существует', self::ERROR_INVALID_EMAIL);
         }
 
         if (!\T4\Crypt\Helpers::checkPassword($data->password, $user->password)) {
-            throw new Exception('Invalid password', self::ERROR_INVALID_PASSWORD);
+            throw new Exception('Неверный пароль', self::ERROR_INVALID_PASSWORD);
         }
 
         $this->login($user);
@@ -60,15 +60,15 @@ class Identity
     public function register($data)
     {
         if (empty($data->email)) {
-            throw new Exception('Empty email', self::ERROR_INVALID_EMAIL);
+            throw new Exception('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
         if (empty($data->password)) {
-            throw new Exception('Empty password', self::ERROR_INVALID_PASSWORD);
+            throw new Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }
 
         $user = User::findByEmail($data->email);
         if (!empty($user)) {
-            throw new Exception('Email already exists', self::ERROR_INVALID_EMAIL);
+            throw new Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
 
         $user = new User();

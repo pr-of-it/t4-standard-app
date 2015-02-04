@@ -4,6 +4,13 @@ namespace App\Models;
 
 use T4\Orm\Model;
 
+/**
+ * Class User
+ * @package App\Models
+ * @property string $email
+ * @property string $password
+ * @property \T4\Core\Collection $roles
+ */
 class User
     extends Model
 {
@@ -14,8 +21,18 @@ class User
             'password'  => ['type'=>'string'],
         ],
         'relations' => [
-            'role' => ['type' => self::BELONGS_TO, 'model' => Role::class],
+            'roles' => ['type' => self::MANY_TO_MANY, 'model' => Role::class],
         ]
     ];
+
+    public function getRoleNames()
+    {
+        return $this->roles->collect('name');
+    }
+
+    public function hasRole($roleName)
+    {
+        return in_array($roleName, $this->getRoleNames());
+    }
 
 }

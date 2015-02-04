@@ -10,7 +10,6 @@ use App\Modules\Pages\Models;
 class Index
     extends Controller
 {
-//for commit
 
     public function actionDefault($url='')
     {
@@ -43,15 +42,11 @@ class Index
 
     public function actionLogin($email = null, $password = null)
     {
-        if (!empty($this->app->user)) {
-            $this->redirect('/');
-        }
-
         if (!is_null($email) || !is_null($password)) {
             try {
                 $identity = new Identity();
                 $user = $identity->authenticate(new Std(['email' => $email, 'password' => $password]));
-                $this->app->flash->message = 'Welcome back, ' . $user->email . '!';
+                $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
             } catch (\T4\Auth\Exception $e) {
                 $this->app->flash->error = $e->getMessage();

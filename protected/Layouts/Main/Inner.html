@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:t4="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% if view.meta.title %}{{view.meta.title}} - {% endif %}Молодёжь Костромской области</title>
+
+    {{ publishCss() }}
+    <link rel="stylesheet" href="{{asset('/Layouts/Main/assets/css/cosmo/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/Layouts/Main/assets/css/main.css')}}">
+    {{ publishJs() }}
+    <script src="{{asset('/Layouts/Main/assets/js/bootstrap-hover-dropdown.js')}}"></script>
+
+</head>
+
+<body>
+
+    {% include 'Main/__top.html' %}
+    {% include 'Main/__menu.html' %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-3">
+                <t4:section id="3"/>
+            </div>
+        </div>
+        <div class="row">
+            <t4:section id="4" />
+        </div>
+    </div>
+
+</body>
+</html>
