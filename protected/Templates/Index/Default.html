@@ -8,8 +8,9 @@
     {% endfor %}
     <li></li>
 </ol>-->
-
-<t4:block path="/Menu//Menu" url="{{url}}" />
+{{parent}}
+<div class="collapse navbar-collapse" id="navbar-collapse-1"><t4:block path="/Menu//Menu" />
+</div>
 <t4:block path="/Pages//PageByUrl" url="{{url}}" />
 
 {% endblock  %}
