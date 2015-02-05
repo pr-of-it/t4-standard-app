@@ -1,7 +1,9 @@
 {% set lastLevel = items[0].__lvl %}
 {% set count = 0 %}
-
-<ul class="nav navbar-nav">
+<div class="navbar navbar-default" role="navigation">
+<div class="container">
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
 
     {% for item in items %}
 
@@ -31,3 +33,6 @@
         {{"</li></ul>"|repeat(currentLevel)|raw}}</li>
 
 </ul>
+    </div>
+    </div>
+</div>

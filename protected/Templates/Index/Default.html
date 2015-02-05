@@ -8,8 +8,11 @@
     {% endfor %}
     <li></li>
 </ol>-->
-<t4:block path="/Menu//Menu" />
+
 <t4:block path="/Pages//PageByUrl" url="{{url}}" />
 
 {% endblock  %}
 
+{% block menu %}
+<t4:block path="/Menu//Menu" />
+{% endblock %}
