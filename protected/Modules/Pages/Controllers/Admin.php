@@ -43,17 +43,20 @@ class Admin
         } else {
             $item = new Page();
         }
+
         $item
             ->fill($_POST)
-            ->uploadFiles('files')
+          //  ->uploadFiles('files')
             ->save();
+
         if ($item->wasNew()) {
             $item->moveToFirstPosition();
         }
+
         if ($redirect) {
             $this->redirect('/pages/' . $item->url . '.html');
         } else {
-            $this->redirect('/admin/pages/');        }
+            $this->redirect('/pages/admin/');        }
 
     }
 
@@ -62,7 +65,7 @@ class Admin
         $item = Page::findByPK($id);
         if ($item)
             $item->delete();
-        $this->redirect('/admin/pages/');
+        $this->redirect('/pages/admin');
     }
 
     public function actionDeleteFile($id)
@@ -80,24 +83,24 @@ class Admin
     {
         $item = Page::findByPK($id);
         if (empty($item))
-            $this->redirect('/admin/pages/');
+            $this->redirect('/pages/admin/');
         $sibling = $item->getPrevSibling();
         if (!empty($sibling)) {
             $item->insertBefore($sibling);
         }
-        $this->redirect('/admin/pages/');
+        $this->redirect('/pages/admin/');
     }
 
     public function actionDown($id)
     {
         $item = Page::findByPK($id);
         if (empty($item))
-            $this->redirect('/admin/pages/');
+            $this->redirect('/pages/admin/');
         $sibling = $item->getNextSibling();
         if (!empty($sibling)) {
             $item->insertAfter($sibling);
         }
-        $this->redirect('/admin/pages/');
+        $this->redirect('/pages/admin/');
     }
 
     public function actionMoveBefore($id, $to)

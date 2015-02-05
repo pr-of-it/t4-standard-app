@@ -1,39 +1,97 @@
-{% extends 'Admin.html' %}
+{% extends 'Admin/blank.html' %}
 
-{% block namepage %}
-    {{ page ? 'Редактировать статью' : 'Создать статью' }}
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/pages/">Страницы</a></li>
+    <li>{% if item.isNew %}Добавление страницы{% else %}Редактирование страницы{% endif %}</li>
+</ol>
 {% endblock %}
 
 {% block content %}
-<form class="form-horizontal" action="/pages/admin/save" method="post">
-    {% if not page.isNew() %}
-    <input type="hidden" name="id" value="{{page.Pk}}" />
-    {% endif %}
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">Url</label>
-        <div class="col-sm-10">
-            <div class="input-group">
-                <input type="text" class="form-control" id="url" name="url" placeholder="Url" value="{{page.url}}">
-                <div class="input-group-addon">.html</div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">Заголовок</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок страницы" value="{{page.title}}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">Текст</label>
-        <div class="col-sm-10">
-            <t4:editor name="text">{{page.text}}</t4:editor>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Сохранить</button>
-        </div>
-    </div>
-</form>
+
+<section class="well">
+    <form class="smart-form" method="post" action="/pages/admin/save" enctype="multipart/form-data">
+        {% if item.isNew %}
+        <header>Добавление страницы</header>
+        {% else %}
+        <input type="hidden" name="__id" value="{{item.__id}}">
+        <header>Редактирование страницы</header>
+        {% endif %}
+        <fieldset>
+            <section>
+                <label class="label">Заголовок страницы</label>
+                <label class="input">
+                    <input type="text" name="title" value="{{item.title}}">
+                </label>
+            </section>
+            <section>
+                <label class="label">Родительская страница</label>
+                <label class="select">
+                    {% if item.isNew %}
+                    {% if item.parent %}
+                    {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", item.parent.Pk, {"null":true}, {"name":"parent"}) }}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", 0, {"null":true}, {"name":"parent"}) }}
+                    {% endif %}
+                    {% else %}
+                    {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent"}) }}
+                    {% endif %}
+                    <i></i>
+                </label>
+            </section>
+            <section>
+                <label class="label">URL (адрес страницы)</label>
+                <label class="input">
+                    <div class="input-group">
+                        <input type="text" name="url" value="{{item.url}}">
+                        <span class="input-group-addon">.html</span>
+                    </div>
+                </label>
+            </section>
+
+            <section>
+                <label class="label">Текст страницы</label>
+                <label class="textarea textarea-resizable">
+                    <t4:editor name="text">{{item.text}}</t4:editor>
+                </label>
+            </section>
+
+        </fieldset>
+        <footer>
+            <input id="redirectAfterSave" type="hidden" name="redirect" value="0" />
+            <button type="submit" class="btn btn-primary" onclick="$('#redirectAfterSave').val(1)">Сохранить и посмотреть</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            <a href="/pages/admin/delete/?id={{item.Pk}}" class="confirmable">
+                <button type="button" class="btn btn-danger">Удалить</button>
+            </a>
+        </footer>
+    </form>
+</section>
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function () {
+
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+        $('.item-file-delete').click( function () {
+            var $this = $(this);
+            var id = $this.attr('data-id');
+            if (0 != id) {
+                $.post('/admin/pages/deleteFile.json', {"id":id}, function (r) {
+                    if (r.result) {
+                        $this.parent().remove();
+                    }
+                });
+            }
+            return false;
+        });
+
+    });
+</script>
+
 {% endblock %}

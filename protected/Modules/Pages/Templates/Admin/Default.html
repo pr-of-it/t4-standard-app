@@ -23,7 +23,7 @@
 {% block content %}
 
 <section class="well">
-    <div class="row"><div class="pull-right"><a class="btn btn-primary btn-lg" href="/admin/pages/edit?id=new">Добавить страницу</a></div></div>
+    <div class="row"><div class="pull-right"><a class="btn btn-primary btn-lg" href="/Pages/admin/edit?id=new">Добавить страницу</a></div></div>
     <div class="row">
 
         <div class="dd" id="tree-nestable" style="width: 100%; max-width: 100%">
@@ -51,24 +51,24 @@
                 <li class="dd-item dd3-item" data-id="{{item.__id}}">
                     <div class="dd-handle dd3-handle" data-id="{{item.__id}}">Drag</div>
                     <div class="dd3-content">
-                        <a href="/admin/pages/edit/?id={{item.__id}}">{{item.title}} [{{item.url}}.html]</a>
+                        <a href="/pages/admin/edit/?id={{item.__id}}">{{item.title}} [{{item.url}}.html]</a>
                         <span class="pull-right">
 
                             {% if items[key-1] is defined and items.existsElement({'__prt':item.__prt, '__lvl':item.__lvl})%}
-                            <a href="/admin/pages/up/?id={{item.__id}}"><i class="fa fa-arrow-up"></i></a>
+                            <a href="/pages/admin/up/?id={{item.__id}}"><i class="fa fa-arrow-up"></i></a>
                             {% else %}
                             <i class="fa fa-ellipsis-horizontal"></i>
                             {% endif %}
                             {% if items[key+1] is defined %}
-                            <a href="/admin/pages/down/?id={{item.__id}}"><i class="fa fa-arrow-down"></i></a>
+                            <a href="/pages/admin/down/?id={{item.__id}}"><i class="fa fa-arrow-down"></i></a>
                             {% else %}
                             <i class="fa fa-ellipsis-horizontal"></i>
                             {% endif %}
                             &nbsp;&nbsp;&nbsp;
 
-                            <a href="/admin/pages/edit/?id=new&parent={{item.Pk}}" class=""><i class="fa fa-plus"></i></a>
-                            <a href="/admin/pages/edit/?id={{item.Pk}}" class=""><i class="fa fa-edit"></i></a>
-                            <a href="/admin/pages/delete/?id={{item.Pk}}" class="confirmable"><i class="fa fa-trash-o"></i></a>
+                            <a href="/pages/admin/edit/?id=new&parent={{item.Pk}}" class=""><i class="fa fa-plus"></i></a>
+                            <a href="/pages/admin/edit/?id={{item.Pk}}" class=""><i class="fa fa-edit"></i></a>
+                            <a href="/pages/admin/delete/?id={{item.Pk}}" class="confirmable"><i class="fa fa-trash-o"></i></a>
                         </span>
                     </div>
                     {% set count = count + 1 %}
