@@ -11,36 +11,41 @@ class Admin
 
     public function actionDefault()
     {
-        $this->data->pages = Page::findAll();
+        $this->data->items = Page::findAll();
     }
 
-    public function actionEdit($id)
+    public function actionEdit($id='new')
     {
-        $this->data->page = Page::findByPK($id);
+        if (null == $id || 'new' == $id) {
+            $this->data->item = new Page();
+        } else {
+            $this->data->item = Page::findByPK($id);
+        }
     }
 
     public function actionSave()
     {
         $id = $this->app->request->post->id;
-        if (!empty($id)) {
-            $page = Page::findByPK($id);
+
+        if (empty($id)) {
+            $item = new Page();
+
         } else {
-            $page = new Page();
+            $item = Page::findByPK($id);
         }
-        $page->fill($this->app->request->post);
-        $page->save();
-        $this->redirect('/pages/admin/');
+
+        $item->fill($this->app->request->post);
+        $item->save();
+        $this->redirect('/admin/pages/');
     }
 
     public function actionDelete($id)
     {
-        $item= Page::findByPK($id);
-        if($item)
-        {
+        $item = Page::findByPK($id);
+        if ($item) {
             $item->delete();
         }
-        $this->redirect('/pages/admin/');
-
+        $this->redirect('/admin/pages');
     }
 
 }
