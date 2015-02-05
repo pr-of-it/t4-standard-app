@@ -20,8 +20,10 @@ class Index
     {
         try {
 
-            $route = new Route('/' . ucfirst($module) . '/Admin/' . ucfirst($action));
-            $this->app->runRoute($route);
+            $this->app->runRoute(
+                new Route('/' . ucfirst($module) . '/Admin/' . ucfirst($action)),
+                Router::getInstance()->getFormatByExtension($this->app->request->extension)
+            );
             exit;
 
         } catch (Exception $e) {
