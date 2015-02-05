@@ -1,4 +1,4 @@
-{% extends "Index.html" %}
+{% extends "index_.html" %}
 
 {% block content  %}
 <!--<ol class="breadcrumb">
@@ -8,9 +8,7 @@
     {% endfor %}
     <li></li>
 </ol>-->
-{{parent}}
-<div class="collapse navbar-collapse" id="navbar-collapse-1"><t4:block path="/Menu//Menu" />
-</div>
+<t4:block path="/Menu//Menu" />
 <t4:block path="/Pages//PageByUrl" url="{{url}}" />
 
 {% endblock  %}
