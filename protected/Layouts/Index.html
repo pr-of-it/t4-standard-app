@@ -12,86 +12,103 @@
 
     {{ publishCss() }}
     {{ publishJs() }}
+    <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
 
 </head>
 
 <body>
-
-{#
-{% if app.flash.message is defined %}
-<div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
-    {{app.flash.message}}
-</div>
-{% endif %}
-#}
-
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">T4 Site</a>
-            {% if app.user %}
-            <a class="navbar-brand" href="/pages/admin/">Админ-панель</a>
-            {% endif %}
-
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-lg-2">
+            <div class="row">
+                <img src="{{asset('/Layouts/src/logo.png')}}" class="img-responsive">
+            </div>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Варианты главной страницы <b class="caret"></b></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="Mobile?page_id=1">Вариант1</a></li>
-                        <li><a href="Mobile?page_id=2">Вариант2</a></li>
-                    </ul>
-                </li>
-            </ul>
 
-            <t4:block path="///Login" template="navbar" />
-
-        </div><!--/.navbar-collapse -->
+        <div class="col-xs-12 col-sm-8 col-lg-10">
+            <h1 class="text-primary center-block">Стандарт ProFit
+                <small>(черновик)</small>
+            </h1>
+        </div>
     </div>
 </div>
-<hr>
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-</div>
 
 <div class="container">
-    <!-- Example row of columns -->
     <div class="row">
-        <div class="col-md-4">
-            <h2>Heading 1</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        <div class="navbar navbar-default navbar-fixed-default navbar-inverse " role="navigation"
+             style="margin-bottom:0px;">
+             <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">T4 Site</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                {% if app.user %}
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Администратор <b
+                                class="caret"></b></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="/admin">Админ-панель</a></li>
+                            <li><a href="/maps/admin">Карты</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                {% endif %}
+                <!--  <t4:block path="///Menu"/>-->
+                {% if not app.user %}
+                <ul class="nav navbar-nav ">
+                    <form class="navbar-form navbar-right" role="form" action="/login.html" method="post">
+                        <div class="form-group">
+                            <input type="text" placeholder="Email" class="form-control" name="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control" name="password">
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                    {% else %}
+                    <a href="/logout.html">
+                        <button type="button" class="btn btn-default navbar-btn navbar-right">Sign out</button>
+                    </a>
+
+                    <p class="navbar-text navbar-right" style="padding-right: 10px;">Hello, {{app.user.email}}!</p>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-        <div class="col-md-4">
-            <h2>Heading 2</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+
+    </div>
+    <!--/.navbar-collapse -->
+</div>
+</div>
+
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="container">
+    <div class="row">
+        <div class="jumbotron" style="margin-bottom: 0px;">
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
         </div>
-        <div class="col-md-4">
-            <h2>Heading 3</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12" style="height:50px; background:dimgray;">
+                    <footer><p>&copy; T4 Development 2014</p></footer>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <hr>
-
-    <footer>
-        <p>&copy; T4 Development 2014</p>
-    </footer>
-</div> <!-- /container -->
+</div>
 
 </body>
 </html>
