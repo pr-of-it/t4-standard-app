@@ -42,9 +42,6 @@ class Admin
             $item = new Story();
         }
         $item->fill($this->app->request->post);
-        if ($item->isNew()) {
-            $item->published = date('Y-m-d H:i:s', time());
-        }
         $item
             ->uploadImage('image')
             ->save();
