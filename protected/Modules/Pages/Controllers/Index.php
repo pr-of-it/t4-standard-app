@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Modules\Pages\Controllers;
-
 use App\Modules\Pages\Models\Page;
 use T4\Core\Std;
 use T4\Http\E404Exception;
@@ -20,19 +19,19 @@ class Index
             throw new E404Exception;
         }
 
-        if($url=="index"){
+        if ($url == "index") {
 
-            $this->data->ip=long2ip($this->app->request->ip);
-            $address=$this->app->extensions->sxgeo->getLocation($this->app->request->ip);
+            $this->data->ip = long2ip($this->app->request->ip);
+            $address = $this->app->extensions->sxgeo->getLocation($this->app->request->ip);
 
-            if($address){
+            if ($address) {
 
-                $this->data->address='Ваша адрес: '.$address['country']['name_ru'].', регион '.$address['region']['name_ru'].', город '.
+                $this->data->address = 'Ваша адрес: ' . $address['country']['name_ru'] . ', регион ' . $address['region']['name_ru'] . ', город ' .
                     $address['city']['name_ru'];
 
             } else {
 
-                return $this->data->address="Ваш адрес не определен";
+                return $this->data->address = "Ваш адрес не определен";
             }
         }
 
