@@ -57,7 +57,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        {% block breadcrumbs %}{% endblock %}
+                        <div class="pull-right">{% block toolbar %}{% endblock %}</div>
                         <h1>{% block header %}{% endblock %}</h1>
+                        <hr>
                         {% block content %}{% endblock %}
                     </div>
                     <!-- /.col-lg-12 -->
@@ -77,6 +80,9 @@
     <script src="{{ asset('/Layouts/Admin/assets//bower_components/metisMenu/dist/metisMenu.min.js') }}"></script>
     <!-- Custom Theme JavaScript -->
     <script src="{{ asset('/Layouts/Admin/assets//dist/js/sb-admin-2.js') }}"></script>
+
+    {% block pagescript %}{% endblock %}
+
 
 </body>
 

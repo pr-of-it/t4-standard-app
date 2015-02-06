@@ -8,7 +8,7 @@ class Topic
     extends Model
 {
     static protected $schema = [
-        'table' => 'new_stopics',
+        'table' => 'news_topics',
         'columns' => [
             'title' => ['type'=>'string'],
         ],
