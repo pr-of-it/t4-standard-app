@@ -9,6 +9,11 @@ use App\Components\Admin\Controller;
 class Admin
     extends Controller
 {
+    protected function access($action)
+    {
+        return !empty($this->app->user);
+    }
+
     public function actionDefault()
     {
         $this->app->extensions->jstree->init();
