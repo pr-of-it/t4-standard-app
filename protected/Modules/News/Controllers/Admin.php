@@ -36,7 +36,7 @@ class Admin
 
     public function actionSave()
     {
-        if (!empty($_POST[Story::PK])) {
+        if (!empty($this->app->request->post->id)) {
             $item = Story::findByPK($this->app->request->post->id);
         } else {
             $item = new Story();
