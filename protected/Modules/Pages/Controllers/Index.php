@@ -12,7 +12,6 @@ class Index
     public $ip;
     public function actionPageByUrl($url)
     {
-
         $page = Page::findByUrl($url);
         $this->data->page = $page;
         if (empty($this->data->page)) {

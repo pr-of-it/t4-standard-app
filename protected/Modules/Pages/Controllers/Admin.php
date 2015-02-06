@@ -8,13 +8,11 @@ use App\Modules\Pages\Models\Page;
 class Admin
     extends Controller
 {
-
-    /*
      protected function access($action)
      {
-         return !empty($this->app->user) && $this->app->user->hasRole('admin');
+         return !empty($this->app->user);
      }
- */
+
     public function actionDefault()
     {
         $this->data->items = Page::findAllTree();
@@ -57,7 +55,6 @@ class Admin
             $this->redirect('/pages/' . $item->url . '.html');
         } else {
             $this->redirect('/pages/admin/');        }
-
     }
 
     public function actionDelete($id)
@@ -140,6 +137,4 @@ class Admin
             $this->data->error = $e->getMessage();
         }
     }
-
-
 }
