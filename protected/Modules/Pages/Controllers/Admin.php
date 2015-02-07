@@ -8,13 +8,14 @@ use App\Modules\Pages\Models\Page;
 class Admin
     extends Controller
 {
-     protected function access($action)
+ /*    protected function access($action)
      {
          return !empty($this->app->user);
      }
-
+*/
     public function actionDefault()
     {
+        $this->app->extensions->jstree->init();
         $this->data->items = Page::findAllTree();
     }
 
