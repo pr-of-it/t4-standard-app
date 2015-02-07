@@ -3,6 +3,7 @@
 namespace App\Modules\Contact\Controllers;
 
 
+use App\Models\User;
 use T4\Mvc\Controller;
 use App\Modules\Contact\Models\Contact;
 
@@ -10,7 +11,8 @@ class Index
          extends Controller{
 
     public function actionDefault(){
-        return $this->app->user->email;
+
+        $this->data->user = User::findAll();
     }
 
     public function actionSave()
