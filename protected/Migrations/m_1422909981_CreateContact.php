@@ -12,6 +12,7 @@ class m_1422909981_CreateContact
     {
         $this->createTable('contact',[
                 'name' => ['type' => 'string'],
+                'published' => ['type'=>'datetime'],
                 'tel' => ['type' => 'string'],
                 'email' => ['type' => 'string'],
                 'message' =>['type' => 'text'],

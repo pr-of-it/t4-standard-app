@@ -8,15 +8,8 @@ use T4\Mvc\Controller;
 class Admin
     extends Controller
 {
-    protected function access($action)
-    {
-        return !empty($this->app->user);
-    }
 
-    public function actionDefault()
-    {
-        $this->data->maps = Map::findAll();
-    }
+
 
     public function actionEdit($id)
     {

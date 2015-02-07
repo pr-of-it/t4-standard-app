@@ -15,10 +15,10 @@ class Index
 
     public function actionSave()
         {
-
              $this->app->request->post->id;
              $contact = new Contact();
              $contact->fill($this->app->request->post);
+             $contact->published = date('Y-m-d H:i:s', time());
              $contact->save();
              $this->redirect('/');
         }
