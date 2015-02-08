@@ -27,15 +27,14 @@ class Admin
         $this->data->contact = Contact::findByPK($id);
     }
 
-    public function actionSendMail()
+    public function actionSend()
     {
         $mail = new Sender();
-
-        $mail->setFrom('verablajennaya@mail.ru', 'First Last');
-        $mail->addReplyTo('veramir10@gmail.com', 'First Last');
-        $mail->addAddress('veramir10@gmail.com', 'Вера');
+        $mail->setFrom('admin@t4.org', 'First Last');
+        $mail->addReplyTo('example@mail.ru', 'First Last');
+        $mail->addAddress($this->app->request->post->email, 'Вера');
         $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the message body';
+        $mail->Body    = $this->app->request->post->msg;
         try {
             $mail->send();
             $this->redirect('/contact/admin/');
