@@ -5,6 +5,7 @@ namespace App\Modules\Contact\Controllers;
 
 use T4\Mvc\Controller;
 use App\Modules\Contact\Models\Contact;
+use T4\Mail\Sender;
 
 
 class Admin
@@ -21,9 +22,27 @@ class Admin
         $this->data->contact = Contact::findAll();
     }
 
-    public function actionAnswer($id)
-    {
+    public function actionAnswer($id){
 
+        $this->data->contact = Contact::findByPK($id);
+    }
+
+    public function actionSendMail()
+    {
+        $mail = new Sender();
+
+        $mail->setFrom('verablajennaya@mail.ru', 'First Last');
+        $mail->addReplyTo('veramir10@gmail.com', 'First Last');
+        $mail->addAddress('veramir10@gmail.com', 'Вера');
+        $mail->Subject = 'Here is the subject';
+        $mail->Body    = 'This is the message body';
+        try {
+            $mail->send();
+            $this->redirect('/contact/admin/');
+        }
+         catch(Exception $e) {
+             echo "Mailer Error: " . $mail->ErrorInfo;
+        }
     }
 
 }

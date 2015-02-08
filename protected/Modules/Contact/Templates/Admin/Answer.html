@@ -1,1 +1,17 @@
 {% extends 'Admin.html' %}
+
+{% block content %}
+
+<form class="form-horizontal" action="/contact/admin/answer" method="post">
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <div class="input-group">
+                <input type="text" class="form-control" id="msg" name="msg" placeholder="" value="">
+                <div class="input-group-addon"></div>
+            </div>
+        </div>
+    </div>
+</form>>
+    {% endblock %}
