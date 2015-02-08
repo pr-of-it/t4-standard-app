@@ -1,20 +1,12 @@
 {% extends 'index.html'%}
-{%if app.user %}
- {% block content %}
 
-{% for users in __user %}
+{% block content %}
 
 <form class="form-horizontal" action="/contact//save" method="post">
     <div class="form-group">
-        <label for="name" class="col-sm-2 control-label">Ваше имя</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="name"  name="name" placeholder="Ваше имя">{{ users.name }}
-        </div>
-    </div>
-    <div class="form-group">
         <label for="email" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-10">
-            <input type="email" class="form-control" name="email" id="email" placeholder="{{users.email}}">{{users.email}}
+            <input type="email" class="form-control" name="email" id="email" placeholder="Example@gmail.com" value="{{ app.user.email }}">
         </div>
     </div>
     <div class="form-group">
@@ -28,41 +20,7 @@
             <button type="submit" class="btn btn-default" >Отправить сообщение</button>
         </div>
     </div>
-    {% endfor %}
-
     {% endblock %}
-    {% endif %}
-
-
-    {% else %}
-    {%block content%}
-    <form class="form-horizontal" action="/contact//save" method="post">
-        <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Ваше имя</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="name"  name="name" placeholder="Ваше имя">{{ users.name }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" name="email" id="email" placeholder="{{users.email}}">{{users.email}}
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="message" class="col-sm-2 control-label">Сообщение</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" rows="3" name= "message" id = "message"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default" >Отправить сообщение</button>
-            </div>
-        </div>
-{% endblock%}
-
-    {% endelse %}
 
 
 

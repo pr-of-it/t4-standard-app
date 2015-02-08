@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Modules\Contact\Controllers;
+
 
 
 use App\Models\User;
@@ -11,8 +13,6 @@ class Index
          extends Controller{
 
     public function actionDefault(){
-
-        $this->data->user = User::findAll();
     }
 
     public function actionSave()

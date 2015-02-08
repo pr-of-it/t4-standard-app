@@ -10,9 +10,7 @@ class Contact
     static protected $schema = [
         'table' => 'contact',
         'columns' => [
-            'name' => ['type' => 'string'],
             'published' => ['type'=>'datetime'],
-            'tel' => ['type' => 'string'],
             'email' => ['type' => 'string'],
             'message' =>['type' => 'text']
         ],

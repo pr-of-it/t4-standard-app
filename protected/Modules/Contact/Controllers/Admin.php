@@ -6,8 +6,10 @@ namespace App\Modules\Contact\Controllers;
 use T4\Mvc\Controller;
 use App\Modules\Contact\Models\Contact;
 
+
 class Admin
-      extends Controller{
+      extends Controller
+{
 
     protected function access($action)
     {
