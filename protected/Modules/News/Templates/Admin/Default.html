@@ -35,6 +35,7 @@
             <td>{% if item.image %}<i class="glyphicon glyphicon-picture"></i>{% endif %}</td>
             <td>{{item.published|date('d.m.Y')}}</td>
             <td style="white-space: nowrap">
+                <a href="#" data-toggle="modal" data-target="#news-preview" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-eye-open"></i></a>
                 <a href="/admin/news/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
                 <a href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
@@ -45,6 +46,24 @@
 
 <div class="row">{{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/news/?page=%d'})}}</div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="news-preview" tabindex="-1" role="dialog" aria-labelledby="news-preview-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="news-preview-title">Предпросмотр новости</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block pagescript %}
@@ -53,6 +72,12 @@
         $('a.confirmable').click(function() {
             return confirm('Вы уверены?');
         });
+
+        $('#news-preview').on('show.bs.modal', function (e) {
+            var id = $(e.relatedTarget).attr('data-id');
+            $(this).find('.modal-body').load('/admin/news/view?id='+id);
+        })
+
     });
 </script>
 {% endblock %}
