@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block toolbar %}
-<a class="btn btn-primary" href="/admin/news/edit?id=new"><i class="fa fa-plus"></i> Добавить новость</a>
+<a class="btn btn-primary" href="/admin/news/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить новость</a>
 {% endblock %}
 
 {% block header %}
@@ -32,11 +32,11 @@
             <td><a href="/admin/news/edit/?id={{item.Pk}}">{{item.Pk}}</a></td>
             <td>{{item.topic.title}}</td>
             <td><a href="/admin/news/edit/?id={{item.Pk}}">{{item.title}}</a></td>
-            <td>{% if item.image %}<i class="fa fa-picture-o"></i>{% endif %}</td>
+            <td>{% if item.image %}<i class="glyphicon glyphicon-picture"></i>{% endif %}</td>
             <td>{{item.published|date('d.m.Y')}}</td>
             <td style="white-space: nowrap">
-                <a href="/admin/news/edit/?id={{item.Pk}}"><i class="fa fa-edit fa-2x"></i></a>
-                <a href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><i class="fa fa-trash-o fa-2x"></i></a>
+                <a href="/admin/news/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
+                <a href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>
         {% endfor %}
