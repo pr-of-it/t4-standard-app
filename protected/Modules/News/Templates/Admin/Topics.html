@@ -31,6 +31,17 @@
             <td>{{'<i class="glyphicon glyphicon-option-horizontal"></i>'|repeat(item.__lvl)|raw}} <a href="/admin/news/editTopic/?id={{item.Pk}}">{{item.Pk}}</a></td>
             <td>{{'<i class="glyphicon glyphicon-option-horizontal"></i>'|repeat(item.__lvl)|raw}} <a href="/admin/news/editTopic/?id={{item.Pk}}">{{item.title}}</a></td>
             <td style="white-space: nowrap">
+                {% if item.hasPrevSibling %}
+                <a href="/admin/news/topicUp/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                {% else %}
+                <i class="glyphicon glyphicon-option-horizontal"></i>
+                {% endif %}
+                {% if item.hasNextSibling %}
+                <a href="/admin/news/topicDown/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                {% else %}
+                <i class="glyphicon glyphicon-option-horizontal"></i>
+                {% endif %}
+                &nbsp;&nbsp;
                 <a href="/admin/news/editTopic/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
                 <a href="/admin/news/deleteTopic/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
             </td>

@@ -107,4 +107,28 @@ class Admin
         $this->redirect('/admin/news/topics/');
     }
 
+    public function actionTopicUp($id)
+    {
+        $item = Topic::findByPK($id);
+        if (empty($item))
+            $this->redirect('/admin/news/topics');
+        $sibling = $item->getPrevSibling();
+        if (!empty($sibling)) {
+            $item->insertBefore($sibling);
+        }
+        $this->redirect('/admin/news/topics');
+    }
+
+    public function actionTopicDown($id)
+    {
+        $item = Topic::findByPK($id);
+        if (empty($item))
+            $this->redirect('/admin/news/topics');
+        $sibling = $item->getNextSibling();
+        if (!empty($sibling)) {
+            $item->insertAfter($sibling);
+        }
+        $this->redirect('/admin/news/topics');
+    }
+
 }
