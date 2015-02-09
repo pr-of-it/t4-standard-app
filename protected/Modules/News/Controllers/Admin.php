@@ -26,6 +26,11 @@ class Admin
         ]);
     }
 
+    public function actionView($id)
+    {
+        $this->data->id = $id;
+    }
+
     public function actionEdit($id = null)
     {
         if (null === $id || 'new' == $id) {
