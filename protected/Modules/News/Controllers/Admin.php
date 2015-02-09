@@ -4,6 +4,7 @@ namespace App\Modules\News\Controllers;
 
 use App\Components\Admin\Controller;
 use App\Modules\News\Models\Story;
+use App\Modules\News\Models\Topic;
 
 
 class Admin
@@ -76,7 +77,7 @@ class Admin
         $this->data->items = Topic::findAllTree();
     }
 
-    public function actionEditTopic($id=null)
+    public function actionEditTopic($id = null)
     {
         if (null === $id || 'new' == $id) {
             $this->data->item = new Topic();
@@ -87,12 +88,12 @@ class Admin
 
     public function actionSaveTopic()
     {
-        if (!empty($_POST[Topic::PK])) {
-            $item = Topic::findByPK($_POST[Topic::PK]);
+        if (!empty($this->app->request->post->id)) {
+            $item = Topic::findByPK($this->app->request->post->id);
         } else {
             $item = new Topic();
         }
-        $item->fill($_POST);
+        $item->fill($this->app->request->post);
         $item->save();
         $this->redirect('/admin/news/topics/');
     }
