@@ -13,6 +13,7 @@
     {{ publishCss() }}
     {{ publishJs() }}
     <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
+    <script type="text/javascript" src="{{asset('/Layouts/assets/js/bootstrap-modal.js')}}"></script>
 
 </head>
 
@@ -76,6 +77,12 @@
                     {% else %}
                     <a href="/logout.html">
                         <button type="button" class="btn btn-default navbar-btn navbar-right">Sign out</button>
+                    </a>
+                    <a  class="btn btn-lg btn-small"
+                       data-toggle="modal"
+                       data-target="#remoteModal"
+                       href="/protected/Templates/index/Registry.html">
+                        Регистрация
                     </a>
 
                     <p class="navbar-text navbar-right" style="padding-right: 10px;">Hello, {{app.user.email}}!</p>

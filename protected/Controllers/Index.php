@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Components\Auth\Identity;
 use T4\Core\Std;
 use T4\Mvc\Controller;
+use App\Models\User;
 
 class Index
     extends Controller
@@ -37,4 +38,25 @@ class Index
         $this->redirect('/');
     }
 
+    public function actionRegistry($email = null, $password = null)
+    {
+
+        if (!is_null($email) || !is_null($password)) {
+
+            $id=User::findByColumn('email', $email);
+            if(!$id) {
+                $user= new User();
+                $user->fill($this->app->request->post);
+                $user->save();
+            } else{
+                $this->app->flash->message='Пользователь с таким e-mail уже зарегестрирован';
+                $this->data->err = true;
+                $this->data->email=null;
+                $this->data->password=null;
+                return $this->redirect('/Registry');
+            }
+
+            $this->app->flash->message = 'Все хорошо';
+        }
+    }
 }
