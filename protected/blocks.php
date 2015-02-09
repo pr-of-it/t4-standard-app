@@ -8,6 +8,9 @@ return [
         'name' => 'Login block'
     ],
 
+    '/News//' => [
+        'title' => 'Главная страница новостей',
+    ],
     '/News//One' => [
         'title' => 'Выбранная новость по ID',
     ],

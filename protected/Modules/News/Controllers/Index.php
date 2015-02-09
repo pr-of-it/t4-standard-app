@@ -10,6 +10,16 @@ class Index
     extends Controller
 {
 
+    public function actionDefault($limit = null)
+    {
+        $this->data->items = Story::findAll(
+            [
+                'order' => 'published DESC',
+                'limit' => $limit,
+            ]
+        );
+    }
+
     public function actionOne($id)
     {
         $this->data->item = Story::findByPK($id);
