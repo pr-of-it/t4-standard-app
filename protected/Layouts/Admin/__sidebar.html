@@ -22,6 +22,16 @@
                     <a href="{{item.url}}">{{item.icon|raw}} {{item.title}}</a>
                 </li>
                 {% else %}
+                <li>
+                    <a href="#"> {{item.icon|raw}} {{item.title}}<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        {% for sub in item.sub %}
+                        <li>
+                            <a href="{{sub.url}}">{{sub.title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
                 {% endif %}
             {% endfor %}
             {% endfor %}

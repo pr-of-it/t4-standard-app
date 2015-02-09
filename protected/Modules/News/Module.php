@@ -9,7 +9,10 @@ class Module
     public function getAdminMenu()
     {
         return [
-            ['icon' => '<i class="fa fa-th-list fa-fw"></i>', 'url' => '/admin/news/', 'title' => 'Новости'],
+            ['title' => 'Новости', 'icon' => '<i class="glyphicon glyphicon-th-list"></i>', 'sub' => [
+                ['title' => 'Рубрики', 'url' => '/admin/news/topics'],
+                ['title' => 'Новости', 'url' => '/admin/news/'],
+            ]],
         ];
     }
 
