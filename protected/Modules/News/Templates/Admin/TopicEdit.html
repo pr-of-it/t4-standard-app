@@ -16,7 +16,7 @@
 {% block content %}
 
 <div class="row">
-    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/news/saveTopic">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/news/topicSave">
 
         {% if not item.isNew %}
         <input type="hidden" name="id" value="{{item.Pk}}">

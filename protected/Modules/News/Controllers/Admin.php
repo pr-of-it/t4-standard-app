@@ -83,7 +83,7 @@ class Admin
         $this->data->items = Topic::findAllTree();
     }
 
-    public function actionEditTopic($id = null)
+    public function actionTopicEdit($id = null)
     {
         if (null === $id || 'new' == $id) {
             $this->data->item = new Topic();
@@ -92,7 +92,7 @@ class Admin
         }
     }
 
-    public function actionSaveTopic()
+    public function actionTopicSave()
     {
         if (!empty($this->app->request->post->id)) {
             $item = Topic::findByPK($this->app->request->post->id);
@@ -104,7 +104,7 @@ class Admin
         $this->redirect('/admin/news/topics/');
     }
 
-    public function actionDeleteTopic($id)
+    public function actionTopicDelete($id)
     {
         $item = Topic::findByPK($id);
         if ($item) {
