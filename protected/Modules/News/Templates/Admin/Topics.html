@@ -44,7 +44,7 @@
 
         <li data-id="{{item.Pk}}">
                 <div class="list-group-item">
-                    <button type="button" class="btn btn-default btn-sm list-sortable-handle" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-resize-vertical"></i></button>&nbsp;&nbsp;
+                    <div class="btn btn-default btn-sm list-sortable-handle" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-resize-vertical"></i></div>&nbsp;&nbsp;
                     {{item.title}}
                     <p class="pull-right">
                         {% if item.hasPrevSibling %}
@@ -76,34 +76,33 @@
 {% block pagescript %}
 <script type="text/javascript">
     $(function() {
+
         $('a.confirmable').click(function() {
             return confirm('Вы уверены?');
         });
 
         $('.list-sortable').sortable({
-            handle: ".list-sortable-handle",
             axis: "y",
-            placeholder: "ui-state-highlight",
+            placeholder: "list-group-item ui-state-highlight",
+            handle: ".list-sortable-handle",
             update: function( event, ui ) {
-                alert('!!!');
-                /*
-                 var prevSibling = ui.item.prev();
-                 var nextSibling = ui.item.next()
-                 if (!$.isEmptyObject(prevSibling) && undefined != prevSibling.attr('data-id')) {
-                 var url = '/admin/pages/moveAfter.json';
-                 var siblingId = prevSibling.attr('data-id');
-                 } else {
-                 var url = '/admin/pages/moveBefore.json';
-                 var siblingId = nextSibling.attr('data-id');
-                 }
-                 $.post(url, {id: ui.item.attr('data-id') ,to: siblingId}, function (r) {
-                 if (!r.result) {
-                 alert('ERROR!!!');
-                 }
-                 });
-                 */
+                var prevSibling = ui.item.prev();
+                var nextSibling = ui.item.next();
+                if (!$.isEmptyObject(prevSibling) && undefined != prevSibling.attr('data-id')) {
+                    var url = '/admin/news/topicMoveAfter.json';
+                    var siblingId = prevSibling.attr('data-id');
+                } else {
+                    var url = '/admin/news/topicMoveBefore.json';
+                    var siblingId = nextSibling.attr('data-id');
+                }
+                $.post(url, {id: ui.item.attr('data-id') ,to: siblingId}, function (r) {
+                    if (!r.result) {
+                        alert('ERROR!!!');
+                    }
+                });
             }
         });
+
     });
 </script>
 {% endblock %}

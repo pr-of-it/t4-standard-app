@@ -5,6 +5,7 @@ namespace App\Modules\News\Controllers;
 use App\Components\Admin\Controller;
 use App\Modules\News\Models\Story;
 use App\Modules\News\Models\Topic;
+use T4\Core\Exception;
 
 
 class Admin
@@ -134,6 +135,44 @@ class Admin
             $item->insertAfter($sibling);
         }
         $this->redirect('/admin/news/topics');
+    }
+
+    public function actionTopicMoveBefore($id, $to)
+    {
+        try {
+            $item = Topic::findByPK($id);
+            if (empty($item)) {
+                throw new Exception('Source element does not exist');
+            }
+            $destination = Topic::findByPK($to);
+            if (empty($destination)) {
+                throw new Exception('Destination element does not exist');
+            }
+            $item->insertBefore($destination);
+            $this->data->result = true;
+        } catch (Exception $e) {
+            $this->data->result = false;
+            $this->data->error = $e->getMessage();
+        }
+    }
+
+    public function actionTopicMoveAfter($id, $to)
+    {
+        try {
+            $item = Topic::findByPK($id);
+            if (empty($item)) {
+                throw new Exception('Source element does not exist');
+            }
+            $destination = Topic::findByPK($to);
+            if (empty($destination)) {
+                throw new Exception('Destination element does not exist');
+            }
+            $item->insertAfter($destination);
+            $this->data->result = true;
+        } catch (Exception $e) {
+            $this->data->result = false;
+            $this->data->error = $e->getMessage();
+        }
     }
 
 }
