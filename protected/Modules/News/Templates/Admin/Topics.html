@@ -1,4 +1,5 @@
 {% extends 'Admin/Blank.html' %}
+{% import 'Admin/Macros/Tree.html' as Tree %}
 
 {% block breadcrumbs %}
 <ol class="breadcrumb">
@@ -18,16 +19,12 @@
 {% endblock %}
 
 {% block content %}
-{% import 'Admin/Macros/Tree.html' as Tree %}
-
 <div class="row">
     {{ Tree.list(items, '/admin/news/topic') }}
 </div>
-
 {% endblock %}
 
 {% block pagescript %}
-{% import 'Admin/Macros/Tree.html' as Tree %}
 <script type="text/javascript">
     $(function() {
 
