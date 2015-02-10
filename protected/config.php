@@ -18,7 +18,6 @@ return [
     ],
     'extensions' => [
         'jquery' => [
-            'ui' => true,
         ],
         'bootstrap' => [
 			'location' => 'local',
