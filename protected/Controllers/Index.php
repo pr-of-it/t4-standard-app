@@ -59,4 +59,9 @@ class Index
             $this->app->flash->message = 'Все хорошо';
         }
     }
+
+    public function actionCaptha()
+    {
+        $this->app->extensions->captcha->generateImage();
+    }
 }
