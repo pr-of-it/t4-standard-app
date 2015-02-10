@@ -23,7 +23,7 @@
     {% set level = items[0].__lvl %}
     {% set count = 0 %}
     {% if items.count %}
-    <ol class="nav nav-pills nav-stacked list-sortable">
+    <ul class="list-unstyled list-sortable">
 
         {% for key, item in items %}
 
@@ -33,68 +33,42 @@
         {% endif %}
 
         {% if current > level %}
-        <ol class="nav nav-pills nav-stacked list-sortable" style="margin-left: 20px;">
+        <ul class="list-unstyled list-sortable" style="margin-left: 20px;">
         {% set level = current %}
         {% endif %}
 
         {% if current < level %}
-        {{"</li></ol>"|repeat(level-current)|raw}}</li>
+        {{"</li></ul>"|repeat(level-current)|raw}}</li>
         {% set level = current %}
         {% endif %}
 
         <li data-id="{{item.Pk}}">
-            <a href="/admin/news/editTopic/?id={{item.Pk}}">
-                <button type="button" class="btn btn-default btn-sm list-sortable-handle" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-resize-vertical"></i></button>&nbsp;&nbsp;
-                {{item.title}}
-            </a>
+                <div class="list-group-item">
+                    <button type="button" class="btn btn-default btn-sm list-sortable-handle" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-resize-vertical"></i></button>&nbsp;&nbsp;
+                    {{item.title}}
+                    <p class="pull-right">
+                        {% if item.hasPrevSibling %}
+                        <a class="btn btn-info btn-sm" href="/admin/news/topicUp/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        {% else %}
+                        <button class="btn btn-default btn-sm"><i class="glyphicon glyphicon-option-horizontal"></i></button>
+                        {% endif %}
+                        {% if item.hasNextSibling %}
+                        <a class="btn btn-info btn-sm" href="/admin/news/topicDown/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                        {% else %}
+                        <button class="btn btn-default btn-sm"><i class="glyphicon glyphicon-option-horizontal"></i></button>
+                        {% endif %}
+                        &nbsp;&nbsp;
+                        <a class="btn btn-primary btn-sm" href="/admin/news/editTopic/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a class="btn btn-danger btn-sm" href="/admin/news/deleteTopic/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
+                    </p>
+                </div>
 
-            <!--
-            <a href="/admin/news/editTopic/?id={{item.Pk}}">
-                <button type="button" class="btn btn-default btn-sm list-sortable-handle" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-resize-vertical"></i></button>&nbsp;&nbsp;
-                {{item.title}}
-                <p class="pull-right">
-                    <a class="btn btn-default" href="/admin/news/editTopic/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
-                </p>
-            </a>
-            -->
         {% set count = count + 1 %}
 
         {% endfor %}
-        {{"</li></ol>"|repeat(current)|raw}}</li>
-    </ol>
+        {{"</li></ul>"|repeat(current)|raw}}</li>
+    </ul>
     {% endif %}
-</div>
-
-
-<div class="row">
-    <table class="table table-striped table-hover">
-        <tr>
-            <th>#</th>
-            <th>Заголовок</th>
-            <th></th>
-        </tr>
-        {% for item in items %}
-        <tr>
-            <td>{{'<i class="glyphicon glyphicon-option-horizontal"></i>'|repeat(item.__lvl)|raw}} <a href="/admin/news/editTopic/?id={{item.Pk}}">{{item.Pk}}</a></td>
-            <td>{{'<i class="glyphicon glyphicon-option-horizontal"></i>'|repeat(item.__lvl)|raw}} <a href="/admin/news/editTopic/?id={{item.Pk}}">{{item.title}}</a></td>
-            <td style="white-space: nowrap">
-                {% if item.hasPrevSibling %}
-                <a href="/admin/news/topicUp/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
-                {% else %}
-                <i class="glyphicon glyphicon-option-horizontal"></i>
-                {% endif %}
-                {% if item.hasNextSibling %}
-                <a href="/admin/news/topicDown/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
-                {% else %}
-                <i class="glyphicon glyphicon-option-horizontal"></i>
-                {% endif %}
-                &nbsp;&nbsp;
-                <a href="/admin/news/editTopic/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="/admin/news/deleteTopic/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
 </div>
 
 {% endblock %}
@@ -109,6 +83,7 @@
         $('.list-sortable').sortable({
             handle: ".list-sortable-handle",
             axis: "y",
+            placeholder: "ui-state-highlight",
             update: function( event, ui ) {
                 alert('!!!');
                 /*
