@@ -40,7 +40,7 @@ class Index
 
     public function actionRegistry($email = null, $password = null)
     {
-
+        $this->app->flash->message='Введите свой е-mail и пароль';
         if (!is_null($email) || !is_null($password)) {
 
             $id=User::findByColumn('email', $email);
@@ -50,9 +50,6 @@ class Index
                 $user->save();
             } else{
                 $this->app->flash->message='Пользователь с таким e-mail уже зарегестрирован';
-                $this->data->err = true;
-                $this->data->email=null;
-                $this->data->password=null;
                 return $this->redirect('/Registry');
             }
 
@@ -60,8 +57,9 @@ class Index
         }
     }
 
-    public function actionCaptha()
+    public function actionCaptcha()
     {
         $this->app->extensions->captcha->generateImage();
+        die();
     }
 }
