@@ -30,11 +30,14 @@ class Admin
     public function actionSend()
     {
         $mail = new Sender();
-        $mail->setFrom('admin@t4.org', 'First Last');
-        $mail->addReplyTo('example@mail.ru', 'First Last');
-        $mail->addAddress($this->app->request->post->email, 'Вера');
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = $this->app->request->post->msg;
+       $mail->CharSet = 'utf-8';
+        $mail->setFrom('admin@t4.org', 'Sender');
+        $mail->addReplyTo('example@mail.ru', 'recipient');
+        $mail->addAddress($this->app->request->post->email, 'Sender');
+        $mail->Subject = $this->app->request->post->theme;
+        $mail->Body = $this->app->request->post->theme;
+        $mail->msgHTML($this->app->request->post->msg);
+        $mail->AltBody = $this->app->request->post->msg;
         try {
             $mail->send();
             $this->redirect('/contact/admin/');
