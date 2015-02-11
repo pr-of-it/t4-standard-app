@@ -39,36 +39,25 @@ class Index
         $this->redirect('/');
     }
 
-    public function actionRegistry($email=null, $password=null , $captcha=null )
+    public function actionRegistry($email = null, $password = null, $captcha = null)
     {
         $this->app->flash->message = 'Введите свой е-mail и пароль';
         if (!is_null($email) || !is_null($password)) {
-
-            if(!User::findByColumn('email', $email)){
-                $id=false;
-            } else {
-                $id=true;
-            }
-
+            $id = (!User::findByColumn('email', $email)) ? false : true;
             if ($id) {
-
-                $this->app->flash->message = 'Пользователь с e-mail '.$email.' уже зарегестрирован';
+                $this->app->flash->message = 'Пользователь с e-mail ' . $email . ' уже зарегестрирован';
                 return;
-
             } elseif (!$this->app->extensions->captcha->checkKeyString($captcha)) {
-                $this->app->flash->message='Вы неправильно ввели символы с картинки';
-                $this->data->email=$email;
-                return ;
+                $this->app->flash->message = 'Вы неправильно ввели символы с картинки';
+                $this->data->email = $email;
+                return;
             } else {
                 $user = new User();
                 $user->email = $email;
                 $user->password = Helpers::hashPassword($password);
                 $user->save();
-               // self::actionLogin($email,$password);
-                //$this->redirect('/login email=$email password=$password');
+                self::actionLogin($email, $password);
             }
-
-           // $this->app->flash->message = 'Все хорошо';
         }
     }
 

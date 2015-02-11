@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Migrations;
+namespace App\Modules\Pages\Migrations;
 
 use T4\Orm\Migration;
 
-class m_1422625830_createPages
+class m_1423658732_createPages
     extends Migration
 {
 
     public function up()
     {
-        $this->dropTable('pages');
         $this->createTable('pages',
             [
                 'title' => [
