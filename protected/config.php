@@ -21,9 +21,14 @@ return [
         'jquery' => [
         ],
         'bootstrap' => [
+			'location' => 'local',
+            'theme' => 'cerulean',
         ],
         'ckeditor' => [
             'location' => 'local'
+        ],
+        'jstree' => [
+            'autoload' => false,
         ],
         'sxgeo' => [
         ],

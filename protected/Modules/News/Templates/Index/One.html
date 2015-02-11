@@ -1,0 +1,22 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+<ul class="breadcrumb">
+    <li><a href="/">Главная страница</a></li>
+    <li><a href="/news/">Новости</a></li>
+    {% for topic in item.topic.findAllParents %}
+    <li><a href="/news/topics/{{topic.Pk}}.html">{{topic.title}}</a></li>
+    {% endfor %}
+    <li><a href="/news/topics/{{item.topic.Pk}}.html">{{item.topic.title}}</a></li>
+</ul>
+
+<h1 class="page-header">{{item.title}}</h1>
+<div class="clearfix">
+    <img src="{{item.image}}" class="pull-left img-responsive" style="max-width: 200px; max-height: 300px; margin-right: 10px !important;">
+    {{item.lead|raw}}
+</div>
+<hr>
+{{item.text|raw}}
+
+{% endblock %}

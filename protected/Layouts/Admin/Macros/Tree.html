@@ -1,0 +1,77 @@
+{% macro listSortable(items, baselink) %}
+
+    {% set level = items[0].__lvl %}
+    {% set count = 0 %}
+    {% if items.count %}
+    <ul class="list-unstyled list-sortable">
+
+        {% for key, item in items %}
+
+        {% set current = item.__lvl %}
+        {% if current == level %}
+        {% if count > 0 %}</li>{% endif %}
+        {% endif %}
+
+        {% if current > level %}
+        <ul class="list-unstyled list-sortable" style="margin-left: 20px;">
+            {% set level = current %}
+            {% endif %}
+
+            {% if current < level %}
+            {{"</li></ul>"|repeat(level-current)|raw}}</li>
+        {% set level = current %}
+        {% endif %}
+
+        <li data-id="{{item.Pk}}">
+            <div class="list-group-item">
+                <div class="btn btn-default btn-sm list-sortable-handle" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-resize-vertical"></i></div>&nbsp;&nbsp;
+                {{item.title}}
+                <p class="pull-right">
+                    {% if item.hasPrevSibling %}
+                    <a class="btn btn-info btn-sm" href="{{baselink}}Up/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    {% else %}
+                    <button class="btn btn-default btn-sm"><i class="glyphicon glyphicon-option-horizontal"></i></button>
+                    {% endif %}
+                    {% if item.hasNextSibling %}
+                    <a class="btn btn-info btn-sm" href="{{baselink}}Down/?id={{item.Pk}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    {% else %}
+                    <button class="btn btn-default btn-sm"><i class="glyphicon glyphicon-option-horizontal"></i></button>
+                    {% endif %}
+                    &nbsp;&nbsp;
+                    <a class="btn btn-primary btn-sm" href="{{baselink}}Edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a class="btn btn-danger btn-sm" href="{{baselink}}Delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
+                </p>
+            </div>
+
+            {% set count = count + 1 %}
+
+            {% endfor %}
+            {{"</li></ul>"|repeat(current)|raw}}</li>
+    </ul>
+    {% endif %}
+
+{% endmacro %}
+
+{% macro listSortableJs(baseurl) %}
+    $('.list-sortable').sortable({
+        axis: "y",
+        placeholder: "list-group-item ui-state-highlight",
+        handle: ".list-sortable-handle",
+        update: function( event, ui ) {
+            var prevSibling = ui.item.prev();
+            var nextSibling = ui.item.next();
+            if (!$.isEmptyObject(prevSibling) && undefined != prevSibling.attr('data-id')) {
+                var url = '{{baseurl}}MoveAfter.json';
+                var siblingId = prevSibling.attr('data-id');
+            } else {
+                var url = '{{baseurl}}MoveBefore.json';
+                var siblingId = nextSibling.attr('data-id');
+            }
+            $.post(url, {id: ui.item.attr('data-id') ,to: siblingId}, function (r) {
+                if (!r.result) {
+                    alert(r.error);
+                }
+            });
+        }
+    });
+{% endmacro %}

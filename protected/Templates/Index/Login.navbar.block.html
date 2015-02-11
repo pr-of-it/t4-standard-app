@@ -1,0 +1,14 @@
+{% if not app.user %}
+<form class="navbar-form navbar-right" role="form" action="/login.html" method="post">
+    <div class="form-group">
+        <input type="text" placeholder="E-mail" class="form-control input-sm" name="email">
+    </div>
+    <div class="form-group">
+        <input type="password" placeholder="Пароль" class="form-control input-sm" name="password">
+    </div>
+    <button type="submit" class="btn btn-success">Войти</button>
+</form>
+{% else %}
+<a href="/logout.html"><button type="button" class="btn btn-sm navbar-btn navbar-right">Выйти</button></a>
+<p class="navbar-text navbar-right" style="padding-right: 10px;">Здравствуйте, {{app.user.email}}!</p>
+{% endif %}
