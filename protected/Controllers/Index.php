@@ -6,6 +6,7 @@ use App\Components\Auth\Identity;
 use T4\Core\Std;
 use T4\Mvc\Controller;
 use App\Models\User;
+use T4\Crypt\Helpers;
 
 class Index
     extends Controller
@@ -38,19 +39,31 @@ class Index
         $this->redirect('/');
     }
 
-    public function actionRegistry($email = null, $password = null)
+    public function actionRegistry($email=null, $password=null , $captcha=null )
     {
-        $this->app->flash->message='Введите свой е-mail и пароль';
+        $this->app->flash->message = 'Введите свой е-mail и пароль';
         if (!is_null($email) || !is_null($password)) {
 
-            $id=User::findByColumn('email', $email);
-            if(!$id) {
-                $user= new User();
-                $user->fill($this->app->request->post);
+            if(!User::findByColumn('email', $email)){
+                $id=false;
+            } else {
+                $id=true;
+            }
+
+            if ($id) {
+
+                $this->app->flash->message = 'Пользователь с e-mail '.$email.' уже зарегестрирован';
+                return;
+
+            } elseif (!$this->app->extensions->captcha->checkKeyString($captcha)) {
+                $this->app->flash->message='Вы неправильно ввели символы с картинки';
+                $this->data->email=$email;
+                return ;
+            } else {
+                $user = new User();
+                $user->email = $email;
+                $user->password = Helpers::hashPassword($password);
                 $user->save();
-            } else{
-                $this->app->flash->message='Пользователь с таким e-mail уже зарегестрирован';
-                return $this->redirect('/Registry');
             }
 
             $this->app->flash->message = 'Все хорошо';
@@ -63,3 +76,4 @@ class Index
         die();
     }
 }
+
