@@ -44,6 +44,14 @@ class Story
         return $this;
     }
 
+    public function beforeSave()
+    {
+        if ($this->isNew()) {
+            $this->published = date('Y-m-d H:i:s', time());
+        }
+        return true;
+    }
+
     public function beforeDelete()
     {
         $this->deleteImage();

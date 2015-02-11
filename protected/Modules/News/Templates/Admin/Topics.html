@@ -1,0 +1,38 @@
+{% extends 'Admin/Blank.html' %}
+{% import 'Admin/Macros/Tree.html' as Tree %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/news/">Новости</a></li>
+    <li>Рубрики</li>
+</ol>
+{% endblock %}
+
+{% block toolbar %}
+<a class="btn btn-primary" href="/admin/news/topicEdit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить рубрику</a>
+{% endblock %}
+
+
+{% block header %}
+Рубрики новостей
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {{ Tree.list(items, '/admin/news/topic') }}
+</div>
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function() {
+
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+        {{ Tree.listSortableJs('/admin/news/topic') }}
+    });
+</script>
+{% endblock %}

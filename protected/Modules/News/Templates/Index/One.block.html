@@ -1,0 +1,9 @@
+<div class="container">
+    <h1>{{item.title}}</h1>
+    <div class="clearfix">
+        <img src="{{item.image}}" class="pull-left img-responsive" style="max-width: 100px; max-height: 200px; margin-right: 10px !important;">
+        {{item.lead|raw}}
+    </div>
+    <hr>
+    {{item.text|raw}}
+</div>

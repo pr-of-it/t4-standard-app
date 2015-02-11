@@ -1,0 +1,9 @@
+<section>
+    {% for item in items %}
+    <article class="clearfix">
+        <h3><a href="/news/{{item.Pk}}.html">{{item.title}}</a></h3>
+        {% if item.image %}<img src="{{item.image}}" style="max-width: 33%; margin-right: 10px;" class="img-responsive pull-left">{% endif %}
+        {{item.lead|raw}}
+    </article>
+    {% endfor %}
+</section>
