@@ -64,9 +64,11 @@ class Index
                 $user->email = $email;
                 $user->password = Helpers::hashPassword($password);
                 $user->save();
+               // self::actionLogin($email,$password);
+                //$this->redirect('/login email=$email password=$password');
             }
 
-            $this->app->flash->message = 'Все хорошо';
+           // $this->app->flash->message = 'Все хорошо';
         }
     }
 
