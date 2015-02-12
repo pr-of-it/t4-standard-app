@@ -1,4 +1,4 @@
-{% macro list(items, baselink) %}
+{% macro listSortable(items, baselink) %}
 
     {% set level = items[0].__lvl %}
     {% set count = 0 %}
@@ -69,7 +69,7 @@
             }
             $.post(url, {id: ui.item.attr('data-id') ,to: siblingId}, function (r) {
                 if (!r.result) {
-                    alert('ERROR!!!');
+                    alert(r.error);
                 }
             });
         }
