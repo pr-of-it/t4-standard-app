@@ -10,7 +10,7 @@ use T4\Auth\Exception;
 class Identity
     extends \T4\Auth\Identity
 {
-
+    const  ERROR_INVALID_CAPTCHA = 102;
     const AUTH_COOKIE_NAME = 'T4auth';
 
     public function authenticate($data)
@@ -71,6 +71,10 @@ class Identity
             throw new Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
 
+        $this->app=Application::getInstance();
+        if (!$this->app->extensions->captcha->checkKeyString($data->captcha)) {
+            throw new Exception('Неправильно введены символы с картинки ', self::ERROR_INVALID_CAPTCHA);
+        }
         $user = new User();
         $user->email = $data->email;
         $user->password = \T4\Crypt\Helpers::hashPassword($data->password);
