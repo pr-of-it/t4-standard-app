@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Components\Exception;
 use T4\Orm\Model;
 
 /**
@@ -24,6 +25,12 @@ class User
             'roles' => ['type' => self::MANY_TO_MANY, 'model' => Role::class],
         ]
     ];
+
+    protected function validateEmail($email)
+    {
+        if (empty($email))
+            throw new Exception('Пустой e-mail');
+    }
 
     public function getRoleNames()
     {
