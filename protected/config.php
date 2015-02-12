@@ -24,7 +24,11 @@ return [
             'theme' => 'cerulean',
         ],
         'ckeditor' => [
-            'location' => 'local'
+            'location' => 'local',
+            'autoload' => false,
+        ],
+        'ckfinder' => [
+            'autoload' => false,
         ],
         'jstree' => [
             'autoload' => false,
