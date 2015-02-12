@@ -31,5 +31,7 @@ return [
         ],
         'sxgeo' => [
         ],
+        'captcha' => [
+        ],
     ],
 ];

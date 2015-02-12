@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Migrations;
+namespace App\Modules\Menu\Migrations;
 
 use T4\Orm\Migration;
 
-class m_1422981714_CreateMenu
+class m_1423714113_createMenu
     extends Migration
 {
+
     public function up()
     {
         $this->createTable('menu',
@@ -29,5 +30,4 @@ class m_1422981714_CreateMenu
     {
         $this->dropTable('menu');
     }
-
 }
