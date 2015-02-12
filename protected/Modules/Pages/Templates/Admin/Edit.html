@@ -1,11 +1,91 @@
 {% extends 'Admin/blank.html' %}
 {% block breadcrumbs %}
 <ol class="breadcrumb">
-    <li><a href="/admin/pages/">Страницы</a></li>
-    <li>{% if item.isNew %}Добавление страницы{% else %}Редактирование страницы{% endif %}</li>
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/Pages/"></a></li>
+    <li>{% if item.isNew %}Добавление новости{% else %}Редактирование новости{% endif %}</li>
 </ol>
 {% endblock %}
 
+{% block header %}
+{% if item.isNew %}Добавление новости{% else %}Редактирование новости{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/pages/save">
+
+        {% if not item.isNew %}
+        <input type="hidden" name="id" value="{{item.Pk}}">
+        {% endif %}
+
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Заголовок страницы</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок страницы" value="{{item.title}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="topic" class="col-sm-2 control-label">Родительска страница</label>
+            <div class="col-sm-10">
+                {% if item.isNew %}
+                {% if item.parent %}
+                {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", item.parent.Pk, {"null":true}, {"name":"parent"}) }}
+                {% else %}
+                {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", 0, {"null":true}, {"name":"parent"}) }}
+                {% endif %}
+                {% else %}
+                {{ selectTreeByModel("App\\Modules\\Pages\\Models\\\Page", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent"}) }}
+                {% endif %}
+                <i></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lead" class="col-sm-2 control-label">Lead (введение)</label>
+            <div class="col-sm-10">
+                <t4:editor name="lead">{{item.lead}}</t4:editor>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Главное фото</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    {% if item.image %}
+                <p class="image">
+                    <img src="{{item.image}}" class="img-responsive" style="max-width: 200px; max-height: 200px;">
+                    <a href="#" class="item-image-delete" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-remove text-danger"></i>&nbsp;</a>
+                </p>
+                {% endif %}
+                </p>
+                {{element('file', 'image', {'text':'Выберите файл'})}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="text" class="col-sm-2 control-label">Текст новости</label>
+            <div class="col-sm-10">
+                <t4:editor name="text">{{item.text}}</t4:editor>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
+                <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+                {% if not item.isNew %}<a href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
+
+<!--
 {% block content %}
 
 <section class="well">
@@ -68,6 +148,8 @@
     </form>
 </section>
 {% endblock %}
+
+-->
 
 {% block pagescript %}
 <script type="text/javascript">
