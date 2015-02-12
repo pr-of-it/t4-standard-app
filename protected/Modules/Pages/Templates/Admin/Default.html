@@ -20,7 +20,7 @@
 
 {% block content %}
 <div class="row">
-    {{ Tree.listSortable(items, '/admin/Pages') }}
+    {{ Tree.listSortable(items, '/admin/Pages/') }}
 </div>
 {% endblock %}
 
@@ -32,7 +32,7 @@
             return confirm('Вы уверены?');
         });
 
-        {{ Tree.listSortableJs('/admin/news/topic') }}
+        {{ Tree.listSortableJs('/admin/pages/') }}
     });
 </script>
 {% endblock %}

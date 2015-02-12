@@ -30,9 +30,6 @@ class Page
                 'type' => 'string',
             ],
         ],
-       /* 'relations' => [
-            'files' => ['type' => self::HAS_MANY, 'model' => '\App\Modules\Pages\Models\File']
-        ],*/
     ];
 
     static protected $extensions = ['tree'];

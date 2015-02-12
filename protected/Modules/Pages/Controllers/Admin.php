@@ -4,6 +4,7 @@ namespace App\Modules\Pages\Controllers;
 
 use App\Components\Admin\Controller;
 use App\Modules\Pages\Models\Page;
+use T4\Core\Exception;
 
 class Admin
     extends Controller
@@ -37,16 +38,13 @@ class Admin
 
     public function actionSave($redirect = 0)
     {
-        if (!empty($_POST[Page::PK])) {
-            $item = Page::findByPK($_POST[Page::PK]);
+        if (!empty($this->app->request->post->id)) {
+            $item = Page::findByPK($this->app->request->post->id);
         } else {
             $item = new Page();
         }
-
-        $item
-            ->fill($_POST)
-          //  ->uploadFiles('files')
-            ->save();
+        $item->fill($this->app->request->post);
+        $item->save();
 
         if ($item->wasNew()) {
             $item->moveToFirstPosition();
@@ -64,17 +62,6 @@ class Admin
         if ($item)
             $item->delete();
         $this->redirect('/pages/admin');
-    }
-
-    public function actionDeleteFile($id)
-    {
-        $item = File::findByPK($id);
-        if ($item) {
-            $item->delete();
-            $this->data->result = true;
-        } else {
-            $this->data->result = false;
-        }
     }
 
     public function actionUp($id)
@@ -120,7 +107,7 @@ class Admin
         }
     }
 
-    public function actionMoveAfter($id, $to)
+    public function actionAfter($id, $to)
     {
         try {
             $item = Page::findByPK($id);
