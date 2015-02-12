@@ -1,4 +1,4 @@
-{% extends 'Admin.html' %}
+{% extends 'Admin/Blank.html' %}
 
 {% block content %}
 <table class="table table-striped table-hover">
@@ -13,9 +13,10 @@
     <tr>
         <td>{{contacts.Pk}}</td>
         <td>{{contacts.email}}</td>
-        <td>{{contacts.published}}</td>
+        <td>{{contacts.datetime|date('d.m.Y H:i')}}</td>
         <td>{{contacts.message}}</td>
         <td><a href="/contact/admin/answer?id={{contacts.Pk}}">Ответить</a></td>
+        <td><a href="/contact/admin/delete?id={{contacts.Pk}}">Удалить</a></td>
     </tr>
     {% endfor %}
 </table>

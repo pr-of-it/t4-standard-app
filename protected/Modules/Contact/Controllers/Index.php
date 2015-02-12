@@ -6,6 +6,7 @@ namespace App\Modules\Contact\Controllers;
 
 
 use App\Models\User;
+use T4\Core\Exception;
 use T4\Mvc\Controller;
 use App\Modules\Contact\Models\Contact;
 
@@ -17,11 +18,18 @@ class Index
 
     public function actionSave()
         {
-             $this->app->request->post->id;
-             $contact = new Contact();
-             $contact->fill($this->app->request->post);
-             $contact->published = date('Y-m-d H:i:s', time());
-             $contact->save();
-             $this->redirect('/');
+            //понять , куда ставить exception
+            if(isset($_POST['name'],$_POST['email'],$_POST['email'],$_POST['email'])){
+                if(!filter_var($this->app->request->post->email, FILTER_VALIDATE_EMAIL)) {
+                    throw new Exception('Введите Ваш email');
+                }
+                $contact = new Contact();
+                $contact->fill($this->app->request->post);
+                $contact->datetime = date('Y-m-d H:i:s', time());
+                $contact->save();
+                $this->redirect('/contact');
+            }
+
+
         }
 }
