@@ -9,22 +9,17 @@ use App\Components\Admin\Controller;
 class Admin
     extends Controller
 {
-    /*
-     protected function access($action)
-     {
-         return !empty($this->app->user) && $this->app->user->hasRole('admin');
-     }
- */
     public function actionDefault()
     {
-        $this->data->items = Page::findAllTree();
+        $this->app->extensions->jstree->init();
+        $this->data->items = MenuModel::findAllTree();
     }
-
 
     public function actionEdit($id=null, $parent=null)
     {
         $this->app->extensions->ckeditor->init();
         $this->app->extensions->ckfinder->init();
+
 
         if (null === $id || 'new' == $id) {
             $this->data->item = new Page();
@@ -137,5 +132,4 @@ class Admin
             $this->data->error = $e->getMessage();
         }
     }
-
 }
