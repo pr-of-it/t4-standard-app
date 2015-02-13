@@ -49,19 +49,8 @@ class Index
         $this->redirect('/');
     }
 
-    public function actionRegister($email=null, $password=null , $captcha=null )
+    public function actionRegister()
     {
-           $this->app->flash->error=null;
-        if (!is_null($email) || !is_null($password)) {
-            try {
-                $identity = new Identity();
-                $user = $identity->register(new Std(['email' => $email, 'password' => $password,'capcha' => $captcha]));
-            } catch (\T4\Auth\Exception $e) {
-                $this->app->flash->error = $e->getMessage();
-            }
-
-            self::actionLogin($email,$password);
-        }
     }
 
     public function actionCaptcha()

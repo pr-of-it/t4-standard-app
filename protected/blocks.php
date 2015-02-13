@@ -5,7 +5,10 @@ return [
         'name' => 'Main page block'
     ],
     '///Login' => [
-        'name' => 'Login block'
+        'name' => 'Форма входа'
+    ],
+    '///Register' => [
+        'name' => 'Форма регистрации'
     ],
 
     '/News//' => [
