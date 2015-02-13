@@ -26,12 +26,6 @@ class User
         ]
     ];
 
-    protected function validateEmail($email)
-    {
-        if (empty($email))
-            throw new Exception('Пустой e-mail');
-    }
-
     public function getRoleNames()
     {
         return $this->roles->collect('name');

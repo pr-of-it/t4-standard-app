@@ -10,9 +10,9 @@
 <h2>Регистрация</h2>
 
 {% if not app.user %}
-<t4:block path="///Register">
-    {% else %}
-    Вы уже вошли как {{app.user.email}}
-    {% endif %}
-    {% endblock %}
+<t4:block path="///Register" />
+{% else %}
+Вы уже вошли как {{app.user.email}}
+{% endif %}
 
+{% endblock %}
