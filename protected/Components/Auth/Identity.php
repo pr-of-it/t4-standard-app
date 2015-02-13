@@ -65,16 +65,15 @@ class Identity
         if (empty($data->password)) {
             throw new Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }
+        if ($data->password2 != $data->password) {
+            throw new Exception('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+        }
 
         $user = User::findByEmail($data->email);
         if (!empty($user)) {
             throw new Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
 
-        $this->app=Application::getInstance();
-        if (!$this->app->extensions->captcha->checkKeyString($data->captcha)) {
-            throw new Exception('Неправильно введены символы с картинки ', self::ERROR_INVALID_CAPTCHA);
-        }
         $user = new User();
         $user->email = $data->email;
         $user->password = \T4\Crypt\Helpers::hashPassword($data->password);
