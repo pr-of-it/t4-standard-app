@@ -9,7 +9,7 @@ class Answer
       extends Model
 {
     static protected $schema = [
-        'table' => 'contact',
+        'table' => 'answer',
         'columns' => [
             'datetime' => ['type'=>'datetime'],
             'email' => ['type' => 'string'],

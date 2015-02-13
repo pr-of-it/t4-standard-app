@@ -30,39 +30,15 @@ class Admin
 
     public function actionSend()
     {
-        $mail = new Sender();
-        $mail->setFrom('admin@t4.org', 'Sender');
-        $mail->addReplyTo('admin@t4.org', 'recipient');
-        $mail->addAddress('verablajennaya@mail.ru', 'Sender');
-        $mail->Subject = $this->app->request->post->theme;
-       // $mail->Body = $this->app->request->post->text;
-        $mail->msgHTML($this->app->request->post->text);
-        //$mail->AltBody = $this->app->request->post->text;
-        try {
-            $mail->send();
-            $this->redirect('/contact/admin/');
-        }
-         catch(Exception $e) {
-             echo "Mailer Error: " . $mail->ErrorInfo;
-        }
-        try{
         $answer = new Answer();
         $answer->fill($this->app->request->post);
         $answer->datetime = date('Y-m-d H:i:s', time());
         $answer->save();
+
+        $mail = new Sender();
+        $post = $this->app->request->post;
+        $mail->sendMail('verablajennaya@mail.ru',$post->theme,$post->message);
         $this->redirect('/contact/admin');
-        }catch(Exception $e) {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-        }
-
-    }
-
-
-    public function actionDelete($id){
-
-            $item = Contact::findByPK($id);
-            $item->delete();
-            $this->redirect('/contact/admin/');
     }
 
 }
