@@ -18,6 +18,7 @@ class Index
     public function actionLogin($login = null)
     {
         if (null !== $login) {
+
             try {
                 $identity = new Identity();
                 $user = $identity->authenticate($login);
@@ -26,9 +27,10 @@ class Index
             } catch (\T4\Auth\Exception $e) {
                 $this->app->flash->error = $e->getMessage();
             }
-        }
 
-        $this->data->email = $login->email;
+            $this->data->email = $login->email;
+
+        }
     }
 
     public function actionLogout()
@@ -38,8 +40,11 @@ class Index
         $this->redirect('/');
     }
 
-    public function actionRegister()
+    public function actionRegister($register = null)
     {
+        if (null !== $register) {
+            $this->data->email = $register->email;
+        }
     }
 
     public function actionCaptcha()
