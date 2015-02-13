@@ -41,7 +41,4 @@ return [
         'name'=> 'Menu'
     ],
 
-    '///Register' => [
-        'name' => 'Registry block'
-    ],
 ];
