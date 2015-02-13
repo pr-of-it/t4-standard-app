@@ -62,16 +62,22 @@ class Identity
         if (empty($data->email)) {
             throw new Exception('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
+
+        $user = User::findByEmail($data->email);
+        if (!empty($user)) {
+            throw new Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
+        }
+
         if (empty($data->password)) {
             throw new Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }
         if ($data->password2 != $data->password) {
             throw new Exception('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
         }
-
-        $user = User::findByEmail($data->email);
-        if (!empty($user)) {
-            throw new Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
+        if(isset($data->captcha)){
+            if(!Application::getInstance()->extensions->captcha->checkKeyString($data->captcha)){
+                throw new Exception('Неправильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
+            }
         }
 
         $user = new User();

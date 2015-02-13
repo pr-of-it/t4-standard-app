@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Components\Auth\Identity;
 use T4\Mvc\Controller;
 use App\Models\User;
+use T4\Core\Config;
 
 class Index
     extends Controller
@@ -42,7 +43,6 @@ class Index
     public function actionRegister($register = null)
     {
         if (null !== $register) {
-
             try {
                 $identity = new Identity();
                 $user = $identity->register($register);
@@ -61,7 +61,6 @@ class Index
     public function actionCaptcha()
     {
         $this->app->extensions->captcha->generateImage();
-        die();
     }
 
 }
