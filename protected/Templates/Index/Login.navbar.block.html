@@ -1,10 +1,10 @@
 {% if not app.user %}
 <form class="navbar-form navbar-right" role="form" action="/login.html" method="post">
     <div class="form-group">
-        <input type="text" placeholder="E-mail" class="form-control input-sm" name="email">
+        <input type="text" placeholder="E-mail" class="form-control input-sm" name="login[email]">
     </div>
     <div class="form-group">
-        <input type="password" placeholder="Пароль" class="form-control input-sm" name="password">
+        <input type="password" placeholder="Пароль" class="form-control input-sm" name="login[password]">
     </div>
     <button type="submit" class="btn btn-success">Войти</button>
 </form>

@@ -6,7 +6,6 @@ use App\Components\Auth\Identity;
 use T4\Core\Std;
 use T4\Mvc\Controller;
 use App\Models\User;
-use T4\Crypt\Helpers;
 
 class Index
     extends Controller
@@ -16,22 +15,12 @@ class Index
     {
     }
 
-    public function  actionMobile($map_id=0,$page_id=1)
+    public function actionLogin($login = null)
     {
-        if($map_id!=0){
-
-            $this->data->map_id=$map_id;
-        }
-
-         $this->data->page_id=$page_id;
-    }
-
-    public function actionLogin($email = null, $password = null)
-    {
-        if (!is_null($email) || !is_null($password)) {
+        if (null !== $login) {
             try {
                 $identity = new Identity();
-                $user = $identity->authenticate(new Std(['email' => $email, 'password' => $password]));
+                $user = $identity->authenticate($login);
                 $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
             } catch (\T4\Auth\Exception $e) {
@@ -39,7 +28,7 @@ class Index
             }
         }
 
-        $this->data->email = $email;
+        $this->data->email = $login->email;
     }
 
     public function actionLogout()
