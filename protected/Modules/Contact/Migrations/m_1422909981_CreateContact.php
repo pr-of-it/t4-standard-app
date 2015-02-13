@@ -10,14 +10,15 @@ class m_1422909981_CreateContact
 
     public function up()
     {
-        $this->createTable('contact',[
-            'datetime' => ['type'=>'datetime'],
+        $this->createTable('contact', [
+            'datetime' => ['type' => 'datetime'],
             'email' => ['type' => 'string'],
             'name' => ['type' => 'string'],
-            'message' =>['type' => 'text'],
+            'message' => ['type' => 'text'],
             '__user_id' => ['type' => 'string'],
-            ],
+        ],
             [
+                'user'=>['columns'=>['__user_id']]
             ]
         );
     }

@@ -4,39 +4,42 @@
 {% block content %}
 <div class="row">
     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/contact/admin/send">
-    <input type="hidden" name="email" value="{{contact.email}}" />
-    <div class="form-group">
-        <div class="col-sm-2">
-           <b>Отправитель:</b>
+        <input type="hidden" name="__contact_id" value="{{item.Pk}}"/>
+
+        <div class="form-group">
+            <div class="col-sm-2">
+                <b>Отправитель:</b>
+            </div>
+            <div class="col-sm-10">
+                {{item.email}}
+            </div>
+            <div class="col-sm-2">
+                <br><b>Сообщение:</b>
+            </div>
+            <div class="col-sm-10">
+                <br>{{item.message}}
+            </div>
         </div>
-        <div class="col-sm-10">
-            {{contact.email}}
+        <div class="form-group">
+            <label for="theme" class="col-sm-2 control-label">Тема</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="theme" name="theme" placeholder="Тема">
+            </div>
         </div>
-        <div class="col-sm-2">
-          <br><b>Сообщение:</b>
+        <div class="form-group">
+            <label for="message" class="col-sm-2 control-label">Сообщение</label>
+
+            <div class="col-sm-10">
+                <t4:editor name="message" id="message"></t4:editor>
+            </div>
         </div>
-        <div class="col-sm-10">
-          <br>{{contact.message}}
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Отправить</button>
+                <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="theme" class="col-sm-2 control-label">Тема</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="theme" name="theme" placeholder="Тема">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="message" class="col-sm-2 control-label">Сообщение</label>
-        <div class="col-sm-10">
-            <t4:editor name="message" id="message"></t4:editor>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">Отправить</button>
-            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
-        </div>
-    </div>
-        </form>
-        </div>
+    </form>
+</div>
 {% endblock %}

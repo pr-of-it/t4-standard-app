@@ -10,13 +10,13 @@ class m_1423766698_CreateAnswer
 
     public function up()
     {
-        $this->createTable('answer',[
-            'datetime' => ['type'=>'datetime'],
-            'email' => ['type' => 'string'],
-            'message' =>['type' => 'text'],
-            '__user_id' => ['type' => 'string'],
-            ],
+        $this->createTable('answer', [
+            'datetime' => ['type' => 'datetime'],
+            'message' => ['type' => 'text'],
+            '__contact_id' => ['type' => 'link'],
+        ],
             [
+                'contact'=>['columns'=>['__contact_id']]
             ]
         );
     }

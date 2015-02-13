@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Role;
 use T4\Orm\Model;
 
 /**

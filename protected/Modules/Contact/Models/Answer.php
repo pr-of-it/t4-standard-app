@@ -6,15 +6,26 @@ namespace App\Modules\Contact\Models;
 use T4\Orm\Model;
 
 class Answer
-      extends Model
+    extends Model
 {
     static protected $schema = [
         'table' => 'answer',
         'columns' => [
-            'datetime' => ['type'=>'datetime'],
-            'email' => ['type' => 'string'],
-            'message' =>['type' => 'text'],
-            '__user_id' => ['type' => 'string'],
+            'datetime' => ['type' => 'datetime'],
+            'message' => ['type' => 'text'],
+            'contact_id' => ['type' => 'string'],
         ],
+        'relations' => [
+            'contact' => ['type'=>self::BELONGS_TO, 'model'=>Contact::class],
+        ]
     ];
+
+    public function beforeSave()
+    {
+        if ($this->isNew()) {
+            $this->datetime = date('Y-m-d H:i:s', time());
+        }
+        return true;
+    }
+
 }

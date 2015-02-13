@@ -9,14 +9,14 @@
         <th>Сообщение</th>
         <th></th>
     </tr>
-    {% for contacts in contact %}
+    {% for item in items %}
     <tr>
-        <td>{{contacts.Pk}}</td>
-        <td>{{contacts.email}}</td>
-        <td>{{contacts.datetime|date('d.m.Y H:i')}}</td>
-        <td>{{contacts.message}}</td>
-        <td><a href="/contact/admin/answer?id={{contacts.Pk}}">Ответить</a></td>
-        <td><a href="/contact/admin/delete?id={{contacts.Pk}}">Удалить</a></td>
+        <td>{{item.Pk}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.datetime|date('d.m.Y H:i')}}</td>
+        <td>{{item.message}}</td>
+        <td><a href="/contact/admin/answer?id={{item.Pk}}">Ответить</a></td>
+        <td><a href="/contact/admin/delete?id={{item.Pk}}">Удалить</a></td>
     </tr>
     {% endfor %}
 </table>
