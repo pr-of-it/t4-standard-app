@@ -5,7 +5,6 @@ namespace App\Components\Auth;
 use App\Models\User;
 use App\Models\UserSession;
 use T4\Mvc\Application;
-use T4\Auth\Exception;
 
 class Identity
     extends \T4\Auth\Identity
@@ -15,21 +14,32 @@ class Identity
 
     public function authenticate($data)
     {
+        $errors = new Exception();
+
         if (empty($data->email)) {
-            throw new Exception('Не введен e-mail', self::ERROR_INVALID_EMAIL);
+            $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
         if (empty($data->password)) {
-            throw new Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
+            $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }
+
+        if (!$errors->isEmpty())
+            throw $errors;
 
         $user = User::findByEmail($data->email);
         if (empty($user)) {
-            throw new Exception('Пользователь с e-mail ' . $data->email . ' не существует', self::ERROR_INVALID_EMAIL);
+            $errors->add('Пользователь с e-mail ' . $data->email . ' не существует', self::ERROR_INVALID_EMAIL);
         }
 
+        if (!$errors->isEmpty())
+            throw $errors;
+
         if (!\T4\Crypt\Helpers::checkPassword($data->password, $user->password)) {
-            throw new Exception('Неверный пароль', self::ERROR_INVALID_PASSWORD);
+            $errors->add('Неверный пароль', self::ERROR_INVALID_PASSWORD);
         }
+
+        if (!$errors->isEmpty())
+            throw $errors;
 
         $this->login($user);
         Application::getInstance()->user = $user;
@@ -60,24 +70,18 @@ class Identity
     public function register($data)
     {
         if (empty($data->email)) {
-            throw new Exception('Не введен e-mail', self::ERROR_INVALID_EMAIL);
+            throw new \T4\Auth\Exception('Не введен e-mail', self::ERROR_INVALID_EMAIL);
+        }
+        if (empty($data->password)) {
+            throw new \T4\Auth\Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
+        }
+        if ($data->password2 != $data->password) {
+            throw new \T4\Auth\Exception('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
         }
 
         $user = User::findByEmail($data->email);
         if (!empty($user)) {
-            throw new Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
-        }
-
-        if (empty($data->password)) {
-            throw new Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
-        }
-        if ($data->password2 != $data->password) {
-            throw new Exception('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
-        }
-        if(isset($data->captcha)){
-            if(!Application::getInstance()->extensions->captcha->checkKeyString($data->captcha)){
-                throw new Exception('Неправильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
-            }
+            throw new \T4\Auth\Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
 
         $user = new User();
