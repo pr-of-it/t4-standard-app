@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-
 use App\Components\Exception;
+use App\Modules\Contact\Models\Contact;
 use T4\Orm\Model;
 
 /**

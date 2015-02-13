@@ -18,7 +18,7 @@ class m_1422909981_CreateContact
             '__user_id' => ['type' => 'string'],
         ],
             [
-                'user'=>['columns'=>['__user_id']]
+                'user' => ['columns' => ['__user_id']],
             ]
         );
     }

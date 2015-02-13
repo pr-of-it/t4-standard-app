@@ -16,7 +16,7 @@ class Answer
             'contact_id' => ['type' => 'string'],
         ],
         'relations' => [
-            'contact' => ['type'=>self::BELONGS_TO, 'model'=>Contact::class],
+            'contact' => ['type' => self::BELONGS_TO, 'model' => Contact::class],
         ]
     ];
 

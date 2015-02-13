@@ -16,7 +16,7 @@ class m_1423766698_CreateAnswer
             '__contact_id' => ['type' => 'link'],
         ],
             [
-                'contact'=>['columns'=>['__contact_id']]
+                'contact' => ['columns' => ['__contact_id']]
             ]
         );
     }
