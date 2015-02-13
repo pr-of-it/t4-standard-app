@@ -14,6 +14,7 @@ class Index
          extends Controller{
 
     public function actionDefault(){
+
     }
 
     public function actionSave()
