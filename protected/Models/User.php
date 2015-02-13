@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use App\Components\Exception;
 use T4\Orm\Model;
 

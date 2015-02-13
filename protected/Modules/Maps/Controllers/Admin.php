@@ -9,10 +9,7 @@ class Admin
     extends Controller
 {
 
-    public function actionDefault()
-    {
-        $this->data->maps = Map::findAll();
-    }
+
 
     public function actionEdit($id)
     {
