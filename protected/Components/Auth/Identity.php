@@ -74,24 +74,24 @@ class Identity
         if (empty($data->email)) {
             $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
-        if (empty($data->password)) {
-            $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
-        }
-
-        if (empty($data->password2)) {
-            $errors->add('Не введен второй пароль', self::ERROR_INVALID_PASSWORD);
-        }
-
-        if (!$errors->isEmpty())
-            throw $errors;
 
         $user = User::findByEmail($data->email);
         if (!empty($user)) {
             $errors->add('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
 
-        if ($data->password2 != $data->password) {
-            $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+        if (empty($data->password)) {
+            $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
+        }
+
+        if (empty($data->password2)) {
+            $errors->add('Не введено подтверждение пароля', self::ERROR_INVALID_PASSWORD);
+        }
+
+        if (isset($data->captcha)) {
+            if (!Application::getInstance()->extensions->captcha->getKeyString()) {
+                $errors->add('Не правильно введены символы с картиник', self::ERROR_INVALID_CAPTCHA);
+            }
         }
 
         if (!$errors->isEmpty())
