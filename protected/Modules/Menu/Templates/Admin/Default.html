@@ -9,19 +9,17 @@
 {% endblock %}
 
 {% block toolbar %}
-<a class="btn btn-primary" href="/admin/menu/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить элемент</a>
+    <a class="btn btn-primary" href="/admin/menu/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить элемент</a>
 {% endblock %}
 
 {% block header %}
-Меню
+    Меню
 {% endblock %}
 
 {% block content %}
-
 <div class="row">
     {{ Tree.listSortable(items, '/menu/admin/') }}
 </div>
-
 {% endblock %}
 
 {% block pagescript %}
