@@ -27,9 +27,7 @@ class Index
             } catch (\App\Components\Auth\Exception $e) {
                 $this->app->flash->errors = $e;
             }
-
             $this->data->email = $login->email;
-
         }
     }
 
@@ -49,12 +47,10 @@ class Index
                 $identity->login($user);
                 $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
-            } catch (\T4\Auth\Exception $e) {
-                $this->app->flash->error = $e->getMessage();
+            } catch (\App\Components\Auth\Exception $e) {
+                $this->app->flash->errors = $e;
             }
-
             $this->data->email = $register->email;
-
         }
     }
 

@@ -1,0 +1,38 @@
+{% extends 'Admin/blank.html' %}
+
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/users">Пользователи</a></li>
+    <li><a href="/admin/users/role">Роли пользователя</a></li>
+</ol>
+{% endblock %}
+
+{% block header %}
+Роли Пользователя {{name}}
+{% endblock %}
+
+{% block toolbar %}
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <tr>
+            <th>Роли</th>
+            <th> </th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{item.name}}</td>
+            <td><a href="/pages/admin/delete?id={{item.Pk}}">Добавить роль</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+

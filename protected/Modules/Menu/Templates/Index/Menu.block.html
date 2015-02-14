@@ -1,0 +1,44 @@
+{% set lastLevel = items[0].__lvl %}
+{% set count = 0 %}
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+                {% for item in items %}
+
+                {% set currentLevel = item.__lvl %}
+
+                {% if currentLevel == lastLevel and count > 0%}
+                </li>
+                {% endif %}
+
+                {% if currentLevel > lastLevel %}
+                <ul class="dropdown-menu" role="menu">
+                    {% endif %}
+
+                    {% if currentLevel < lastLevel %}
+                    {{"</li></ul>
+                "|repeat(lastLevel-currentLevel)|raw}}</li>
+                {% endif %}
+
+                <li data-id="{{item.Pk}}"
+                {% if item.__rgt-item.__lft>1 %} class="dropdown{% if currentLevel>0 %} dropdown-submenu{% endif %}"{%
+                endif %}>
+                <a href="{{item.url}}"{% if item.__rgt-item.__lft>1 %} class="dropdown-toggle" data-toggle="dropdown"
+                data-target="#"{% endif %}>
+                {{item.title}}{% if item.__rgt-item.__lft>1 and currentLevel==0 %} <span class="caret"></span>{% endif
+                %}
+                </a>
+
+                {% set lastLevel = currentLevel %}
+                {% set count = count + 1 %}
+                {% endfor %}
+
+                {{"</li></ul>
+            "|repeat(currentLevel)|raw}}</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
