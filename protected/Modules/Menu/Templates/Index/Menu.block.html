@@ -1,10 +1,11 @@
-{% set lastLevel = items[0].__lvl %}
-{% set count = 0 %}
+
 <div class="navbar navbar-default" role="navigation">
     <div class="container">
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
 
+                {% set lastLevel = items[0].__lvl %}
+                {% set count = 0 %}
                 {% for item in items %}
 
                 {% set currentLevel = item.__lvl %}
@@ -16,7 +17,6 @@
                 {% if currentLevel > lastLevel %}
                 <ul class="dropdown-menu" role="menu">
                     {% endif %}
-
                     {% if currentLevel < lastLevel %}
                     {{"</li></ul>
                 "|repeat(lastLevel-currentLevel)|raw}}</li>

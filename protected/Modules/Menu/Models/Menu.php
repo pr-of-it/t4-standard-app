@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Вера
- * Date: 03.02.2015
- * Time: 19:40
- */
 
 namespace App\Modules\Menu\Models;
 
