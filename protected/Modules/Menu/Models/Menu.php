@@ -12,7 +12,7 @@ namespace App\Modules\Menu\Models;
 use T4\Orm\Model;
 
 class Menu
-      extends Model
+    extends Model
 {
     static protected $schema = [
         'table' => 'menu',
