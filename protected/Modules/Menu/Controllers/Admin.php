@@ -3,6 +3,7 @@
 namespace App\Modules\Menu\Controllers;
 
 use App\Modules\Menu\Models\Menu as MenuModel;
+use App\Modules\Menu\Models\Menu;
 use T4\Core\Exception;
 use App\Components\Admin\Controller;
 
@@ -22,19 +23,19 @@ class Admin
 
 
         if (null === $id || 'new' == $id) {
-            $this->data->item = new Page();
+            $this->data->item = new Menu();
             if (null !== $parent) {
                 $this->data->item->parent = $parent;
             }
         } else {
-            $this->data->item = Page::findByPK($id);
+            $this->data->item = Menu::findByPK($id);
         }
     }
 
     public function actionSave($redirect = 0)
     {
-        if (!empty($_POST[Page::PK])) {
-            $item = Page::findByPK($_POST[Page::PK]);
+        if (!empty($_POST[Menu::PK])) {
+            $item = Menue::findByPK($_POST[Page::PK]);
         } else {
             $item = new Page();
         }
