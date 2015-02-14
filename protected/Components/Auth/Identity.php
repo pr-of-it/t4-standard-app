@@ -19,7 +19,7 @@ class Identity
         if (empty($data->email)) {
             $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
-        if (empty($data->password)) {
+        if ( empty($data->password)) {
             $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }
 
@@ -69,20 +69,33 @@ class Identity
 
     public function register($data)
     {
+        $errors = new Exception();
+
         if (empty($data->email)) {
-            throw new \T4\Auth\Exception('Не введен e-mail', self::ERROR_INVALID_EMAIL);
+            $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
         if (empty($data->password)) {
-            throw new \T4\Auth\Exception('Не введен пароль', self::ERROR_INVALID_PASSWORD);
+            $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }
-        if ($data->password2 != $data->password) {
-            throw new \T4\Auth\Exception('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+
+        if (empty($data->password2)) {
+            $errors->add('Не введен второй пароль', self::ERROR_INVALID_PASSWORD);
         }
+
+        if (!$errors->isEmpty())
+            throw $errors;
 
         $user = User::findByEmail($data->email);
         if (!empty($user)) {
-            throw new \T4\Auth\Exception('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
+            $errors->add('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
+
+        if ($data->password2 != $data->password) {
+            $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+        }
+
+        if (!$errors->isEmpty())
+            throw $errors;
 
         $user = new User();
         $user->email = $data->email;

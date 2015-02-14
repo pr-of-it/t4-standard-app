@@ -14,7 +14,7 @@
     <div class="form-group">
         <label for="register[password2]" class="col-sm-2 control-label">Повтор пароля</label>
         <div class="col-sm-10">
-            <input type="password2" class="form-control" id="register[password2]" name="register[password2]" placeholder="Введите пароль еще раз">
+            <input type="password" class="form-control" id="register[password2]" name="register[password2]" placeholder="Введите пароль еще раз">
         </div>
     </div>
 {% if  app.config.extensions.captcha.show  %}
@@ -36,6 +36,7 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отказаться</button>
         </div>
     </div>
 </form>
