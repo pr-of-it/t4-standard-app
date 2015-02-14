@@ -4,7 +4,7 @@
 
 {% if app.flash.errors is defined %}
 {% for error in app.flash.errors %}
-<div class="alert alert-danger" role="alert">{{errors.message}}</div>
+<div class="alert alert-danger" role="alert">{{error.message}}</div>
 {% endfor %}
 {% endif %}
 

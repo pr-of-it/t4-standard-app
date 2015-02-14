@@ -47,7 +47,7 @@ class Index
                 $identity->login($user);
                 $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
-            } catch (\App\Components\Auth\Exceptions $e) {
+            } catch (\App\Components\Auth\Exception $e) {
                 $this->app->flash->errors = $e;
             }
             $this->data->email = $register->email;

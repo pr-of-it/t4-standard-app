@@ -89,7 +89,7 @@ class Identity
         }
 
         if (isset($data->captcha)) {
-            if (!Application::getInstance()->extensions->captcha->getKeyString()) {
+            if (!Application::getInstance()->extensions->captcha->checkKeyString($data->captcha)) {
                 $errors->add('Не правильно введены символы с картиник', self::ERROR_INVALID_CAPTCHA);
             }
         }
