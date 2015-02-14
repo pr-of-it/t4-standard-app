@@ -3,7 +3,7 @@
 
 namespace App\Modules\Menu\Controllers;
 
-use App\Components\Admin\Controller;
+use T4\Mvc\Controller;
 
 class Index extends Controller
 {
