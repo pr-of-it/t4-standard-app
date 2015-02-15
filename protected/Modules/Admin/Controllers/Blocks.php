@@ -53,4 +53,14 @@ class Blocks
         }
     }
 
+    public function actionUninstallBlock($id)
+    {
+        $block = Block::findByPK($id);
+        if (false !== $block->delete()) {
+            $this->data->result = true;
+        } else {
+            $this->data->result = false;
+        }
+    }
+
 }
