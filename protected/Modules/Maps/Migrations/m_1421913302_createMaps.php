@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Migrations;
+namespace App\Modules\Maps\Migrations;
 
-use App\Modules\Maps\Models\Map;
 use T4\Orm\Migration;
 
 class m_1421913302_createMaps
@@ -24,27 +23,26 @@ class m_1421913302_createMaps
             'ptStyle' => ['type' => 'string', 'default' => 'flag'],
         ]);
 
-        $map = new Map();
-        $map->title = 'Карта Москвы';
-        $map->latitude = 55.75358253;
-        $map->longitude = 37.62091000;
-        $map->width = 450;
-        $map->height = 450;
-        $map->zoom = 13;
-        $map->ptLatitude = 55.75358253;
-        $map->ptLongitude = 37.62091000;
-        $map->save();
-
-        $map1 = new Map();
-        $map1->title = 'Уменьшенная карта Москвы';
-        $map1->latitude = 55.75358253;
-        $map1->longitude = 37.62091000;
-        $map1->width = 200;
-        $map1->height = 200;
-        $map1->zoom = 15;
-        $map1->ptLatitude = 55.75358253;
-        $map1->ptLongitude = 37.62091000;
-        $map1->save();
+        $this->insert('maps', [
+            'title' => 'Карта Москвы',
+            'latitude' => 55.75358253,
+            'longitude' => 37.62091000,
+            'width' => 450,
+            'height' => 450,
+            'zoom' => 13,
+            'ptLatitude' => 55.75358253,
+            'ptLongitude' => 37.62091000,
+        ]);
+        $this->insert('maps', [
+            'title' => 'Уменьшенная карта Москвы',
+            'latitude' => 55.75358253,
+            'longitude' => 37.62091000,
+            'width' => 200,
+            'height' => 200,
+            'zoom' => 15,
+            'ptLatitude' => 55.75358253,
+            'ptLongitude' => 37.62091000,
+        ]);
     }
 
     public function down()
