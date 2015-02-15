@@ -38,10 +38,7 @@ class Admin
         $item
             ->fill($_POST)
             ->save();
-        if ($item->wasNew()) {
-            $item->moveToFirstPosition();
-        }
-        $this->redirect('/menu/admin/');
+        $this->redirect('/admin/menu/');
     }
 
     public function actionDelete($id)
@@ -49,7 +46,7 @@ class Admin
         $item = Menu::findByPK($id);
         if ($item)
             $item->delete();
-        $this->redirect('/menu/admin/');
+        $this->redirect('/admin/menu/');
     }
 
     public function actionUp($id)
@@ -61,7 +58,7 @@ class Admin
         if (!empty($sibling)) {
             $item->insertBefore($sibling);
         }
-        $this->redirect('/menu/admin/');
+        $this->redirect('/admin/menu/');
     }
 
     public function actionDown($id)
@@ -73,7 +70,7 @@ class Admin
         if (!empty($sibling)) {
             $item->insertAfter($sibling);
         }
-        $this->redirect('/menu/admin/');
+        $this->redirect('/admin/menu/');
     }
 
     public function actionMoveBefore($id, $to)
