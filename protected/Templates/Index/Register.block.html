@@ -17,7 +17,8 @@
             <input type="password" class="form-control" id="register[password2]" name="register[password2]" placeholder="Введите пароль еще раз">
         </div>
     </div>
-{% if  app.config.extensions.captcha.show  %}
+
+    {% if  app.config.extensions.captcha.show  %}
     <div class="form-group">
         <label for="register[password2]" class="col-sm-2 control-label"></label>
         <div class="col-sm-10">
@@ -31,7 +32,7 @@
             <input type="text" class="form-control" id="register[captcha]" name="register[captcha]" placeholder="Введите символы с картинки">
         </div>
     </div>
-{% endif %}
+    {% endif %}
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
