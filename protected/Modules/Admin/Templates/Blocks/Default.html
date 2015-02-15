@@ -22,7 +22,7 @@
 <div class="row">
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         {% for id, section in sections %}
-        <div class="panel panel-default" data-id="{{id}}">
+        <div class="panel panel-default" id="section-{{id}}" data-id="{{id}}">
             <div class="panel-heading" role="tab" id="heading-{{id}}">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{id}}" aria-expanded="{% if id==1 %}true{% else %}false{% endif %}" aria-controls="collapse-{{id}}">
@@ -109,24 +109,33 @@
                     blockPath: blockPath
                 }, function (data) {
                     if (data.result) {
-                        alert('Installed!');
-                        /*
                         var installedBlock = block.clone();
+
                         installedBlock.removeClass('ui-draggable').removeClass('ui-draggable-dragging').removeClass('block-available-draggable');
                         installedBlock.removeAttr('style');
                         installedBlock.removeAttr('data-block-path');
+
+                        installedBlock.addClass('block-installed');
                         installedBlock.attr('data-id', data.id);
+
+                        /*
                         installedBlock.find('form :disabled').removeAttr('disabled');
                         installedBlock.find('form').append('<div class="form-group"><div class="col-sm-offset-4 col-sm-8"><input type="submit" value="Сохранить" class="btn btn-default"></div></div>');
-                        installedBlock.find('header').append('<div class="jarviswidget-ctrls" role="menu"><a href="#" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Удалить"><i class="fa fa-times"></i></a></div>');
-                        $('#section-'+sectionId+' .row').append(installedBlock);
+                        */
+
+                        installedBlock.find('h4.panel-title').append('<button type="button" class="close pull-right block-uninstall" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>');
+
+                        $('#collapse-'+sectionId+' .panel-body .row').append(installedBlock);
+
+                        /*
                         installedBlock.find('form input[type=submit]').click(function (event) {
                             saveBlockOptions($(this), event);
                         });
-                        installedBlock.find('a.jarviswidget-delete-btn').click(function (event) {
+                        */
+
+                        installedBlock.find('.block-uninstall').click(function (event) {
                             uninstallBlock($(this), event);
                         });
-                        */
                     };
                 });
             }
