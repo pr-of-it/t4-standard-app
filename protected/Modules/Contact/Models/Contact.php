@@ -18,7 +18,8 @@ class Contact
             '__user_id' => ['type' => 'link'],
         ],
         'relations' => [
-            'answers' => ['type'=>self::HAS_MANY, 'model'=>Answer::class],
+            'answers' => ['type' => self::HAS_MANY, 'model' => Answer::class],
+            'user' => ['type' => self::BELONGS_TO, 'model' => User::class]
         ]
     ];
 

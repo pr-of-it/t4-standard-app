@@ -24,7 +24,7 @@ class Admin
         $this->data->item = Contact::findByPK($id);
     }
 
-    public function actionSend($email=null, $theme, $message)
+    public function actionSend($email = null, $theme, $message)
     {
         $answer = new Answer();
         $answer->fill($this->app->request->post);

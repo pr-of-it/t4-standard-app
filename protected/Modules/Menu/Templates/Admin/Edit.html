@@ -1,60 +1,65 @@
 {% extends 'Admin/Blank.html'%}
 
-
 {% block breadcrumbs %}
 <ol class="breadcrumb">
-    <li><a href="/admin/pages/">Меню</a></li>
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/menu/">Меню</a></li>
     <li>{% if item.isNew %}Добавление элемента{% else %}Редактирование элемента{% endif %}</li>
 </ol>
 {% endblock %}
 
-{% block head %}
-<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/Layouts/Admin/Smart/assets/css/smartadmin-production.css') }}">
+{% block header %}
+{% if item.isNew %}Добавление элемента{% else %}Редактирование элемента{% endif %}
 {% endblock %}
 
 {% block content %}
 
-<section class="well">
-    <form class="smart-form" method="post" action="/menu/admin/save">
-        {% if item.isNew %}
-        <header>Добавление элемента</header>
-        {% else %}
+<div class="row">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/menu/save">
+
+        {% if not item.isNew %}
         <input type="hidden" name="__id" value="{{item.Pk}}">
-        <header>Редактирование элемента</header>
         {% endif %}
-        <fieldset>
-            <section>
-                <label class="label">Заголовок элемента</label>
-                <label class="input">
-                    <input type="text" name="title" value="{{item.title}}">
-                </label>
-            </section>
-            <section>
-                <label class="label">Родительский элемент</label>
-                <label class="select">
-                    {% if item.isNew %}
-                    {% if item.parent %}
-                    {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", item.parent.Pk, {"null":true}, {"name":"parent"}) }}
-                    {% else %}
-                    {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", 0, {"null":true}, {"name":"parent"}) }}
-                    {% endif %}
-                    {% else %}
-                    {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent"}) }}
-                    {% endif %}
-                    <i></i>
-                </label>
-            </section>
-            <section>
-                <label class="label">URL (адрес ссылки)</label>
-                <label class="input">
-                    <input type="text" name="url" value="{{item.url}}">
-                </label>
-            </section>
-        </fieldset>
+
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Заголовок страницы</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок страницы"
+                       value="{{item.title}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Родительский элемент</label>
+
+            <div class="col-sm-10">
+                {% if item.isNew %}
+                {% if item.parent %}
+                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", item.parent.Pk, {"null":true},{"name":"parent",
+                "class": "form-control"})}}
+                {% else %}
+                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", 0, {"null":true}, {"name":"parent",
+                "class":"form-control"}) }}
+                {% endif %}
+                {% else %}
+                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", item.__prt, {"null":true,
+                'disabled':[item.__id]}, {"name":"parent", "class": "form-control"}) }}
+                {% endif %}
+                <i></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="url" class="col-sm-2 control-label">Url (адрес ссылки)</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="url" id="url" value="{{item.url}}">
+            </div>
+        </div>
         <footer>
             <button type="submit" class="btn btn-primary">Сохранить</button>
             <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
         </footer>
     </form>
-</section>
+</div>
 {% endblock %}

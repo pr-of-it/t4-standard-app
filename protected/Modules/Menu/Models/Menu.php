@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Вера
- * Date: 03.02.2015
- * Time: 19:40
- */
 
 namespace App\Modules\Menu\Models;
 
@@ -12,7 +6,7 @@ namespace App\Modules\Menu\Models;
 use T4\Orm\Model;
 
 class Menu
-      extends Model
+    extends Model
 {
     static protected $schema = [
         'table' => 'menu',

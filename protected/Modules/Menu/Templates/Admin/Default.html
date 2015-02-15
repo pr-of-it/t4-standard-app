@@ -1,98 +1,40 @@
 {% extends 'Admin/Blank.html' %}
+{% import 'Admin/Macros/Tree.html' as Tree %}
 
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li>Меню</li>
+</ol>
+{% endblock %}
 
-{% block head %}
-<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/Layouts/Admin/Smart/assets/css/smartadmin-production.css') }}">
+{% block toolbar %}
+    <a class="btn btn-primary" href="/admin/menu/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить элемент</a>
+{% endblock %}
+
+{% block header %}
+    Меню
 {% endblock %}
 
 {% block content %}
-
-<section class="well">
-    <div class="row"><div class="pull-right"><a class="btn btn-primary btn-lg" href="/menu/admin/edit?id=new">Добавить элемент</a></div></div>
-    <div class="row">
-
-        <div class="dd" id="tree-nestable" style="width: 100%; max-width: 100%">
-            {% set level = items[0].__lvl %}
-            {% set count = 0 %}
-            <ol class="dd-list">
-                {% for key, item in items %}
-
-                {% set current = item.__lvl %}
-
-                {% if current == level %}
-                {% if count > 0 %}</li>{% endif %}
-                {% endif %}
-
-                {% if current > level %}
-                <ol class="dd-list">
-                    {% set level = current %}
-                    {% endif %}
-
-                    {% if current < level %}
-                    {{"</li></ol>"|repeat(level-current)|raw}}</li>
-                {% set level = current %}
-                {% endif %}
-
-                <li class="dd-item dd3-item" data-id="{{item.__id}}">
-                    <div class="dd-handle dd3-handle" data-id="{{item.__id}}">Drag</div>
-                    <div class="dd3-content">
-                        <a href="/menu/admin/edit/?id={{item.__id}}">{{item.title}} [{{item.url}}]</a>
-                        <span class="pull-right">
-                            {% if items[key-1] is defined and items.existsElement({'__prt':item.__prt, '__lvl':item.__lvl})%}
-                            <a href="/menu/admin/up/?id={{item.__id}}"><i class="fa fa-arrow-up"></i></a>
-                            {% else %}
-                            <i class="fa fa-ellipsis-horizontal"></i>
-                            {% endif %}
-                            {% if items[key+1] is defined%}
-                            <a href="/menu/admin/down/?id={{item.__id}}"><i class="fa fa-arrow-down"></i></a>
-                            {% else %}
-                            <i class="fa fa-ellipsis-horizontal"></i>
-                            {% endif %}
-                            <a href="/menu/admin/edit/?id=new&parent={{item.Pk}}" class=""><i class="fa fa-plus"></i></a>
-                            <a href="/menu/admin/edit/?id={{item.__id}}" class=""><i class="fa fa-edit"></i></a>
-                            <a href="/menu/admin/delete/?id={{item.__id}}" class="confirmable"><i class="fa fa-trash-o"></i></a>
-                        </span>
-                    </div>
-
-                    {% set count = count + 1 %}
-                    {% endfor %}
-                    {{"</li></ol>"|repeat(current)|raw}}</li>
-
-            </ol>
-        </div>
-
-    </div>
-</section>
-
+<div class="row">
+    {{ Tree.listSortable(items, '/menu/admin/') }}
+</div>
 {% endblock %}
 
 {% block pagescript %}
 <script type="text/javascript">
-    $(function() {
-        $('a.confirmable').click(function() {
+    $(function () {
+
+        $('a.confirmable').click(function () {
             return confirm('Вы уверены?');
         });
 
-        $('.dd-list').sortable({
-            handle: ".dd-handle",
-            axis: "y",
-            update: function( event, ui ) {
-                var prevSibling = ui.item.prev();
-                var nextSibling = ui.item.next()
-                if (!$.isEmptyObject(prevSibling) && undefined != prevSibling.attr('data-id')) {
-                    var url = '/menu/admin/moveAfter.json';
-                    var siblingId = prevSibling.attr('data-id');
-                } else {
-                    var url = '/menu/admin/moveBefore.json';
-                    var siblingId = nextSibling.attr('data-id');
-                }
-                $.post(url, {id: ui.item.attr('data-id') ,to: siblingId}, function (r) {
-                    if (!r.result) {
-                        alert('ERROR!!!');
-                    }
-                });
+        {
+            {
+                Tree.listSortableJs('/admin/menu/')
             }
-        });
+        }
     });
 </script>
 {% endblock %}
