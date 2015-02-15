@@ -14,7 +14,7 @@ class Identity
 
     public function authenticate($data)
     {
-        $errors = new Exception();
+        $errors = new MultiException();
 
         if (empty($data->email)) {
             $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
@@ -69,15 +69,10 @@ class Identity
 
     public function register($data)
     {
-        $errors = new Exception();
+        $errors = new MultiException();
 
         if (empty($data->email)) {
             $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
-        }
-
-        $user = User::findByEmail($data->email);
-        if (!empty($user)) {
-            $errors->add('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
 
         if (empty($data->password)) {
@@ -88,10 +83,22 @@ class Identity
             $errors->add('Не введено подтверждение пароля', self::ERROR_INVALID_PASSWORD);
         }
 
+        if ( $data->password2 != $data->password) {
+            $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+        }
+
         if (isset($data->captcha)) {
             if (!Application::getInstance()->extensions->captcha->checkKeyString($data->captcha)) {
-                $errors->add('Не правильно введены символы с картиник', self::ERROR_INVALID_CAPTCHA);
+                $errors->add('Не правильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
             }
+        }
+
+        if (!$errors->isEmpty())
+            throw $errors;
+
+        $user = User::findByEmail($data->email);
+        if (!empty($user)) {
+            $errors->add('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
         }
 
         if (!$errors->isEmpty())

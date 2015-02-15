@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Components\Auth\Identity;
 use T4\Mvc\Controller;
 use App\Models\User;
-use T4\Core\Config;
 
 class Index
     extends Controller
@@ -18,13 +17,12 @@ class Index
     public function actionLogin($login = null)
     {
         if (null !== $login) {
-
             try {
                 $identity = new Identity();
                 $user = $identity->authenticate($login);
                 $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
-            } catch (\App\Components\Auth\Exception $e) {
+            } catch (\App\Components\Auth\MultiException $e) {
                 $this->app->flash->errors = $e;
             }
             $this->data->email = $login->email;
@@ -47,7 +45,7 @@ class Index
                 $identity->login($user);
                 $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
-            } catch (\App\Components\Auth\Exception $e) {
+            } catch (\App\Components\Auth\MultiException $e) {
                 $this->app->flash->errors = $e;
             }
             $this->data->email = $register->email;
