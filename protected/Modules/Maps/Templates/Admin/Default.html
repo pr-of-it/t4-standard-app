@@ -1,20 +1,50 @@
-{% extends 'Admin.html' %}
+{% extends 'Admin/Blank.html' %}
 
-{% block head %}
-    {{ parent() }}
-    <link rel=stylesheet href="{{ asset('/Modules/Maps/Templates/assets/css/mapsadmin.css') }}">
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li>Карты</li>
+</ol>
 {% endblock %}
 
-{% block namepage %}Карты сайта{% endblock %}
+{% block toolbar %}
+<a class="btn btn-primary" href="/admin/maps/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить карту</a>
+{% endblock %}
+
+{% block header %}
+Карты
+{% endblock %}
 
 {% block content %}
-{% for map in maps %}
-    <div class="map">
-        <h2 class="pull-left">#{{map.Pk}} {{map.title}}</h2>
-        <a class="btn btn-info btn-sm" role="button" href="/maps/admin/edit?id={{map.Pk}}">Редактировать</a>
-        <a class="btn btn-info btn-sm" role="button" href="/maps/admin/delete?id={{map.Pk}}">Удалить</a>
-        <div class="clearfix"></div>
-        <p><img src="//static-maps.yandex.ru/1.x/?ll={{map.longitude}},{{map.latitude}}&size={{map.width}},{{map.height}}&z={{map.zoom}}&l={{map.layer}}&pt={{map.ptLongitude}},{{map.ptLatitude}},{{map.ptStyle}}"></p>
-    </div>
-{% endfor %}
+
+<div class="row">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th></th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td><a href="/admin/maps/edit/?id={{item.Pk}}">{{item.Pk}}</a></td>
+            <td>{{item.title}}</td>
+            <td style="white-space: nowrap">
+                <a href="/admin/maps/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
+                <a href="/admin/maps/delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function() {
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+    });
+</script>
 {% endblock %}
