@@ -12,8 +12,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
 
+<style>
+    .panel-heading {cursor: move;}
+</style>
+
+<h2>Размещенные на сайте</h2>
+
+<div class="row">
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         {% for id, section in sections %}
         <div class="panel panel-default">
@@ -25,14 +31,38 @@
                 </h4>
             </div>
             <div id="collapse-{{id}}" class="panel-collapse collapse {% if id==1 %}in{% endif %}" role="tabpanel" aria-labelledby="heading-{{id}}">
-                <div class="panel-body">
+                <div style="min-height:200px;" class="panel-body">
                     {{section.title}}
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-
 </div>
 
+<h2>Доступные к размещению</h2>
+
+<div class="row">
+    {% for block in blocksAvailable %}
+    <div class="col-xs-12 col-sm-6 col-md-4 block-available-draggable">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">{{block.title}}</h4>
+            </div>
+            <div class="panel-body">
+                {{block.desc}}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function () {
+        $(".block-available-draggable").draggable({handle: ".panel-heading", cursor: "move", revert: true});
+    });
+</script>
 {% endblock %}
