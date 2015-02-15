@@ -4,13 +4,21 @@ namespace App\Models;
 
 use T4\Mvc\Application;
 use T4\Mvc\Route;
-use T4\Mvc\Router;
 use T4\Orm\Model;
 
+/**
+ * Class Block
+ * @package App\Models
+ * @property int $section
+ * @property string $path
+ * @property string $template
+ * @property string $options
+ * @property int $order
+ */
 class Block
     extends Model
 {
-    public static $schema = [
+    protected static $schema = [
         'table' => '__blocks',
         'columns' => [
             'section'   => ['type'=>'int'],
