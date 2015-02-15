@@ -20,7 +20,7 @@ class Admin
 
     public function actionAnswer($id)
     {
-
+        $this->app->extensions->ckeditor->init();
         $this->data->item = Contact::findByPK($id);
     }
 
