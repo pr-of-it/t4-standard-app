@@ -18,7 +18,7 @@
     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/menu/save">
 
         {% if not item.isNew %}
-        <input type="hidden" name="__id" value="{{item.Pk}}">
+        <input type="hidden" name="id" value="{{item.Pk}}">
         {% endif %}
 
         <div class="form-group">
