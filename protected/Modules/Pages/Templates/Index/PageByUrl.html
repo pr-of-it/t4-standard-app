@@ -1,12 +1,8 @@
 {% extends 'Index.html' %}
 
-{% block title %} {{page.title}} {% endblock%}
-
 {% block content %}
-<div class="container">
-    <h2 class="text-center">{{page.title}}</h2>
-    <p>
-        {{page.text}}
-    </p>
+<h2 class="page-header">{{page.title}}</h2>
+<div class="row">
+    <article>{{page.text|raw}}</article>
 </div>
 {% endblock %}
