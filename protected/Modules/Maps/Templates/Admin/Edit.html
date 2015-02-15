@@ -92,13 +92,11 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
-                <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
-                {% if not item.isNew %}<a href="/admin/maps/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
-            </div>
-        </div>
+        <footer class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            {% if not item.isNew %}<a href="/admin/maps/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
+        </footer>
 
     </form>
 </div>
