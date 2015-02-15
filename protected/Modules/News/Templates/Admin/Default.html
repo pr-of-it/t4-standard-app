@@ -35,9 +35,9 @@
             <td>{% if item.image %}<i class="glyphicon glyphicon-picture"></i>{% endif %}</td>
             <td>{{item.published|date('d.m.Y')}}</td>
             <td style="white-space: nowrap">
-                <a href="#" data-toggle="modal" data-target="#news-preview" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-eye-open"></i></a>
-                <a href="/admin/news/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
+                <a class="btn btn-default btn-sm" href="#" data-toggle="modal" data-target="#news-preview" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a class="btn btn-primary btn-sm" href="/admin/news/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
+                <a class="btn btn-danger btn-sm" href="/admin/news/delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>
         {% endfor %}

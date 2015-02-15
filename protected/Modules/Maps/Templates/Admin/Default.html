@@ -29,8 +29,8 @@
             <td><a href="/admin/maps/edit/?id={{item.Pk}}">{{item.Pk}}</a></td>
             <td>{{item.title}}</td>
             <td style="white-space: nowrap">
-                <a href="/admin/maps/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="/admin/maps/delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
+                <a class="btn btn-primary btn-sm" href="/admin/maps/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
+                <a class="btn btn-danger btn-sm" href="/admin/maps/delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>
         {% endfor %}
