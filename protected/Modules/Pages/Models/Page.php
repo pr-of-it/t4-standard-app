@@ -15,19 +15,9 @@ class Page
             'url' => [
                 'type' => 'string',
             ],
-            'template' => [
-                'type' => 'string',
-            ],
             'text' => [
                 'type' => 'text',
                 'length' => 'big',
-            ],
-            'order' => [
-                'type' => 'int',
-                'default' => 0
-            ],
-            'file' => [
-                'type' => 'string',
             ],
         ],
     ];
@@ -38,7 +28,7 @@ class Page
     {
         $ret = new Collection;
         foreach ($this->findAllParents() as $i => $parent) {
-            if (0==$i)
+            if (0 == $i)
                 continue;
             $p = new Std;
             $p->url = $parent->url;
@@ -47,6 +37,5 @@ class Page
         }
         return $ret;
     }
-
 
 }

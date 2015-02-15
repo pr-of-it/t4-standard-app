@@ -23,21 +23,14 @@ class m_1423651650_createPages
                     'type' => 'text',
                     'length' => 'big',
                 ],
-                'order' => [
-                    'type' => 'int'
-                ],
-                'template' => [
-                    'type' => 'string',
-                ],
             ],
             [
                 ['columns' => ['url']],
-                ['columns' => ['order']]
             ],
             ['tree']
         );
+        $this->insert('pages', ['title' => 'Главная страница', 'url' => 'index', 'text' => 'Добро пожаловать на ваш новый сайт!']);
     }
-
 
 
     public function down()
