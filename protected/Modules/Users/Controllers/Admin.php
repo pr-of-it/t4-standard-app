@@ -15,12 +15,24 @@ class Admin
         $this->data->items = User::findAll();
     }
 
-    public function actionRole($id)
+    public function actionRoleUser($id)
     {
         $users=User::findByPK($id);
         $this->data->items=$users->roles;
+        $this->data->user=$users->email;
+        $this->data->itemsRole=Role::findAll();
+    }
+
+    public function actionRoles()
+    {
+        $this->data->items=Role::findAll();
+    }
+
+    public function actionAddRole()
+    {
 
     }
+
     public function actionEdit($id='new')
     {
         if (null == $id || 'new' == $id) {
@@ -35,7 +47,7 @@ class Admin
         $id = $this->app->request->post->id;
 
         if (empty($id)) {
-            $item = new Page();
+            $item = new Role();
 
         } else {
             $item = Page::findByPK($id);
@@ -43,7 +55,7 @@ class Admin
 
         $item->fill($this->app->request->post);
         $item->save();
-        $this->redirect('/admin/pages/');
+        $this->redirect('/admin/users/roles/');
     }
 
     public function actionDelete($id)

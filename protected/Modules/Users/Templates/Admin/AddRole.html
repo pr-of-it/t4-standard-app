@@ -1,0 +1,49 @@
+{% extends 'Admin/blank.html' %}
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/roles/">Роли</a></li>
+    <li>Добавление роли</li>
+</ol>
+{% endblock %}
+
+{% block header %}
+Добавление роли
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/users/save">
+
+        {% if not item.isNew %}
+        <input type="hidden" name="id" value="{{item.Pk}}">
+        {% endif %}
+
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Добавить роль</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Назначение роли" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">роль</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" name="name" placeholder="роль" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
+                <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+                {% if not item.isNew %}<a href="/admin/pages/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
+

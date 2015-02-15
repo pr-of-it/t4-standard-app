@@ -8,9 +8,13 @@ class Module
 
     public function getAdminMenu()
     {
-        return [
+        return  [
+            ['title' => 'Пользователи и роли', 'icon' => '<i class="glyphicon glyphicon-th-list"></i>', 'sub' => [
                 ['title' => 'Пользователи', 'url' => '/admin/users/'],
+                ['title' => 'Роли', 'url' => '/admin/users/roles/'],
+            ]],
         ];
+
     }
 
 } 
