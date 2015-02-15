@@ -4,11 +4,18 @@ namespace App\Models;
 
 use T4\Orm\Model;
 
+/**
+ * Class Role
+ * @package App\Models
+ * @property string $name
+ * @property string $title
+ * @property \T4\Core\Collection|\App\Models\User[] $users
+ */
 class Role
     extends Model
 {
 
-    public static $schema = [
+    protected static $schema = [
         'table' => '__user_roles',
         'columns' => [
             'name' => ['type' => 'string'],
@@ -19,4 +26,4 @@ class Role
         ],
     ];
 
-} 
+}

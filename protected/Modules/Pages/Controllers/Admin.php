@@ -9,23 +9,15 @@ use T4\Core\Exception;
 class Admin
     extends Controller
 {
- /*    protected function access($action)
-     {
-         return !empty($this->app->user);
-     }
-*/
+
     public function actionDefault()
     {
-        $this->app->extensions->jstree->init();
         $this->data->items = Page::findAllTree();
     }
 
 
-    public function actionEdit($id=null, $parent=null)
+    public function actionEdit($id = null, $parent = null)
     {
-        $this->app->extensions->ckeditor->init();
-        $this->app->extensions->ckfinder->init();
-
         if (null === $id || 'new' == $id) {
             $this->data->item = new Page();
             if (null !== $parent) {
@@ -36,7 +28,7 @@ class Admin
         }
     }
 
-    public function actionSave($redirect = 0)
+    public function actionSave()
     {
         if (!empty($this->app->request->post->id)) {
             $item = Page::findByPK($this->app->request->post->id);
@@ -45,35 +37,29 @@ class Admin
         }
         $item->fill($this->app->request->post);
         $item->save();
-
-        if ($item->wasNew()) {
-            $item->moveToFirstPosition();
-        }
-
-        if ($redirect) {
-            $this->redirect('/pages/' . $item->url . '.html');
-        } else {
-            $this->redirect('/pages/admin/');        }
+        $this->redirect('/admin/pages');
     }
 
     public function actionDelete($id)
     {
         $item = Page::findByPK($id);
-        if ($item)
+        if ($item) {
             $item->delete();
-        $this->redirect('/pages/admin');
+        }
+        $this->redirect('/admin/pages');
     }
 
     public function actionUp($id)
     {
         $item = Page::findByPK($id);
-        if (empty($item))
+        if (empty($item)) {
             $this->redirect('/pages/admin/');
+        }
         $sibling = $item->getPrevSibling();
         if (!empty($sibling)) {
             $item->insertBefore($sibling);
         }
-        $this->redirect('/pages/admin/');
+        $this->redirect('/admin/pages');
     }
 
     public function actionDown($id)
@@ -85,7 +71,7 @@ class Admin
         if (!empty($sibling)) {
             $item->insertAfter($sibling);
         }
-        $this->redirect('/pages/admin/');
+        $this->redirect('/admin/pages');
     }
 
     public function actionMoveBefore($id, $to)
@@ -107,7 +93,7 @@ class Admin
         }
     }
 
-    public function actionAfter($id, $to)
+    public function actionMoveAfter($id, $to)
     {
         try {
             $item = Page::findByPK($id);

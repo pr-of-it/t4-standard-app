@@ -1,81 +1,116 @@
-{% extends 'Admin.html' %}
+{% extends 'Admin/Blank.html' %}
 
-{% block head %}
-    {{ parent() }}
-    <link rel=stylesheet href="{{ asset('/Modules/Maps/Templates/assets/css/mapsadmin.css') }}">
-    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-    <script src="{{ asset('/Modules/Maps/Templates/assets/js/maps.js') }}"></script>
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/news/">Карты</a></li>
+    <li>{% if item.isNew %}Добавление карты{% else %}Редактирование карты{% endif %}</li>
+</ol>
 {% endblock %}
 
-{% block namepage %}
-    {{ map ? 'Редактировать карту #' : 'Создать карту' }} {{map.Pk}}
+{% block header %}
+{% if item.isNew %}Добавление карты{% else %}Редактирование карты{% endif %}
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-9">
-                <div id="map"></div>
-            </div>
-            <div class="col-md-3">
-                <form class="form-horizontal" action="/maps/admin/save" method="post">
-                    {% if not map.isNew() %}
-                    <input type="hidden" name="id" value="{{map.Pk}}" />
-                    {% endif %}
-                    <div class="form-group">
-                        <label for="title">Название карты</label>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Название карты" value="{{map.title}}">
-                    </div>
-                    <div class="form-group">
-                        <div class="text-center">Центр карты:</div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <label for="latitude">Широта</label>
-                                <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Широта" value="{{map.latitude}}" required>
-                            </div>
-                            <div class="col-xs-6">
-                                <label for="longitude">Долгота</label>
-                                <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Долгота" value="{{map.longitude}}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="text-center">Размер карты:</div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <label for="width">Ширина</label>
-                                <input type="text" class="form-control" id="width" name="width" placeholder="Ширина" value="{{map.width}}" required>
-                            </div>
-                            <div class="col-xs-6">
-                                <label for="height">Высота</label>
-                                <input type="text" class="form-control" id="height" name="height" placeholder="Высота" value="{{map.height}}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="zoom">Масштаб</label>
-                        <input type="text" class="form-control" id="zoom" name="zoom" placeholder="Масштаб" value="{{map.zoom}}" required>
-                    </div>
-                    <div class="form-group">
-                        <div class="text-center">Координаты метки:</div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <label for="ptLatitude">Широта</label>
-                                <input type="text" class="form-control" id="ptLatitude" name="ptLatitude" placeholder="Широта" value="{{map.ptLatitude}}" required>
-                            </div>
-                            <div class="col-xs-6">
-                                <label for="ptLongitude">Долгота</label>
-                                <input type="text" class="form-control" id="ptLongitude" name="ptLongitude" placeholder="Долгота" value="{{map.ptLongitude}}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                            <button type="submit" class="btn btn-default">Сохранить</button>
-                        </div>
-                    </div>
-                </form>
+
+<link rel=stylesheet href="{{ asset('/Modules/Maps/Templates/assets/css/mapsadmin.css') }}">
+
+<div class="row">
+    <div class="col-xs-12">
+        <div id="map"></div>
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/maps/save">
+
+        {% if not item.isNew %}
+        <input type="hidden" name="id" value="{{item.Pk}}">
+        {% endif %}
+
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Название</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Название" value="{{item.title}}">
             </div>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Центр карты</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="latitude">Широта</label>
+                        <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Широта" value="{{item.latitude}}" required>
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="longitude">Долгота</label>
+                        <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Долгота" value="{{item.longitude}}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Размер карты</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="width">Ширина</label>
+                        <input type="text" class="form-control" id="width" name="width" placeholder="Ширина" value="{{item.width}}" required>
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="height">Высота</label>
+                        <input type="text" class="form-control" id="height" name="height" placeholder="Высота" value="{{item.height}}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="zoom" class="col-sm-2 control-label">Масштаб</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="zoom" name="zoom" placeholder="Масштаб" value="{{item.zoom}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Координаты метки</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="ptLatitude">Широта</label>
+                        <input type="text" class="form-control" id="ptLatitude" name="ptLatitude" placeholder="Широта" value="{{item.ptLatitude}}" required>
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="ptLongitude">Долгота</label>
+                        <input type="text" class="form-control" id="ptLongitude" name="ptLongitude" placeholder="Долгота" value="{{item.ptLongitude}}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            {% if not item.isNew %}<a href="/admin/maps/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
+        </footer>
+
+    </form>
+</div>
+
+{% endblock %}
+
+{% block pagescript %}
+<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="{{ asset('/Modules/Maps/Templates/assets/js/maps.js') }}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+    });
+</script>
 {% endblock %}

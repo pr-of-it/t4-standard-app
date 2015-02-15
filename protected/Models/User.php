@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Components\Exception;
-use App\Modules\Contact\Models\Contact;
 use T4\Orm\Model;
 
 /**
@@ -11,12 +9,12 @@ use T4\Orm\Model;
  * @package App\Models
  * @property string $email
  * @property string $password
- * @property \T4\Core\Collection $roles
+ * @property \T4\Core\Collection|\App\Models\Role[] $roles
  */
 class User
     extends Model
 {
-    public static $schema = [
+    protected static $schema = [
         'table' => '__users',
         'columns' => [
             'email'     => ['type'=>'string'],

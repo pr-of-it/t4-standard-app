@@ -6,9 +6,9 @@
     <div class="form-group">
         <input type="password" placeholder="Пароль" class="form-control input-sm" name="login[password]">
     </div>
-    <button type="submit" class="btn btn-success">Войти</button>
+    <div class="form-group"><button type="submit" class="btn btn-success">Войти</button></div>
 </form>
 {% else %}
-<a href="/logout.html"><button type="button" class="btn btn-sm navbar-btn navbar-right">Выйти</button></a>
+<a href="/logout.html" class="navbar-right"><button class="btn btn-default btn-sm navbar-btn">Выйти</button></a>
 <p class="navbar-text navbar-right" style="padding-right: 10px;">Здравствуйте, {{app.user.email}}!</p>
 {% endif %}

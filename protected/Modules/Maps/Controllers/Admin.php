@@ -9,33 +9,40 @@ class Admin
     extends Controller
 {
 
-
-
-    public function actionEdit($id)
+    public function actionDefault()
     {
-        $this->data->map = Map::findByPK($id);
+        $this->data->items = Map::findAll();
+    }
+
+    public function actionEdit($id = null)
+    {
+        if (null === $id || 'new' == $id) {
+            $this->data->item = new Map();
+        } else {
+            $this->data->item = Map::findByPK($id);
+        }
     }
 
     public function actionSave()
     {
         $id = $this->app->request->post->id;
         if (!empty($id)) {
-            $map = Map::findByPK($id);
+            $item = Map::findByPK($id);
         } else {
-            $map = new Map();
+            $item = new Map();
         }
-        $map->fill($this->app->request->post);
-        $map->save();
-        $this->redirect('/maps/admin/');
+        $item->fill($this->app->request->post);
+        $item->save();
+        $this->redirect('/admin/maps');
     }
 
     public function actionDelete($id)
     {
-        $map = Map::findByPK($id);
-        if ($map) {
-            $map->delete();
+        $item = Map::findByPK($id);
+        if ($item) {
+            $item->delete();
         }
-        $this->redirect('/maps/admin/');
+        $this->redirect('/admin/maps');
     }
 
 }

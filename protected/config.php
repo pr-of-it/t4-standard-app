@@ -32,7 +32,6 @@ return [
         ],
         'ckeditor' => [
             'location' => 'local',
-            'autoload' => false,
         ],
         'ckfinder' => [
             'autoload' => false,
@@ -43,7 +42,7 @@ return [
         'sxgeo' => [
         ],
         'captcha' => [
-            'show' => true,
+            'show' => false,
         ],
     ],
 ];
