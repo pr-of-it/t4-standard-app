@@ -4,23 +4,21 @@
 {% block breadcrumbs %}
 <ol class="breadcrumb">
     <li><a href="/admin/">Админ-панель</a></li>
-    <li><a href="/admin/pages/">Страницы</a></li>
+    <li>Страницы</li>
 </ol>
 {% endblock %}
 
-{% block header %}
-    Страницы
-{% endblock %}
-
 {% block toolbar %}
-<a class="btn btn-primary" href="/admin/Pages/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить страницу</a>
+<a class="btn btn-primary" href="/admin/pages/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить страницу</a>
 {% endblock %}
 
-
+{% block header %}
+Страницы
+{% endblock %}
 
 {% block content %}
 <div class="row">
-    {{ Tree.listSortable(items, '/admin/Pages/') }}
+    {{ Tree.listSortable(items, '/admin/pages/') }}
 </div>
 {% endblock %}
 

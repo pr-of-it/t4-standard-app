@@ -26,7 +26,6 @@ return [
         ],
         'ckeditor' => [
             'location' => 'local',
-            'autoload' => false,
         ],
         'ckfinder' => [
             'autoload' => false,
