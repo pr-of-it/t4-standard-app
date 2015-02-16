@@ -35,19 +35,7 @@
                     <div style="min-height:200px;" class="row block-drop-area">
 
                         {% for block in blocksInstalled[id] %}
-                        <div class="col-xs-12 col-sm-6 col-md-4 block-installed" data-id="{{block.Pk}}">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        {{blocksAvailable[block.path].title}}
-                                        <button type="button" class="close pull-right block-uninstall" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
-                                    </h4>
-                                </div>
-                                <div class="panel-body">
-                                    {{blocksAvailable[block.path].desc}}
-                                </div>
-                            </div>
-                        </div>
+                        {% include '__block_installed.html' %}
                         {% endfor %}
 
                     </div>
@@ -62,16 +50,7 @@
 
 <div class="row">
     {% for path, block in blocksAvailable %}
-    <div class="col-xs-12 col-sm-6 col-md-4 block-available-draggable" data-block-path="{{path}}">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h4 class="panel-title">{{block.title}}</h4>
-            </div>
-            <div class="panel-body">
-                {{block.desc}}
-            </div>
-        </div>
-    </div>
+    {% include '__block_available.html' %}
     {% endfor %}
 </div>
 
@@ -111,11 +90,13 @@
                     if (data.result) {
                         var installedBlock = block.clone();
 
-                        installedBlock.removeClass('ui-draggable').removeClass('ui-draggable-dragging').removeClass('block-available-draggable');
+                        installedBlock.removeClass('ui-draggable')
+                                .removeClass('ui-draggable-dragging')
+                                .removeClass('block-available-draggable');
                         installedBlock.removeAttr('style');
-                        installedBlock.removeAttr('data-block-path');
-
                         installedBlock.addClass('block-installed');
+
+                        installedBlock.removeAttr('data-block-path');
                         installedBlock.attr('data-id', data.id);
 
                         /*
