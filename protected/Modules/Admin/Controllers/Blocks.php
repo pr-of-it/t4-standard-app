@@ -53,6 +53,12 @@ class Blocks
         }
     }
 
+    public function actionGetFormForBlock($id)
+    {
+        $this->data->blocksAvailable = $this->app->config->blocks;
+        $this->data->block = Block::findByPK($id);
+    }
+
     public function actionUninstallBlock($id)
     {
         $block = Block::findByPK($id);

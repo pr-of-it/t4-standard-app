@@ -119,24 +119,18 @@
                         installedBlock.removeAttr('data-block-path');
                         installedBlock.attr('data-id', data.id);
 
-                        /*
-                        installedBlock.find('form :disabled').removeAttr('disabled');
-                        installedBlock.find('form').append('<div class="form-group"><div class="col-sm-offset-4 col-sm-8"><input type="submit" value="Сохранить" class="btn btn-default"></div></div>');
-                        */
-
-                        installedBlock.find('h4.panel-title').append('<button type="button" class="close pull-right block-uninstall" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>');
-
                         $('#collapse-'+sectionId+' .panel-body .row').append(installedBlock);
 
-                        /*
-                        installedBlock.find('form input[type=submit]').click(function (event) {
-                            saveBlockOptions($(this), event);
+                        installedBlock.find('.panel-body').load('/admin/blocks/getFormForBlock', {"id": data.id}, function() {
+                            installedBlock.find('form input[type=submit]').click(function (event) {
+                                saveBlockOptions($(this), event);
+                            });
+                            installedBlock.find('h4.panel-title').append('<button type="button" class="close pull-right block-uninstall" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>');
+                            installedBlock.find('.block-uninstall').click(function (event) {
+                                uninstallBlock($(this), event);
+                            });
                         });
-                        */
 
-                        installedBlock.find('.block-uninstall').click(function (event) {
-                            uninstallBlock($(this), event);
-                        });
                     };
                 });
             }
