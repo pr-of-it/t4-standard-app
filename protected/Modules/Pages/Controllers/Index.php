@@ -17,4 +17,12 @@ class Index
         $this->data->page = $page;
     }
 
+    public function actionPageById($id)
+    {
+        $page = Page::findByPK($id);
+        if (empty($page))
+            throw new E404Exception;
+        $this->data->page = $page;
+    }
+
 }

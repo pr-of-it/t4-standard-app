@@ -24,14 +24,26 @@ return [
         'options' => [],
     ],
 
-    '/Pages//PageByUrl' => [
+    '/Pages//PageById' => [
         'title' => 'Страница сайта',
         'desc' => 'Выводит выбранную страницу',
         'options' => [
+            'id' => [
+                'title' => 'Страница',
+                'type' => 'select:tree',
+                'model' => \App\Modules\Pages\Models\Page::class,
+                'default' => 1,
+            ]
+        ],
+        'cache' => ['time' => 60],
+    ],
+    '/Pages//PageByUrl' => [
+        'title' => 'Страница сайта',
+        'desc' => 'Выводит выбранную страницу по URL',
+        'options' => [
             'url' => [
                 'title' => 'URL',
-                'type' => 'select',
-                'model' => 'App\Modules\Pages\Models\Page',
+                'type' => 'string',
                 'default' => 'index',
             ]
         ],

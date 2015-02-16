@@ -76,6 +76,25 @@
             uninstallBlock($(this), event);
         });
 
+        saveBlockOptions = function (button, event) {
+            event.preventDefault();
+            button.removeClass('btn-success');
+            button.addClass('btn-warning');
+            var blockId = button.parents(".block-installed").attr('data-id');
+            var data = button.parents("form").serializeArray();
+            $.get('/admin/blocks/updateBlockOptions.json', {
+                id: blockId,
+                options: data
+            }, function (data) {
+                button.removeClass('btn-warning');
+                button.addClass('btn-success');
+            });
+            return false;
+        };
+        $("#accordion form input[type='submit']").click(function (event) {
+            saveBlockOptions($(this), event);
+        });
+
         $(".block-available-draggable").draggable({handle: ".panel-heading", cursor: "move", revert: true});
         $(".block-drop-area").droppable({
             accept: '.block-available-draggable',
@@ -90,7 +109,8 @@
                     if (data.result) {
                         var installedBlock = block.clone();
 
-                        installedBlock.removeClass('ui-draggable')
+                        installedBlock
+                                .removeClass('ui-draggable')
                                 .removeClass('ui-draggable-dragging')
                                 .removeClass('block-available-draggable');
                         installedBlock.removeAttr('style');

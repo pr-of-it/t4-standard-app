@@ -63,4 +63,28 @@ class Blocks
         }
     }
 
+    public function actionUpdateBlockOptions($id, $options)
+    {
+        $block = Block::findByPK($id);
+        if (empty($block)) {
+            $this->data->result = false;
+            return;
+        }
+        $opt = [];
+        foreach ($options as $option) {
+            if ('template' == $option['name']) {
+                $block->template = $option['value'];
+                continue;
+            }
+            $opt[$option['name']] = $option['value'];
+        }
+        $block->options = json_encode($opt);
+
+        if (false !== $block->save()) {
+            $this->data->result = true;
+        } else {
+            $this->data->result = false;
+        }
+    }
+
 }
