@@ -12,7 +12,6 @@ class Admin
 
     public function actionDefault()
     {
-        $this->app->extensions->jstree->init();
         $this->data->items = Menu::findAllTree();
     }
 

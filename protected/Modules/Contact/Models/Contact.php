@@ -23,4 +23,14 @@ class Contact
         ]
     ];
 
+    public function countAnswers($id)
+    {
+
+        //$res = $this->data->items = Contact::findByPK($id);
+        //$what = $res->answers->collect('__id');
+        //return $count = count($what);
+
+    }
+
+
 }

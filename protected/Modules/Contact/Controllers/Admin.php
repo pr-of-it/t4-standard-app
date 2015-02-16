@@ -13,14 +13,24 @@ class Admin
     extends Controller
 {
 
-    public function actionDefault()
+    const PAGE_SIZE = 20;
+
+    public function actionDefault($page = 1)
     {
-        $this->data->items = Contact::findAll();
-    }
+        $this->data->itemsCount = Contact::countAll();
+        $this->data->pageSize = self::PAGE_SIZE;
+        $this->data->activePage = $page;
+
+        $this->data->items = Contact::findAll([
+            'order' => 'datetime DESC',
+            'offset'=> ($page-1)*self::PAGE_SIZE,
+            'limit'=> self::PAGE_SIZE
+        ]);
+         }
+
 
     public function actionAnswer($id)
     {
-        $this->app->extensions->ckeditor->init();
         $this->data->item = Contact::findByPK($id);
     }
 
