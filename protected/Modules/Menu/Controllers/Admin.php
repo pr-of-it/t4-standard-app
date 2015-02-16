@@ -29,13 +29,13 @@ class Admin
 
     public function actionSave()
     {
-        if (!empty($_POST[Menu::PK])) {
-            $item = Menu::findByPK($_POST[Menu::PK]);
+        if (!empty($this->app->request->post->id)) {
+            $item = Menu::findByPK($this->app->request->post->id);
         } else {
             $item = new Menu();
         }
         $item
-            ->fill($_POST)
+            ->fill($this->app->request->post)
             ->save();
         $this->redirect('/admin/menu/');
     }

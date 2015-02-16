@@ -1,31 +1,49 @@
 <?php
 
 return [
-    '///' => [
-        'name' => 'Main page block'
-    ],
+
     '///Login' => [
-        'name' => 'Форма входа'
+        'title' => 'Форма входа',
+        'desc' => 'Форма входа на сайт',
+        'options' => [],
     ],
     '///Register' => [
-        'name' => 'Форма регистрации'
+        'title' => 'Форма регистрации',
+        'desc' => 'Форма регистрации пользователя',
+        'options' => [],
     ],
 
     '/News//' => [
-        'name' => 'Главная страница новостей',
+        'title' => 'Главная страница новостей',
+        'desc' => 'Главная страница модуля Новости в блоке',
+        'options' => [],
     ],
     '/News//One' => [
-        'name' => 'Выбранная новость по ID',
+        'title' => 'Новость',
+        'desc' => 'Выбранная по ID новость',
+        'options' => [],
     ],
 
+    '/Pages//PageById' => [
+        'title' => 'Страница сайта',
+        'desc' => 'Выводит выбранную страницу',
+        'options' => [
+            'id' => [
+                'title' => 'Страница',
+                'type' => 'select:tree',
+                'model' => \App\Modules\Pages\Models\Page::class,
+                'default' => 1,
+            ]
+        ],
+        'cache' => ['time' => 60],
+    ],
     '/Pages//PageByUrl' => [
-        'name' => 'Страница сайта',
-        'desc' => 'Выводит выбранную страницу в заданном шаблоне',
+        'title' => 'Страница сайта',
+        'desc' => 'Выводит выбранную страницу по URL',
         'options' => [
             'url' => [
                 'title' => 'URL',
-                'type' => 'select',
-                'model' => 'App\Modules\Pages\Models\Page',
+                'type' => 'string',
                 'default' => 'index',
             ]
         ],
@@ -33,12 +51,15 @@ return [
     ],
 
     '/Maps//Map' => [
-        'name' => 'Карта',
+        'title' => 'Карта',
         'desc' => 'Выводит блок с картой по ее ID',
+        'options' => [],
     ],
 
     '/Menu//' => [
-        'name'=> 'Меню сайта'
+        'title'=> 'Меню сайта',
+        'options' => [],
+        'cache' => ['time' => 60],
     ],
 
 ];

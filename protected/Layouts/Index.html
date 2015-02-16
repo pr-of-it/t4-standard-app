@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:t4="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,9 @@
 </nav>
 
 <div class="container">
+    <t4:section id="1" />
     {% block content %}{% endblock %}
+    <t4:section id="2" />
     <hr>
     <footer>
         <p>&copy; ProfIT</p>
