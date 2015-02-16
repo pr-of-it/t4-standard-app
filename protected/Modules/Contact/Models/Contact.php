@@ -16,21 +16,11 @@ class Contact
             'name' => ['type' => 'string'],
             'message' => ['type' => 'text'],
             '__user_id' => ['type' => 'link'],
+            '__answer_id'=>['type' => 'link']
         ],
         'relations' => [
-            'answers' => ['type' => self::HAS_MANY, 'model' => Answer::class],
+            'answers' => ['type' => self::BELONGS_TO, 'model' => Answer::class],
             'user' => ['type' => self::BELONGS_TO, 'model' => User::class]
         ]
     ];
-
-    public function countAnswers($id)
-    {
-
-        //$res = $this->data->items = Contact::findByPK($id);
-        //$what = $res->answers->collect('__id');
-        //return $count = count($what);
-
     }
-
-
-}

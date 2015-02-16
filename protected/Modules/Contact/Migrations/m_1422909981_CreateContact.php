@@ -15,10 +15,12 @@ class m_1422909981_CreateContact
             'email' => ['type' => 'string'],
             'name' => ['type' => 'string'],
             'message' => ['type' => 'text'],
-            '__user_id' => ['type' => 'string'],
+            '__answer_id' => ['type' => 'link'],
+            '__user_id' => ['type' => 'link'],
         ],
             [
                 'user' => ['columns' => ['__user_id']],
+                'answer' => ['columns' => ['__answer_id']]
             ]
         );
     }

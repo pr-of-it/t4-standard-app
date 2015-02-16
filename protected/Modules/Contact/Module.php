@@ -10,7 +10,7 @@ class Module
     public function getAdminMenu()
     {
         return [
-            ['title' => 'Сообщения', 'url' => '/admin/contact/'],
+            ['title' => 'Сообщения', 'icon' => '<i class="glyphicon glyphicon-envelope"></i>', 'url' => '/admin/contact/'],
         ];
     }
 

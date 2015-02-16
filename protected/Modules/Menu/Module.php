@@ -9,7 +9,7 @@ class Module
     public function getAdminMenu()
     {
         return [
-            ['title' => 'Меню', 'icon' => '<i class="glyphicon glyphicon-list-alt"></i>', 'url' => '/admin/menu/'],
+            ['title' => 'Меню', 'icon' => '<i class="glyphicon glyphicon-menu-hamburger"></i>', 'url' => '/admin/menu/'],
         ];
     }
 

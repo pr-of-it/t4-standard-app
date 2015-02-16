@@ -1,5 +1,16 @@
 {% extends 'Admin/Blank.html' %}
 
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/news/">Сообщения</a></li>
+    <li>Ответить</li>
+</ol>
+{% endblock %}
+
+{% block header %}
+Ответ
+{% endblock %}
 
 {% block content %}
 <div class="row">

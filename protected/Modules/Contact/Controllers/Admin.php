@@ -26,7 +26,7 @@ class Admin
             'offset'=> ($page-1)*self::PAGE_SIZE,
             'limit'=> self::PAGE_SIZE
         ]);
-         }
+    }
 
 
     public function actionAnswer($id)
@@ -34,7 +34,7 @@ class Admin
         $this->data->item = Contact::findByPK($id);
     }
 
-    public function actionSend($email = null, $theme, $message)
+    public function actionSend($email=null, $theme, $message)
     {
         $answer = new Answer();
         $answer->fill($this->app->request->post);

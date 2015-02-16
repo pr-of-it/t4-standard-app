@@ -13,10 +13,8 @@ class m_1423766698_CreateAnswer
         $this->createTable('answer', [
             'datetime' => ['type' => 'datetime'],
             'message' => ['type' => 'text'],
-            '__contact_id' => ['type' => 'link'],
         ],
             [
-                'contact' => ['columns' => ['__contact_id']]
             ]
         );
     }

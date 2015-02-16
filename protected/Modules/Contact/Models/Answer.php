@@ -13,10 +13,9 @@ class Answer
         'columns' => [
             'datetime' => ['type' => 'datetime'],
             'message' => ['type' => 'text'],
-            'contact_id' => ['type' => 'string'],
         ],
         'relations' => [
-            'contact' => ['type' => self::BELONGS_TO, 'model' => Contact::class],
+            'contact' => ['type' => self::HAS_MANY, 'model' => Contact::class],
         ]
     ];
 
