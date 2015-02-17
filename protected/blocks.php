@@ -37,18 +37,6 @@ return [
         ],
         'cache' => ['time' => 60],
     ],
-    '/Pages//PageByUrl' => [
-        'title' => 'Страница сайта',
-        'desc' => 'Выводит выбранную страницу по URL',
-        'options' => [
-            'url' => [
-                'title' => 'URL',
-                'type' => 'string',
-                'default' => 'index',
-            ]
-        ],
-        'cache' => ['time' => 60],
-    ],
 
     '/Maps//Map' => [
         'title' => 'Карта',

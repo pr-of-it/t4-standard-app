@@ -14,6 +14,10 @@ use T4\Orm\Model;
  * @property string $template
  * @property string $options
  * @property int $order
+ *
+ * @property \T4\Core\Config $config
+ * @property string $title
+ * @property string $desc
  */
 class Block
     extends Model
@@ -29,25 +33,35 @@ class Block
         ],
     ];
 
+    public function getConfig()
+    {
+        return
+            !empty(Application::getInstance()->config->blocks->{$this->path})
+            ? Application::getInstance()->config->blocks->{$this->path}
+            : [];
+    }
+
     public function getTitle()
     {
-        return Application::getInstance()->config->blocks->{$this->path}->title;
+        return $this->config ? $this->config->title : $this->path;
     }
 
     public function getDesc()
     {
-        return Application::getInstance()->config->blocks->{$this->path}->desc;
+        return $this->config ? $this->config->desc : '';
     }
 
     public function getAllOptions()
     {
         $_options = (array)json_decode($this->options, true);
         $ret = [];
-        foreach (Application::getInstance()->config->blocks->{$this->path}->options as $name => $option) {
-            if (isset($_options[$name])) {
-                $ret[$name] = $_options[$name];
-            } else {
-                $ret[$name] = isset($option->default) ? $option->default : '';
+        if (!empty($this->config)) {
+            foreach ($this->config->options as $name => $option) {
+                if (isset($_options[$name])) {
+                    $ret[$name] = $_options[$name];
+                } else {
+                    $ret[$name] = isset($option->default) ? $option->default : '';
+                }
             }
         }
         return $ret;
