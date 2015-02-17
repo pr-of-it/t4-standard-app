@@ -40,8 +40,16 @@ return [
 
     '/Maps//Map' => [
         'title' => 'Карта',
-        'desc' => 'Выводит блок с картой по ее ID',
-        'options' => [],
+        'desc' => 'Блок с заданной картой',
+        'options' => [
+            'id' => [
+                'title' => 'Карта',
+                'type' => 'select:model',
+                'model' => \App\Modules\Maps\Models\Map::class,
+                'default' => 1,
+            ]
+        ],
+        'cache' => ['time' => 60],
     ],
 
     '/Menu//' => [
