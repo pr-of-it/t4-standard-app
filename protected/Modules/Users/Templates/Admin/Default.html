@@ -19,16 +19,18 @@
 
 
 {% block content %}
-<div class="table-responsive">
-    <table class="table table-striped table-hover table-bordered">
-        <tr>
-            <th>E-MAIL</th>
+<div class="table-responsive ">
+    <table class="table table-striped table-hover table  ">
+        <tr class="info">
+            <th>E-MAIL пользователя</th>
+            <th>Действия</th>
+            <th></th>
         </tr>
         {% for item in items %}
         <tr>
             <td>{{item.email}}</td>
             <td><a href="/users/admin/edit?id={{item.Pk}}">Сменить пароль</a></td>
-            <td><a href="/admin/users/roleuser?id={{item.Pk}}">Роли</a></td>
+            <td><a href="/admin/users/roleuser?id={{item.Pk}}">Роли пользователя</a></td>
         </tr>
         {% endfor %}
     </table>

@@ -17,15 +17,16 @@ class Admin
 
     public function actionRoleUser($id)
     {
-        $users=User::findByPK($id);
-        $this->data->items=$users->roles;
-        $this->data->user=$users->email;
-        $this->data->itemsRole=Role::findAll();
+        $users = User::findByPK($id);
+        $this->data->id=$id;
+        $this->data->items = $users->roles;
+        $this->data->user = $users->email;
+        $this->data->roles = Role::findAll();
     }
 
     public function actionRoles()
     {
-        $this->data->items=Role::findAll();
+        $this->data->items = Role::findAll();
     }
 
     public function actionAddRole()
@@ -33,7 +34,16 @@ class Admin
 
     }
 
-    public function actionEdit($id='new')
+    public function actionAddRoleUser($id, $name)
+    {
+        $user = new User($id);
+        $user->roles->append($name);
+        $user->save();
+        $this->redirect("/Admin/Uesrs");
+
+    }
+
+    public function actionEdit($id = 'new')
     {
         if (null == $id || 'new' == $id) {
             $this->data->item = new Page();
