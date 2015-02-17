@@ -1,21 +1,21 @@
 {% extends 'index.html'%}
 
 {% block content %}
-<form class="form-horizontal" action="/contact//save" method="post">
+<form class="form-horizontal" action="/message/save" method="post">
     <input type="hidden" name="__user_id" value="{{app.user.Pk}}"/>
 
     <div >Имя</div>
 
     <div class="form-group">
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="name" id="name" placeholder="Ваше имя" required>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Ваше имя">
         </div>
         </div>
         <div>Email</div>
 
         <div class="form-group">
         <div class="col-sm-4">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Example@gmail.com" required value="{{ app.user.email }}">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Example@gmail.com" value="{{ app.user.email }}">
         </div>
     </div>
 
@@ -23,7 +23,7 @@
 
     <div class="form-group">
         <div class="col-sm-4">
-            <textarea class="form-control" rows="6" name="message" id="message" required></textarea>
+            <textarea class="form-control" rows="6" name="question" id="question"></textarea>
         </div>
     </div>
     <div class="form-group">

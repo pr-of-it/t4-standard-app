@@ -24,12 +24,17 @@
     {% for item in items %}
     <tr>
         <td>{{item.Pk}}</td>
-        <td>{{item.datetime|date('d.m.Y H:i')}}</td>
+        <td>{{item.q_datetime|date('d.m.Y H:i')}}</td>
         <td>{{item.email}}</td>
-        <td>{{item.message}}</td>
+        <td>{{item.question}}</td>
         <td style="white-space: nowrap">
-            <a class="btn btn-primary btn-sm" href="/admin/contact/answer?id={{item.Pk}}"><i class="fa fa-envelope fa-fw"></i></a>
-            <a class="btn btn-danger btn-sm" href="/admin/contact/answer/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
+            {% if not item.answer == NULL %}
+            <a class="btn btn-success btn-sm" href="#"><i class="glyphicon glyphicon-ok"></i></a>
+            {% else %}
+            <a class="btn btn-primary btn-sm" href="/admin/message/answer?id={{item.Pk}}"><i class="fa fa-envelope fa-fw"></i></a>
+            {% endif %}
+            <a class="btn btn-danger btn-sm" href="/admin/message/answer/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
+
         </td>
     </tr>
     {% endfor %}
