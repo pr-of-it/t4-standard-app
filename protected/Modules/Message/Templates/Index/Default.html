@@ -1,6 +1,13 @@
 {% extends 'index.html'%}
 
 {% block content %}
+
+{% if app.flash.errors is defined %}
+{% for error in app.flash.errors %}
+<div class="alert alert-danger" role="alert">{{error.message}}</div>
+{% endfor %}
+{% endif %}
+
 <form class="form-horizontal" action="/message/save" method="post">
     <input type="hidden" name="__user_id" value="{{app.user.Pk}}"/>
 

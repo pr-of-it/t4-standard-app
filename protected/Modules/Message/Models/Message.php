@@ -27,10 +27,9 @@ class Message
     {
         if ($this->isNew()) {
             $this->q_datetime = date('Y-m-d H:i:s', time());
-        }
-        else {
+        } else {
             $this->a_datetime = date('Y-m-d H:i:s', time());
         }
         return true;
     }
-    }
+}
