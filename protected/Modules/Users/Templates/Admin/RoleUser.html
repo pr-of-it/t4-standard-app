@@ -15,14 +15,14 @@
 
 {% block toolbar %}
 <div class="btn-group">
-    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-plus-sign"></i>
+    <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-plus-sign"></i>
         Добавить роль пользователю
         <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         {% for item in roles %}
         <li>
-            <a href="/admin/users/addroleuser?id={{ id }}&name={{item.name }}">{{ item.title }}</a>
+            <a href="/admin/users/roleuser?id={{ id }}&namerole={{item.name }}">{{ item.title }}</a>
         </li>
         {% endfor %}
     </ul>
@@ -41,7 +41,7 @@
         {% for item in items %}
         <tr>
             <td>{{ item.name }}</td>
-            <td><a href="/admin/users/addrole?id={{item.Pk}}">Добавить роль</a></td>
+            <td><a href="/admin/users/DeleteRoleUser?id={{ id }}&namerole={{item.name }}">Удалить роль</a></td>
         </tr>
         {% endfor %}
     </table>
