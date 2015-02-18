@@ -17,8 +17,8 @@ return [
         'method' => 'smtp',
         'host' =>'smtp.gmail.com',
         'auth' =>[
-            'username'=>'',
-            'password'=> ''
+            'username'=>'veramir10@gmail.com',
+            'password'=> 'vera23139'
         ],
         'port' => '587',
         'secure' => 'tls',
