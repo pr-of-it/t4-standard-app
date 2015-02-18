@@ -32,4 +32,15 @@ class Message
         }
         return true;
     }
+
+    public function validate($data){
+        if (filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                return true;
+        }
+        else
+            return false;
+    }
+
+
+
 }

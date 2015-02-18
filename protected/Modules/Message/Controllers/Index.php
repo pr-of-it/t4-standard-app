@@ -5,6 +5,7 @@ namespace App\Modules\Message\Controllers;
 
 use App\Models\User;
 use App\Modules\Message\Models\Message;
+use App\Components\Auth\MultiException;
 use T4\Mvc\Controller;
 
 class Index
@@ -28,11 +29,6 @@ class Index
         if (empty($data['email'])) {
             $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
-        if (!empty($data['email'])) {
-            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                $errors->add('Введите корректный адрес эл.почты');
-            }
-        }
         if (empty($data['question'])) {
             $errors->add('Напишите Ваш вопрос');
         }
@@ -47,7 +43,7 @@ class Index
             $question = new Message();
             $question->fill($this->app->request->post);
             $question->save();
-        } catch (\App\Modules\Message\Controllers\MultiException $e) {
+        } catch (\App\Components\Auth\MultiException $e) {
             $this->app->flash->errors = $e;
         }
         $this->redirect('/message');
