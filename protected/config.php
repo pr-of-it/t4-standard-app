@@ -42,7 +42,8 @@ return [
         'sxgeo' => [
         ],
         'captcha' => [
-            'show' => false,
+            'register'=>[
+                'show' => true,],
         ],
     ],
 ];
