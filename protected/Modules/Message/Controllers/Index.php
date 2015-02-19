@@ -13,6 +13,7 @@ class Index
 {
 
     const ERROR_INVALID_EMAIL = 100;
+    const ERROR_INVALID_CAPTCHA = 102;
 
     public function actionDefault()
     {
