@@ -49,6 +49,7 @@ class Index
             $question = new Message();
             $question->fill($this->app->request->post);
             $question->save();
+            $this->app->flash->message = 'Ваше письмо успешно отправлено!';
         } catch (\App\Components\Auth\MultiException $e) {
             $this->app->flash->errors = $e;
         }

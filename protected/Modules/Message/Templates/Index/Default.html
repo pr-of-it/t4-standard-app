@@ -8,6 +8,10 @@
 {% endfor %}
 {% endif %}
 
+{% if app.flash.message is defined %}
+<div class="alert alert-success " role="alert">{{ app.flash.message }}</div>
+{% endif %}
+
 <form class="form-horizontal" action="/message/save" method="post">
     <input type="hidden" name="__user_id" value="{{app.user.Pk}}"/>
 
