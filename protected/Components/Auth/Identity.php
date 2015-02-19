@@ -87,7 +87,7 @@ class Identity
             $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
         }
 
-        if (isset($data->captcha)) {
+        if (Application::getInstance()->config->extensions->captcha->register) {
             if (!Application::getInstance()->extensions->captcha->checkKeyString($data->captcha)) {
                 $errors->add('Не правильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
             }

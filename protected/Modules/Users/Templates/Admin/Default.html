@@ -29,7 +29,7 @@
         {% for item in items %}
         <tr>
             <td>{{item.email}}</td>
-            <td><a href="/users/admin/edit?id={{item.Pk}}">Сменить пароль</a></td>
+            <td><a href="/admin/users/CheckPassword?id={{item.Pk}}">Сменить пароль</a></td>
             <td><a href="/admin/users/roleuser?id={{item.Pk}}">Роли пользователя</a></td>
         </tr>
         {% endfor %}
