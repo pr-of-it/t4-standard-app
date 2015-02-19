@@ -15,6 +15,7 @@
 {% block content %}
 <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/message/send">
     <input type="hidden" name="id" value="{{item.Pk}}"/>
+    <input type="hidden" name="email" value="{{item.email}}"/>
 <table class="table table-striped table-hover">
     <tr>
         <td>От кого</td>
