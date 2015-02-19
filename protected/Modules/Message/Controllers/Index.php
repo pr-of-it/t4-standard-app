@@ -33,6 +33,11 @@ class Index
         if (empty($data['question'])) {
             $errors->add('Напишите Ваш вопрос');
         }
+        if ($this->app->config->extensions->captcha->message) {
+            if (!$this->app->extensions->captcha->checkKeyString($data['captcha'])) {
+                $errors->add('Не правильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
+            }
+        }
         if (!$errors->isEmpty())
             throw $errors;
     }

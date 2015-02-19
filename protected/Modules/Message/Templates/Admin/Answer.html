@@ -13,19 +13,48 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="row">
+    <div class="col-md-2">.col-md-8</div>
+    <div class="col-md-10">.col-md-4</div>
+</div>
+
+    <div class="row">
     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/message/send">
         <input type="hidden" name="id" value="{{item.Pk}}"/>
 
         <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-1">
-                <strong>От кого:</strong>
+            <div class="col-sm-2 control-label">
+                <strong>От кого</strong>
             </div>
             <div class="col-sm-10">{{item.email}}</div>
-            <div class="col-sm-offset-1 col-sm-10">
-                <br><strong>Сообщение: </strong> {{item.question}}
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <strong>Сообщение</strong>
+            </div>
+            <div class="col-sm-10">
+                {{item.question}}
             </div>
         </div>
+
+        {% if not item.answer == NULL %}
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <strong>Вы</strong>
+            </div>
+            <div class="col-sm-10">
+                {{item.a_datetime}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <strong>Ответ</strong>
+            </div>
+            <div class="col-sm-10">{{item.answer | raw }}</div>
+        </div>
+
+        {% else %}
         <div class="form-group">
             <label for="theme" class="col-sm-2 control-label">Тема</label>
 
@@ -35,14 +64,18 @@
         </div>
         <div class="form-group">
             <label for="answer" class="col-sm-2 control-label">Сообщение</label>
+
             <div class="col-sm-10">
-                 <t4:editor name="answer"></t4:editor>
+                <t4:editor name="answer"></t4:editor>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">Отправить</button>
-                <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+                {% endif %}
+                <button type="button" class="btn btn-default" onclick="window.history.back();">
+                    {% if not item.answer == NULL %}Назад{% else %}Отменить{% endif %}
+                </button>
             </div>
         </div>
     </form>

@@ -33,6 +33,11 @@ class Admin
         $this->data->item = Message::findByPK($id);
     }
 
+    public function actionView($id)
+    {
+        $this->data->id = $id;
+    }
+
     public function actionSend($id, $email = null, $theme, $answer)
     {
         $message = Message::findByPK($id);
