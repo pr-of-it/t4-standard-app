@@ -22,8 +22,8 @@ class Admin
 
         $this->data->items = Message::findAll([
             'order' => 'q_datetime DESC',
-            'offset'=> ($page-1)*self::PAGE_SIZE,
-            'limit'=> self::PAGE_SIZE
+            'offset' => ($page - 1) * self::PAGE_SIZE,
+            'limit' => self::PAGE_SIZE
         ]);
     }
 
@@ -33,14 +33,22 @@ class Admin
         $this->data->item = Message::findByPK($id);
     }
 
-    public function actionSend($id, $email = null, $theme, $answer)
+    public function actionDelete($id)
+    {
+        $item = Message::findByPK($id);
+        if ($item)
+            $item->delete();
+        $this->redirect('/admin/message/');
+    }
+
+    public function actionSend($id, $email, $theme, $answer)
     {
         $message = Message::findByPK($id);
         $message->fill($this->app->request->post);
         $message->save();
 
         $mail = new Sender();
-        $mail->sendMail('verablajennaya@mail.ru', $theme, $answer);
+        $mail->sendMail($email, $theme, $answer);
         $this->redirect('/admin/message');
     }
 
