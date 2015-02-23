@@ -2,11 +2,9 @@
 
 {% block content %}
 
-{% if app.flash.errors is defined %}
-{% for error in app.flash.errors %}
+{% for error in errors %}
 <div class="alert alert-danger" role="alert">{{ error.message }}</div>
 {% endfor %}
-{% endif %}
 
 <h2>Вход на сайт</h2>
 
