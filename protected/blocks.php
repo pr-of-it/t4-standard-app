@@ -24,7 +24,7 @@ return [
         'options' => [],
     ],
 
-    '/Pages//PageById' => [
+    '/Pages//PageByUrl' => [
         'title' => 'Страница сайта',
         'desc' => 'Выводит выбранную страницу',
         'options' => [
