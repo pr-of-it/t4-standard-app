@@ -81,4 +81,17 @@ class Admin
         }
     }
 
+    public  function actionCheckPassword($id, $password=null)
+    {
+        if(null==$password){
+            $this->data->user=User::findByPk($id);
+        } else {
+            $user=User::findByPk($id);
+            $user->password = \T4\Crypt\Helpers::hashPassword($password);
+            $user->save();
+            $this->redirect('admin/users');
+        }
+
+    }
+
 }

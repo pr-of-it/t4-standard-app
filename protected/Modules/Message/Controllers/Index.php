@@ -5,6 +5,7 @@ namespace App\Modules\Message\Controllers;
 
 use App\Models\User;
 use App\Modules\Message\Models\Message;
+use App\Components\Auth\MultiException;
 use T4\Mvc\Controller;
 
 class Index
@@ -12,6 +13,7 @@ class Index
 {
 
     const ERROR_INVALID_EMAIL = 100;
+    const ERROR_INVALID_CAPTCHA = 102;
 
     public function actionDefault()
     {
@@ -28,13 +30,13 @@ class Index
         if (empty($data['email'])) {
             $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
-        if (!empty($data['email'])) {
-            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                $errors->add('Введите корректный адрес эл.почты');
-            }
-        }
         if (empty($data['question'])) {
             $errors->add('Напишите Ваш вопрос');
+        }
+        if ($this->app->config->extensions->captcha->message) {
+            if (!$this->app->extensions->captcha->checkKeyString($data['captcha'])) {
+                $errors->add('Не правильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
+            }
         }
         if (!$errors->isEmpty())
             throw $errors;
@@ -47,7 +49,8 @@ class Index
             $question = new Message();
             $question->fill($this->app->request->post);
             $question->save();
-        } catch (\App\Modules\Message\Controllers\MultiException $e) {
+            $this->app->flash->message = 'Ваше письмо успешно отправлено!';
+        } catch (\App\Components\Auth\MultiException $e) {
             $this->app->flash->errors = $e;
         }
         $this->redirect('/message');

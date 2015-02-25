@@ -23,7 +23,7 @@ class Index
                 $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
             } catch (\App\Components\Auth\MultiException $e) {
-                $this->app->flash->errors = $e;
+                $this->data->errors = $e;
             }
             $this->data->email = $login->email;
         }
@@ -46,7 +46,7 @@ class Index
                 $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                 $this->redirect('/');
             } catch (\App\Components\Auth\MultiException $e) {
-                $this->app->flash->errors = $e;
+                $this->data->errors = $e;
             }
             $this->data->email = $register->email;
         }
@@ -55,6 +55,7 @@ class Index
     public function actionCaptcha()
     {
         $this->app->extensions->captcha->generateImage();
+        die;
     }
 
 }

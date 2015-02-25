@@ -1,6 +1,6 @@
 <p>{{block.desc}}</p>
 <form class="form-horizontal" role="form">
-    {% for name, value in block.getAllOptions %}
+    {% for name, value in block.allOptions %}
     <div class="form-group">
         <label class="col-sm-4 control-label">{{blocksAvailable[block.path].options[name].title}}</label>
         <div class="col-sm-8">
@@ -22,6 +22,6 @@
     </div>
     {% endif %}
     <footer class="col-sm-offset-4 col-sm-8">
-        <input type="submit" value="Сохранить" class="btn btn-success"{% if not block.getAllOptions %} disabled{% endif %}>
+        <input type="submit" value="Сохранить" class="btn btn-success"{% if not block.getAllOptions %}{% if not block.allTemplates %} disabled{% endif %}{% endif %}>
     </footer>
 </form>

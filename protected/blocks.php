@@ -54,6 +54,7 @@ return [
 
     '/Menu//' => [
         'title'=> 'Меню сайта',
+        'desc' => 'Главное меню',
         'options' => [],
         'cache' => ['time' => 60],
     ],

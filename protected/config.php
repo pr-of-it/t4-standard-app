@@ -17,9 +17,10 @@ return [
         'method' => 'smtp',
         'host' =>'smtp.gmail.com',
         'auth' =>[
-            'username'=>'veramir10@gmail.com',
-            'password'=> 'vera23139'
+            'username'=>'phpsendertesting@gmail.com',
+            'password'=> 'vera1234567'
         ],
+        'sender' => 'Sender',
         'port' => '587',
         'secure' => 'tls',
         ],
@@ -42,7 +43,8 @@ return [
         'sxgeo' => [
         ],
         'captcha' => [
-            'show' => false,
+            'register' => true,
+            'message' => true,
         ],
     ],
 ];

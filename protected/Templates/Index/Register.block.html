@@ -18,14 +18,13 @@
         </div>
     </div>
 
-    {% if  app.config.extensions.captcha.show  %}
+    {% if  app.config.extensions.captcha.register  %}
     <div class="form-group">
-        <label for="register[password2]" class="col-sm-2 control-label"></label>
+        <label class="col-sm-2 control-label"></label>
         <div class="col-sm-10">
             <img src="/captcha">
         </div>
     </div>
-
     <div class="form-group">
         <label for="register[captcha]" class="col-sm-2 control-label">Вы не робот ?</label>
         <div class="col-sm-10">

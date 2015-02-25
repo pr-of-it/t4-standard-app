@@ -23,6 +23,14 @@ class Message
         ]
     ];
 
+    public function validate(){
+        if (filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            return true;
+        }
+        else
+            return false;
+    }
+
     public function beforeSave()
     {
         if ($this->isNew()) {
@@ -32,4 +40,9 @@ class Message
         }
         return true;
     }
+
+
+
+
+
 }
