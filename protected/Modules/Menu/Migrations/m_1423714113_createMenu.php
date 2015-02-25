@@ -24,6 +24,35 @@ class m_1423714113_createMenu
             ],
             ['tree']
         );
+
+        $this->insert('menu', [
+                'title'=>'Админ-панель',
+                'url' =>'/admin',
+                '__lft' =>'1',
+                '__rgt'=>'2',
+                '__lvl'=>'0',
+                '__prt' =>'0',
+            ]
+            );
+        $this->insert('menu', [
+                'title'=>'Контакты',
+                'url' =>'/message',
+                '__lft' =>'3',
+                '__rgt'=>'4',
+                '__lvl'=>'0',
+                '__prt' =>'0',
+            ]
+        );
+        $this->insert('menu', [
+                'title'=>'Регистрация',
+                'url' =>'/register',
+                '__lft' =>'5',
+                '__rgt'=>'6',
+                '__lvl'=>'0',
+                '__prt' =>'0',
+            ]
+        );
+
     }
 
     public function down()
