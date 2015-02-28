@@ -23,14 +23,16 @@
     <table class="table table-striped table-hover table  ">
         <tr class="info">
             <th>E-MAIL пользователя</th>
+            <th></th>
             <th>Действия</th>
             <th></th>
         </tr>
         {% for item in items %}
         <tr>
-            <td>{{item.email}}</td>
-            <td><a href="/admin/users/CheckPassword?id={{item.Pk}}">Сменить пароль</a></td>
-            <td><a href="/admin/users/roleuser?id={{item.Pk}}">Роли пользователя</a></td>
+            <td>{{items.email}}</td>
+            <td><a class="btn btn-primary" href="/admin/users/CheckPassword?id={{item.Pk}}">Сменить пароль</a></td>
+            <td><a class="btn btn-primary" href="/admin/users/roleuser?id={{item.Pk}}">Роли пользователя</a></td>
+            <td><a class="btn btn-danger" href="/admin/users/roleuser?id={{item.Pk}}">Удалить пользователя</a></td>
         </tr>
         {% endfor %}
     </table>

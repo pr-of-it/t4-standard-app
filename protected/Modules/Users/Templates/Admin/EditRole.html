@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block header %}
-Добавление роли
+{% if item.isNew %}Добавление роли{% else %}Редактирование роли{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -21,16 +21,16 @@
         {% endif %}
 
         <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">Добавить роль</label>
+            <label for="title" class="col-sm-2 control-label">Назначение роли</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Назначение роли" >
+                <input type="text" class="form-control" id="title" name="title" placeholder="Назначение роли" value="{{ item.title }}" >
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">роль</label>
+            <label class="col-sm-2 control-label">Имя роли</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="роль" >
+                <input type="text" class="form-control" id="name" name="name" placeholder="имя роли" value="{{ item.name }}">
             </div>
         </div>
 
@@ -38,7 +38,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
                 <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
-                {% if not item.isNew %}<a href="/admin/pages/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
+                {% if not item.isNew %}<a href="/admin/users/DeleteRole/?name={{item.name}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
             </div>
         </div>
 

@@ -9,28 +9,26 @@ use App\Models\Role;
 class Admin
     extends Controller
 {
-
     public function actionDefault()
     {
         $this->data->items = User::findAll();
     }
 
-    public function actionRoleUser($id, $namerole=null)
+    public function actionRoleUser($id, $namerole = null)
     {
-        if(null==$namerole){
+        if (null == $namerole) {
             $users = User::findByPK($id);
-            $this->data->id=$id;
-            $this->data->items = $users->roles;
-            $this->data->roles = Role::findAll();
-            $this->data->user = $users->email;
+            $this->data->addrole = array_diff(Role::findAll()->collect('title'), $users->roles->collect('title'));
+            $this->data->users = $users->email;
+            $this->data->userrole = $users->roles;
+            $this->data->id = $id;
         } else {
             $user = User::findByPk($id);
-            $role = Role::findByName($namerole);
+            $role = Role::findByTitle($namerole);
             $user->roles->append($role);
             $user->save();
-            $this->redirect($this->app->request->url->host );
+            $this->redirect('/admin/users/RoleUser?id=' . $id);
         }
-
     }
 
     public function actionRoles()
@@ -38,18 +36,13 @@ class Admin
         $this->data->items = Role::findAll();
     }
 
-    public function actionAddRole()
+    public function actionEditRole($name = 'new')
     {
+        if ('new' == $name) {
+            $this->data->item = new Role();
 
-    }
-
-
-    public function actionEdit($id = 'new')
-    {
-        if (null == $id || 'new' == $id) {
-            $this->data->item = new Page();
         } else {
-            $this->data->item = Page::findByPK($id);
+            $this->data->item = Role::findByName($name);
         }
     }
 
@@ -61,7 +54,7 @@ class Admin
             $item = new Role();
 
         } else {
-            $item = Page::findByPK($id);
+            $item = Role::findByPK($id);
         }
 
         $item->fill($this->app->request->post);
@@ -69,29 +62,31 @@ class Admin
         $this->redirect('/admin/users/roles/');
     }
 
-    public function actionDeleteRoleUser($id, $namerole)
+    public function actionDeleteRoleUser($id, $namerole, $idrole)
     {
-        if($namerole!='admin'){
-            die();
+        if ($namerole != 'admin') {
             $user = User::findByPk($id);
-            $role = Role::findByName($namerole);
-            $user->roles->delete($role);
+            unset($user->roles[$idrole]);
             $user->save();
-            $this->redirect('/admin/users');
+            $this->redirect('/admin/users/RoleUser?id=' . $id);
         }
     }
 
-    public  function actionCheckPassword($id, $password=null)
+    public function actionCheckPassword($id, $password = null)
     {
-        if(null==$password){
-            $this->data->user=User::findByPk($id);
+        if (null == $password) {
+            $this->data->user = User::findByPk($id);
         } else {
-            $user=User::findByPk($id);
+            $user = User::findByPk($id);
             $user->password = \T4\Crypt\Helpers::hashPassword($password);
             $user->save();
             $this->redirect('admin/users');
         }
-
     }
 
+    public function actionDeleteRole($name)
+    {
+        Role::findByName($name)->delete();
+        $this->redirect('/admin/users/Roles');
+    }
 }

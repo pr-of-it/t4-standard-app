@@ -9,7 +9,7 @@ class Module
     public function getAdminMenu()
     {
         return [
-                ['title' => 'Страницы', 'url' => '/admin/pages/'],
+                ['title' => 'Страницы','icon' => '<i class="glyphicon glyphicon-list-alt"></i>', 'url' => '/admin/pages/'],
         ];
     }
 

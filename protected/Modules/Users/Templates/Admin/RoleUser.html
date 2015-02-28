@@ -20,9 +20,9 @@
         <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-        {% for item in roles %}
+        {% for item in addrole %}
         <li>
-            <a href="/admin/users/roleuser?id={{ id }}&namerole={{item.name }}">{{ item.title }}</a>
+            <a href="/admin/users/roleuser?id={{ id }}&namerole={{item }}">{{ item }}</a>
         </li>
         {% endfor %}
     </ul>
@@ -35,13 +35,19 @@
 <div class="table-responsive">
     <table class="table table-striped table-hover ">
         <tr class="info">
-            <th>{{ user }}</th>
-            <th> </th>
+            <th>{{ users }}</th>
+            <th> Назначение роли</th>
+            <th></th>
         </tr>
-        {% for item in items %}
+        {% for item in userrole %}
         <tr>
             <td>{{ item.name }}</td>
-            <td><a href="/admin/users/DeleteRoleUser?id={{ id }}&namerole={{item.name }}">Удалить роль</a></td>
+            <td>{{ item.title }}</td>
+            {% if  item.name == "admin" %}
+            <td> <a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-warning-sign"></i></a></td>
+            {% else %}
+            <td><a class="btn btn-primary"  href="/admin/users/DeleteRoleUser?id={{ id }}&namerole={{ item.name }}&idrole={{ loop.index-1 }}">Удалить роль</a></td>
+            {% endif%}
         </tr>
         {% endfor %}
     </table>
