@@ -75,7 +75,7 @@ class __TwigTemplate_955d2b1cd3a2cd61e3d035726738ac0ff5819d5a7587713abf026d963ee
             echo "        <tr>
             <td>";
             // line 32
-            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["users"]) ? $context["users"] : null), "email", array()), "html", null, true);
+            echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "email", array()), "html", null, true);
             echo "</td>
             <td><a class=\"btn btn-primary\" href=\"/admin/users/CheckPassword?id=";
             // line 33
@@ -85,17 +85,23 @@ class __TwigTemplate_955d2b1cd3a2cd61e3d035726738ac0ff5819d5a7587713abf026d963ee
             // line 34
             echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "Pk", array()), "html", null, true);
             echo "\">Роли пользователя</a></td>
-            <td><a class=\"btn btn-danger\" href=\"/admin/users/roleuser?id=";
+            ";
             // line 35
-            echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "Pk", array()), "html", null, true);
-            echo "\">Удалить пользователя</a></td>
-        </tr>
+            if (($this->getAttribute($context["item"], "email", array()) != "admin@t4.org")) {
+                // line 36
+                echo "            <td><a class=\"btn btn-danger\" href=\"/admin/users/DeleteUser?id=";
+                echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "Pk", array()), "html", null, true);
+                echo "\">Удалить пользователя</a></td>
+            ";
+            }
+            // line 38
+            echo "        </tr>
         ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['item'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 38
+        // line 40
         echo "    </table>
 </div>
 ";
@@ -113,6 +119,6 @@ class __TwigTemplate_955d2b1cd3a2cd61e3d035726738ac0ff5819d5a7587713abf026d963ee
 
     public function getDebugInfo()
     {
-        return array (  99 => 38,  90 => 35,  86 => 34,  82 => 33,  78 => 32,  75 => 31,  71 => 30,  61 => 22,  58 => 21,  53 => 16,  50 => 15,  45 => 12,  42 => 11,  34 => 5,  31 => 4,);
+        return array (  105 => 40,  98 => 38,  92 => 36,  90 => 35,  86 => 34,  82 => 33,  78 => 32,  75 => 31,  71 => 30,  61 => 22,  58 => 21,  53 => 16,  50 => 15,  45 => 12,  42 => 11,  34 => 5,  31 => 4,);
     }
 }

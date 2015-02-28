@@ -89,4 +89,11 @@ class Admin
         Role::findByName($name)->delete();
         $this->redirect('/admin/users/Roles');
     }
+
+    public function actionDeleteUser($id)
+    {
+        User::findByPk($id)->delete();
+        $this->redirect('/admin/users');
+    }
+
 }
