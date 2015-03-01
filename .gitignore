@@ -2,4 +2,4 @@
 .idea
 t4/
 www/Assets/
-www/Cache/
+protected/Cache/
