@@ -4,3 +4,5 @@ t4/
 www/Assets/
 public/Assets/
 protected/Cache/
+public/Cache/
+www/Cache/
