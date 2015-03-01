@@ -15,20 +15,20 @@ return [
     ],
     'mail' => [
         'method' => 'smtp',
-        'host' =>'smtp.gmail.com',
-        'auth' =>[
-            'username'=>'phpsendertesting@gmail.com',
-            'password'=> 'vera1234567'
+        'host' => 'smtp.gmail.com',
+        'auth' => [
+            'username' => 'phpsendertesting@gmail.com',
+            'password' => 'vera1234567'
         ],
         'sender' => 'Sender',
         'port' => '587',
         'secure' => 'tls',
-        ],
+    ],
     'extensions' => [
         'jquery' => [
         ],
         'bootstrap' => [
-			'location' => 'local',
+            'location' => 'local',
             'theme' => 'cerulean',
         ],
         'ckeditor' => [
