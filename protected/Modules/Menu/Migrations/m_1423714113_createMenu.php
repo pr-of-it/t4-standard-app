@@ -44,8 +44,8 @@ class m_1423714113_createMenu
             ]
         );
         $this->insert('menu', [
-                'title'=>'Регистрация',
-                'url' =>'/register',
+                'title'=>'Новости',
+                'url' =>'/news',
                 '__lft' =>'5',
                 '__rgt'=>'6',
                 '__lvl'=>'0',
