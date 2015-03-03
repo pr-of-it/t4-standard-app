@@ -74,14 +74,20 @@ class Admin
 
     public function actionCheckPassword($id, $password = null)
     {
-        if (null == $password) {
-            $this->data->user = User::findByPk($id);
-        } else {
-            $user = User::findByPk($id);
-            $user->password = \T4\Crypt\Helpers::hashPassword($password);
-            $user->save();
-            $this->redirect('admin/users');
+        $user = User::findByPK($id);
+        $this->data->user = $user;
+        $this->data->resalt = false;
+        if (isset($_POST['submit'])) {
+            if (null == $password) {
+                $this->data->message = "Пароль не может быть пустым";
+            } else {
+                $user->password = \T4\Crypt\Helpers::hashPassword($password);
+                $user->save();
+                $this->data->message = "Пароль  для ".$user->email." установлен" ;
+                $this->data->resalt = true;
+            }
         }
+
     }
 
     public function actionDeleteRole($name)
