@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Components\Auth\Identity;
 use T4\Mvc\Controller;
 use App\Models\User;
+use T4\Mail\Sender;
+use T4\Core\Session;
 
 class Index
     extends Controller
@@ -56,6 +58,28 @@ class Index
     {
         $this->app->extensions->captcha->generateImage();
         die;
+    }
+
+    public function actionRestorePassword($restore=null,$step=0)
+    {
+        if (null !== $restore) {
+            try {
+                $identity = new Identity();
+                $user = $identity->restorePassword($restore,$step);
+                if (null == Session::get('contolstring')) {
+                    $controlstring='abc';
+                    Session::set('controlstring',$controlstring);
+                    $mail = new Sender();
+                    $mail->sendMail($restore->email, 'Востановление пароля', 'Для восстановления пароля введите этот код: '.$controlstring);
+                    $this->data->step=true;
+                    $step=2;
+                }
+            } catch (\App\Components\Auth\MultiException $e) {
+                $this->data->errors = $e;
+            }
+        } else {
+            $this->data->check=false;
+        }
     }
 
 }
