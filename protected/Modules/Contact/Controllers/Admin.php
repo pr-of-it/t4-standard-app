@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Message\Controllers;
+namespace App\Modules\Contact\Controllers;
 
 
 use App\Components\Admin\Controller;
-use App\Modules\Message\Models\Message;
+use App\Modules\Contact\Models\Contact;
 use T4\Mail\Sender;
 
 
@@ -16,11 +16,11 @@ class Admin
 
     public function actionDefault($page = 1)
     {
-        $this->data->itemsCount = Message::countAll();
+        $this->data->itemsCount = Contact::countAll();
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
 
-        $this->data->items = Message::findAll([
+        $this->data->items = Contact::findAll([
             'order' => 'q_datetime DESC',
             'offset' => ($page - 1) * self::PAGE_SIZE,
             'limit' => self::PAGE_SIZE
@@ -30,12 +30,12 @@ class Admin
 
     public function actionAnswer($id)
     {
-        $this->data->item = Message::findByPK($id);
+        $this->data->item = Contact::findByPK($id);
     }
 
     public function actionDelete($id)
     {
-        $item = Message::findByPK($id);
+        $item = Contact::findByPK($id);
         if ($item)
             $item->delete();
         $this->redirect('/admin/message/');
@@ -43,13 +43,13 @@ class Admin
 
     public function actionSend($id, $email, $theme, $answer)
     {
-        $message = Message::findByPK($id);
+        $message = Contact::findByPK($id);
         $message->fill($this->app->request->post);
         $message->save();
 
         $mail = new Sender();
         $mail->sendMail($email, $theme, $answer);
-        $this->redirect('/admin/message');
+        $this->redirect('/admin/contact');
     }
 
 }

@@ -36,7 +36,7 @@ class m_1423714113_createMenu
             );
         $this->insert('menu', [
                 'title'=>'Контакты',
-                'url' =>'/message',
+                'url' =>'/contact',
                 '__lft' =>'3',
                 '__rgt'=>'4',
                 '__lvl'=>'0',
