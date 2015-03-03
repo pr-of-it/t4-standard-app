@@ -83,8 +83,12 @@ class Identity
             $errors->add('Не введено подтверждение пароля', self::ERROR_INVALID_PASSWORD);
         }
 
-        if ( $data->password2 != $data->password) {
+        if ($data->password2 != $data->password) {
             $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+        }
+
+        if (0 == preg_match('~^[a-zA-Z0-9_]{6,}$~', $data->password)) {
+            $errors->add('Пароль не отвечает условиям сложности');
         }
 
         if (Application::getInstance()->config->extensions->captcha->register) {
