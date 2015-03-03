@@ -3,7 +3,7 @@
 {% block breadcrumbs %}
 <ol class="breadcrumb">
     <li><a href="/admin/">Админ-панель</a></li>
-    <li><a href="/admin/message/">Сообщения</a></li>
+    <li><a href="/admin/contact/">Сообщения</a></li>
     <li>Ответить</li>
 </ol>
 {% endblock %}
@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/message/send">
+<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/contact/send">
     <input type="hidden" name="id" value="{{item.Pk}}"/>
     <input type="hidden" name="email" value="{{item.email}}"/>
 <table class="table table-striped table-hover">

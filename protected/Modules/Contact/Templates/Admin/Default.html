@@ -29,17 +29,17 @@
         <td>{{item.question}}</td>
         <td style="white-space: nowrap">
             {% if not item.answer == NULL %}
-            <a class="btn btn-success btn-sm" href="/admin/message/answer?id={{item.Pk}}"><i class="glyphicon glyphicon-ok"></i></a>
+            <a class="btn btn-success btn-sm" href="/admin/contact/answer?id={{item.Pk}}"><i class="glyphicon glyphicon-ok"></i></a>
             {% else %}
-            <a class="btn btn-primary btn-sm" href="/admin/message/answer?id={{item.Pk}}"><i class="fa fa-envelope fa-fw"></i></a>
+            <a class="btn btn-primary btn-sm" href="/admin/contact/answer?id={{item.Pk}}"><i class="fa fa-envelope fa-fw"></i></a>
             {% endif %}
-            <a class="btn btn-danger btn-sm" href="/admin/message/delete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
+            <a class="btn btn-danger btn-sm" href="/admin/contact/delete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
 
         </td>
     </tr>
     {% endfor %}
 </table>
 
-<div class="row">{{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/message/?page=%d'})}}</div>
+<div class="row">{{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/contact/?page=%d'})}}</div>
 
 {% endblock %}
