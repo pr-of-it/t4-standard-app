@@ -86,7 +86,7 @@ class Admin
 
     public function actionDeleteRole($name)
     {
-        Role::findByName($name)->delete();
+       Role::findByName($name)->delete();
         $this->redirect('/admin/users/Roles');
     }
 
