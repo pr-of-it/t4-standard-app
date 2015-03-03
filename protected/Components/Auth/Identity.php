@@ -112,6 +112,30 @@ class Identity
         return $user;
     }
 
+    public function restorePassword($data)
+    {
+        $errors = new MultiException();
+
+        if (empty($data->email)) {
+            $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
+        }
+
+        $user = User::findByEmail($data->email);
+        if (empty($user)) {
+            $errors->add('Пользователь с e-mail ' . $data->email . ' не существует', self::ERROR_INVALID_EMAIL);
+        }
+
+        if($data->step==2){
+            if(Session::get('contolstring')!=$data->code){
+                $errors->add='Неправильный код';
+            }
+        }
+        if (!$errors->isEmpty())
+            throw $errors;
+
+
+    }
+
     /**
      * @param \App\Models\User $user
      */
