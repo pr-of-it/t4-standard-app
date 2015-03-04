@@ -71,17 +71,23 @@ class Index
                     Session::set('controlstring', $controlstring);
                     //$mail = new Sender();
                     // $mail->sendMail($restore->email, 'Востановление пароля', 'Для восстановления пароля введите этот код: '.$controlstring);
-                    $this->data->step = 2;
+                    $this->data->step = 1;
                     $this->data->email = $restore->email;
                 } else {
                    $this->data->step = 2;
-                   //$this->data->email = $restore->email;
+                   $this->data->email = $restore->email;
                     // $identity->login($user);
                     //$this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                     // $this->redirect('/');
                 }
             } catch (\App\Components\Auth\MultiException $e) {
-                $this->data->errors = $e;
+                switch($e->getCode()){
+                    case 103: {
+                        $this->data->step = 1;
+                        $this->data->email = $restore->email;
+                        $this->data->errors = $e;
+                    }
+                }
             }
         } else {
             Session::clear('controlstring');

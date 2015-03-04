@@ -5,11 +5,13 @@ namespace App\Components\Auth;
 use App\Models\User;
 use App\Models\UserSession;
 use T4\Mvc\Application;
+use T4\Core\Session;
 
 class Identity
     extends \T4\Auth\Identity
 {
     const  ERROR_INVALID_CAPTCHA = 102;
+    const ERROR_INVALID_CODE = 103;
     const AUTH_COOKIE_NAME = 'T4auth';
 
     public function authenticate($data)
@@ -127,7 +129,7 @@ class Identity
 
         if($data->step==1){
             if(Session::get('controlstring')!=$data->code){
-                $errors->add='Неправильный код';
+                $errors->add('Неправильный код', self::ERROR_INVALID_CODE);
             }
         }
         if (!$errors->isEmpty())
