@@ -60,25 +60,32 @@ class Index
         die;
     }
 
-    public function actionRestorePassword($restore=null,$step=0)
+    public function actionRestorePassword($restore = null)
     {
         if (null !== $restore) {
             try {
                 $identity = new Identity();
-                $user = $identity->restorePassword($restore,$step);
-                if (null == Session::get('contolstring')) {
-                    $controlstring='abc';
-                    Session::set('controlstring',$controlstring);
-                    $mail = new Sender();
-                    $mail->sendMail($restore->email, 'Востановление пароля', 'Для восстановления пароля введите этот код: '.$controlstring);
-                    $this->data->step=true;
-                    $step=2;
+                $identity->restorePassword($restore);
+                if (null == Session::get('controlstring')) {
+                    $controlstring = 'abcd';
+                    Session::set('controlstring', $controlstring);
+                    //$mail = new Sender();
+                    // $mail->sendMail($restore->email, 'Востановление пароля', 'Для восстановления пароля введите этот код: '.$controlstring);
+                    $this->data->step = 2;
+                    $this->data->email = $restore->email;
+                } else {
+                   $this->data->step = 2;
+                   //$this->data->email = $restore->email;
+                    // $identity->login($user);
+                    //$this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
+                    // $this->redirect('/');
                 }
             } catch (\App\Components\Auth\MultiException $e) {
                 $this->data->errors = $e;
             }
         } else {
-            $this->data->check=false;
+            Session::clear('controlstring');
+            $this->data->step = 0;
         }
     }
 

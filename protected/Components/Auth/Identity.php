@@ -125,15 +125,34 @@ class Identity
             $errors->add('Пользователь с e-mail ' . $data->email . ' не существует', self::ERROR_INVALID_EMAIL);
         }
 
-        if($data->step==2){
-            if(Session::get('contolstring')!=$data->code){
+        if($data->step==1){
+            if(Session::get('controlstring')!=$data->code){
                 $errors->add='Неправильный код';
             }
         }
         if (!$errors->isEmpty())
             throw $errors;
 
+        if ($data->step==2){
+            if (empty($data->password)) {
+                $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
+            }
 
+            if (empty($data->password2)) {
+                $errors->add('Не введено подтверждение пароля', self::ERROR_INVALID_PASSWORD);
+            }
+
+            if ( $data->password2 != $data->password) {
+                $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+            }
+
+            $user = new User();
+            $user->email = $data->email;
+            $user->password = \T4\Crypt\Helpers::hashPassword($data->password);
+            $user->save();
+
+            return $user;
+        }
     }
 
     /**
