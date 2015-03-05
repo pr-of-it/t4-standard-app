@@ -62,6 +62,7 @@ class Index
 
     public function actionRestorePassword($restore = null)
     {
+        $step=0;
         if (null !== $restore) {
             try {
                 $identity = new Identity();
@@ -71,7 +72,8 @@ class Index
                     Session::set('controlstring', $controlstring);
                     //$mail = new Sender();
                     // $mail->sendMail($restore->email, 'Востановление пароля', 'Для восстановления пароля введите этот код: '.$controlstring);
-                    $this->data->step = 1;
+                    $step=1;
+                    $this->data->step = $step;
                     $this->data->email = $restore->email;
                 } else {
                    $this->data->step = 2;
