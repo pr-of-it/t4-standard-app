@@ -12,6 +12,7 @@ class Identity
 {
     const  ERROR_INVALID_CAPTCHA = 102;
     const ERROR_INVALID_CODE = 103;
+    const ERROR_INVALID_TIME = 104;
     const AUTH_COOKIE_NAME = 'T4auth';
 
     public function authenticate($data)
@@ -127,15 +128,21 @@ class Identity
             $errors->add('Пользователь с e-mail ' . $data->email . ' не существует', self::ERROR_INVALID_EMAIL);
         }
 
-        if($data->step==1){
-            if(Session::get('controlstring')!=$data->code){
+        if ($data->step == 1) {
+
+            if (Session::get('controlstring')['controlstring']['string'] != $data->code) {
                 $errors->add('Неправильный код', self::ERROR_INVALID_CODE);
             }
+
+            if (time() - Session::get('controlstring')['controlstring']['start_time'] > 240) {
+                $errors->add('Истекло время ожидания', self::ERROR_INVALID_TIME);
+            }
+
         }
         if (!$errors->isEmpty())
             throw $errors;
 
-        if ($data->step==2){
+        if ($data->step == 2) {
             if (empty($data->password)) {
                 $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
             }
@@ -144,9 +151,12 @@ class Identity
                 $errors->add('Не введено подтверждение пароля', self::ERROR_INVALID_PASSWORD);
             }
 
-            if ( $data->password2 != $data->password) {
+            if ($data->password2 != $data->password) {
                 $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
             }
+
+            if (!$errors->isEmpty())
+                throw $errors;
 
             $user = new User();
             $user->email = $data->email;

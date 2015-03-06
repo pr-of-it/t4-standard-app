@@ -62,32 +62,45 @@ class Index
 
     public function actionRestorePassword($restore = null)
     {
-        $step=0;
         if (null !== $restore) {
             try {
                 $identity = new Identity();
-                $identity->restorePassword($restore);
+                $user = $identity->restorePassword($restore);
                 if (null == Session::get('controlstring')) {
-                    $controlstring = 'abcd';
+                    $controlstring = ['controlstring' => ['string' => User::getRandomString(6, 'all'), 'start_time' => time()]];
                     Session::set('controlstring', $controlstring);
-                    //$mail = new Sender();
-                    // $mail->sendMail($restore->email, 'Востановление пароля', 'Для восстановления пароля введите этот код: '.$controlstring);
-                    $step=1;
-                    $this->data->step = $step;
+                    $mail = new Sender();
+                    $mail->sendMail($restore->email, 'Востановление пароля', 'Для восстановления пароля введите этот код: ' .
+                        $controlstring['controlstring']['string']);
+                    $this->data->step = 1;
                     $this->data->email = $restore->email;
+                } else if ($restore->step == 2) {
+                    $identity->login($user);
+                    $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
+                    $this->redirect('/');
                 } else {
-                   $this->data->step = 2;
-                   $this->data->email = $restore->email;
-                    // $identity->login($user);
-                    //$this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
-                    // $this->redirect('/');
+                    $this->data->step = 2;
+                    $this->data->email = $restore->email;
                 }
+
             } catch (\App\Components\Auth\MultiException $e) {
-                switch($e->getCode()){
-                    case 103: {
-                        $this->data->step = 1;
-                        $this->data->email = $restore->email;
-                        $this->data->errors = $e;
+
+                $this->data->errors = $e;
+                $this->data->email = $restore->email;
+                foreach ($e as $error) {
+                    switch ($error->getCode()) {
+                        case 103: {
+                            $this->data->step = 1;
+                            break;
+                        }
+                        case 104: {
+                            $this->data->step = 100;
+                            break;
+                        }
+                        case 101: {
+                            $this->data->step = 2;
+                            break;
+                        }
                     }
                 }
             }
