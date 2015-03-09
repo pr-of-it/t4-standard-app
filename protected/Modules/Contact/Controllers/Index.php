@@ -26,6 +26,8 @@ class Index
                 $this->redirect('/contact/sent');
             } catch (\App\Components\Auth\MultiException $e) {
                 $this->app->flash->errors = $e;
+                var_dump($this->app->flash->errors);
+                die;
                 $post = $this->app->request->post;
                 $this->data->name = $post->name;
                 $this->data->email = $post->email;
@@ -60,9 +62,12 @@ class Index
             } else {
                 $errors->add('Не введены символы с картинки');
             }
+
+            //var_dump($errors);
+            //die;
+            if (!$errors->isEmpty())
+                throw $errors;
         }
-        if (!$errors->isEmpty())
-            throw $errors;
 
     }
 
