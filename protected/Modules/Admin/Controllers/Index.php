@@ -16,18 +16,20 @@ class Index
     {
     }
 
-    public function actionModule($module, $action=Router::DEFAULT_ACTION)
+    public function actionModule($module, $controller = 'Admin', $action = Router::DEFAULT_ACTION)
     {
         try {
 
             $this->app->runRoute(
-                new Route('/' . ucfirst($module) . '/Admin/' . ucfirst($action)),
+                new Route('/' . ucfirst($module) . '/' . ucfirst($controller) . '/' . ucfirst($action)),
                 Router::getInstance()->getFormatByExtension($this->app->request->extension)
             );
             exit;
 
         } catch (Exception $e) {
+
             throw new E404Exception('Ошибка админ-панели в модуле ' . $module . ': ' . $e->getMessage());
+
         }
     }
 
