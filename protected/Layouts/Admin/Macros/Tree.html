@@ -38,6 +38,9 @@
                     <button class="btn btn-default btn-sm"><i class="glyphicon glyphicon-option-horizontal"></i></button>
                     {% endif %}
                     &nbsp;&nbsp;
+                    {% if baselink=='/admin/catalogs/' %}
+                    <a class="btn btn-primary btn-sm" href="{{baselink}}Goods?id={{item.Pk}}"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    {%endif%}
                     <a class="btn btn-primary btn-sm" href="{{baselink}}Edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
                     <a class="btn btn-danger btn-sm" href="{{baselink}}Delete/?id={{item.Pk}}" class="confirmable"><i class="glyphicon glyphicon-remove"></i></a>
                 </p>

@@ -1,0 +1,41 @@
+{% extends 'Admin/Blank.html' %}
+{% import 'Admin/Macros/Tree.html' as Tree %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li>Каталог</li>
+</ol>
+{% endblock %}
+
+{% block toolbar %}
+<a class="btn btn-primary" href="/admin/catalogs/edit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить группу товаров</a>
+{% endblock %}
+
+{% block header %}
+Каталог
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {{ Tree.listSortable(items, '/admin/catalogs/') }}
+</div>
+
+<footer class="col-sm-offset-2 col-sm-10">
+    <a href="/admin/catalogs/goods" class="confirmable"><button type="button" class="btn btn-primary">Товары</button></a>
+</footer>
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function() {
+
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+        {{ Tree.listSortableJs('/admin/catalogs/') }}
+    });
+</script>
+{% endblock %}
+

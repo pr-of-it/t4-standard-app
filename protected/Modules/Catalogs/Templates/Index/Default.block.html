@@ -1,0 +1,44 @@
+<!--<div class="dropdown">
+{% set level = items[0].__lvl %}
+{% set count = 0 %}
+{% if items.count %}
+<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+
+    {% for key, item in items %}
+
+    {% set current = item.__lvl %}
+    {% if current == level %}
+    {% if count > 0 %}</li>{% endif %}
+    {% endif %}
+
+    {% if current > level %}
+    <li class="dropdown-submenu">
+        <a tabindex="-1" href="#">{{item.title}}</a>
+        <ul class="dropdown-menu">
+        {% set level = current %}
+        {% endif %}
+
+        {% if current < level %}
+        {{"</li></ul>"|repeat(level-current)|raw}}</li>
+    {% set level = current %}
+    {% endif %}
+
+    <li><a tabindex="-1" href="#">{{item.title}}</a></li>
+        {% set count = count + 1 %}
+
+        {% endfor %}
+        {{"</li></ul>"|repeat(current)|raw}}</li>
+</ul>
+{% endif %}
+</div>
+-->
+<div class="dropdown">
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <li class="dropdown-submenu">
+            <a tabindex="-1" href="#">Товары</a>
+            <ul class="dropdown-menu">
+                <a tabindex="-1" href="#">Стулья</a>
+            </ul>
+        </li>
+    </ul>
+</div>

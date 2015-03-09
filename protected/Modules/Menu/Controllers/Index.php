@@ -11,6 +11,7 @@ class Index extends Controller
     public function actionDefault()
     {
         $this->data->items = MenuModel::findAllTree();
+
     }
 
 }

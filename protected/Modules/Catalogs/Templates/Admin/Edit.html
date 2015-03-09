@@ -1,0 +1,78 @@
+{% extends 'Admin/Blank.html' %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/Catalogs/">Каталог</a></li>
+    <li>{% if item.isNew %}Добавление группы товаров{% else %}Редактирование группы товаров{% endif %}</li>
+</ol>
+{% endblock %}
+
+{% block header %}
+{% if item.isNew %}Добавление группы товаров{% else %}Редактирование группы товаров{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/catalogs/save">
+
+        {% if not item.isNew %}
+        <input type="hidden" name="id" value="{{item.Pk}}">
+        {% endif %}
+
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Название группы</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Название группы" value="{{item.title}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="parent" class="col-sm-2 control-label">Родительская группа</label>
+            <div class="col-sm-10">
+                {% if item.isNew %}
+                {% if item.parent %}
+                {{ selectTreeByModel("App\\Modules\\Catalogs\\Models\\Catalog", item.parent.Pk, {"null":true}, {"name":"parent", "class": "form-control"}) }}
+                {% else %}
+                {{ selectTreeByModel("App\\Modules\\Catalogs\\Models\\Catalog", 0, {"null":true}, {"name":"parent", "class": "form-control"}) }}
+                {% endif %}
+                {% else %}
+                {{ selectTreeByModel("App\\Modules\\Catalogs\\Models\\Catalog", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent", "class": "form-control"}) }}
+                {% endif %}
+                <i></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="type" class="col-sm-2 control-label">группа-товар</label>
+            <div class="col-sm-10">
+                <select  id="type" name="type" class="form-control" >
+                    <option value="0">Группа товаров</option>
+                    <option value="1">Товар</option>
+                </select>
+                <i></i>
+
+            </div>
+        </div>
+
+        <footer class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
+            <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
+            {% if not item.isNew %}<a href="/admin/pages/delete/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
+        </footer>
+
+    </form>
+</div>
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function () {
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+    });
+</script>
+{% endblock %}
