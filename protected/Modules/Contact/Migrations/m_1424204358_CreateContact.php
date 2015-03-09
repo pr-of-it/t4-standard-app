@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Modules\Message\Migrations;
+namespace App\Modules\Contact\Migrations;
 
 use T4\Orm\Migration;
 
-class m_1424204358_CreateMessages
+class m_1424204358_CreateContact
     extends Migration
 {
 
     public function up()
     {
-        $this->createTable('messages', [
+        $this->createTable('contact', [
             'q_datetime' => ['type' => 'datetime'],
             'email' => ['type' => 'string'],
             'name' => ['type' => 'string'],
@@ -27,7 +27,7 @@ class m_1424204358_CreateMessages
 
     public function down()
     {
-        $this->dropTable('messages');
+        $this->dropTable('contact');
     }
 
 }

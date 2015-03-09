@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Modules\Message\Models;
+namespace App\Modules\Contact\Models;
 
 use App\Models\User;
 use  T4\Orm\Model;
 
-class Message
+class Contact
     extends Model
 {
     static protected $schema = [
-        'table' => 'messages',
+        'table' => 'contact',
         'columns' => [
             'q_datetime' => ['type' => 'datetime'],
             'email' => ['type' => 'string'],
