@@ -44,34 +44,4 @@ class Index
     {
     }
 
-    /*
-    public function checkdata($data)
-    {
-        $errors = new MultiException();
-
-        if (empty($data['name'])) {
-            $errors->add('Укажите свое имя');
-        }
-        if (empty($data['email'])) {
-            $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
-        }
-        if (empty($data['question'])) {
-            $errors->add('Напишите Ваш вопрос');
-        }
-        if ($this->app->config->extensions->captcha->message) {
-            if (!empty($data['captcha'])) {
-                if (!$this->app->extensions->captcha->checkKeyString($data['captcha'])) {
-                    $errors->add('Неправильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
-                }
-            } else {
-                $errors->add('Не введены символы с картинки');
-            }
-        }
-        if (!$errors->isEmpty())
-            throw $errors;
-
-    }
-
-    */
-
 }
