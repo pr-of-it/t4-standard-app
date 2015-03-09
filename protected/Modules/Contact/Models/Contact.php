@@ -3,13 +3,12 @@
 namespace App\Modules\Contact\Models;
 
 use App\Models\User;
-use  T4\Orm\Model;
+use T4\Orm\Model;
 
 class Contact
     extends Model
 {
     static protected $schema = [
-        'table' => 'contact',
         'columns' => [
             'q_datetime' => ['type' => 'datetime'],
             'email' => ['type' => 'string'],
@@ -23,12 +22,13 @@ class Contact
         ]
     ];
 
-    public function validate(){
+    public function validate()
+    {
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             return true;
-        }
-        else
+        } else {
             return false;
+        }
     }
 
     public function beforeSave()
@@ -40,9 +40,6 @@ class Contact
         }
         return true;
     }
-
-
-
 
 
 }
