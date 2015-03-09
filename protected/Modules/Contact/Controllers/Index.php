@@ -5,7 +5,7 @@ namespace App\Modules\Contact\Controllers;
 
 use App\Models\User;
 use App\Modules\Contact\Models\Contact;
-use App\Components\Auth\MultiException;
+use T4\Core\MultiException;
 use T4\Mvc\Controller;
 
 class Index
@@ -15,30 +15,36 @@ class Index
     const ERROR_INVALID_EMAIL = 100;
     const ERROR_INVALID_CAPTCHA = 102;
 
-    public function actionDefault($data = null)
+    public function actionDefault()
     {
-        if (isset($this->app->request->post->submit)) {
+
+        if ( !empty($this->app->request->post->message) ) {
             try {
-                $this->checkdata($data);
+
                 $question = new Contact();
-                $question->fill($this->app->request->post);
+                $question->fill($this->app->request->post->message);
                 $question->save();
                 $this->redirect('/contact/sent');
-            } catch (\App\Components\Auth\MultiException $e) {
-                $this->app->flash->errors = $e;
-                $post = $this->app->request->post;
-                $this->data->name = $post->name;
-                $this->data->email = $post->email;
-                $this->data->question = $post->question;
+
+            } catch (MultiException $e) {
+
+                $this->data->errors = $e;
             }
-        } else
+        }
+
+        $this->data->merge($this->app->request->post->message);
+
+        if (empty ($this->data->email) && !empty($this->app->user)) {
             $this->data->email = $this->app->user->email;
+        }
+
     }
 
     public function actionSent()
     {
     }
 
+    /*
     public function checkdata($data)
     {
         $errors = new MultiException();
@@ -65,5 +71,7 @@ class Index
             throw $errors;
 
     }
+
+    */
 
 }
