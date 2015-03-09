@@ -26,30 +26,21 @@ class m_1423714113_createMenu
         );
 
         $this->insert('menu', [
-                'title'=>'Админ-панель',
-                'url' =>'/admin',
-                '__lft' =>'1',
-                '__rgt'=>'2',
-                '__lvl'=>'0',
-                '__prt' =>'0',
-            ]
-            );
-        $this->insert('menu', [
-                'title'=>'Контакты',
-                'url' =>'/contact',
-                '__lft' =>'3',
-                '__rgt'=>'4',
-                '__lvl'=>'0',
-                '__prt' =>'0',
+                'title' => 'Контакты',
+                'url' => '/contact',
+                '__lft' => '1',
+                '__rgt' => '2',
+                '__lvl' => '0',
+                '__prt' => '0',
             ]
         );
         $this->insert('menu', [
-                'title'=>'Новости',
-                'url' =>'/news',
-                '__lft' =>'5',
-                '__rgt'=>'6',
-                '__lvl'=>'0',
-                '__prt' =>'0',
+                'title' => 'Новости',
+                'url' => '/news',
+                '__lft' => '3',
+                '__rgt' => '4',
+                '__lvl' => '0',
+                '__prt' => '0',
             ]
         );
 
