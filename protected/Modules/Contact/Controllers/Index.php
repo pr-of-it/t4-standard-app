@@ -23,7 +23,9 @@ class Index
                 $this->data->errors = $e;
             }
         }
+
         $this->data->merge($this->app->request->post->message);
+
         if (empty ($this->data->email) && !empty($this->app->user)) {
             $this->data->email = $this->app->user->email;
         }
