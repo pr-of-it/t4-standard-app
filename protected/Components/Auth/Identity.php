@@ -15,6 +15,11 @@ class Identity
     const ERROR_INVALID_TIME = 104;
     const AUTH_COOKIE_NAME = 'T4auth';
 
+    private function regular_expression($expression)
+    {
+        return preg_match('~^[a-zA-Z0-9_]{6,}$~', $expression);
+    }
+
     public function authenticate($data)
     {
         $errors = new MultiException();
@@ -86,8 +91,12 @@ class Identity
             $errors->add('Не введено подтверждение пароля', self::ERROR_INVALID_PASSWORD);
         }
 
-        if ( $data->password2 != $data->password) {
+        if ($data->password2 != $data->password) {
             $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
+        }
+
+        if (0==$this->regular_expression($data->password)) {
+            $errors->add('Пароль не отвечает условиям сложности');
         }
 
         if (Application::getInstance()->config->extensions->captcha->register) {

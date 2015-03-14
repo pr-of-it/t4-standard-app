@@ -13,7 +13,7 @@
 
 <h1 class="page-header">{{item.title}}</h1>
 <div class="clearfix">
-    <img src="{{item.image}}" class="pull-left img-responsive" style="max-width: 200px; max-height: 300px; margin-right: 10px !important;">
+    {% if item.image %}<img src="{{item.image}}" class="pull-left img-responsive" style="max-width: 200px; max-height: 300px; margin-right: 10px !important;">{% endif %}
     {{item.lead|raw}}
 </div>
 <hr>

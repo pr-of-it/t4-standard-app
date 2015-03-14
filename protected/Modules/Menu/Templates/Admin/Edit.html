@@ -33,12 +33,12 @@
             <div class="col-sm-10">
                 {% if item.isNew %}
                 {% if item.parent %}
-                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", item.parent.Pk, {"null":true},{"name":"parent", "class": "form-control"})}}
+                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\MenuItem", item.parent.Pk, {"null":true},{"name":"parent", "class": "form-control"})}}
                 {% else %}
-                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", 0, {"null":true}, {"name":"parent", "class":"form-control"}) }}
+                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\MenuItem", 0, {"null":true}, {"name":"parent", "class":"form-control"}) }}
                 {% endif %}
                 {% else %}
-                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\Menu", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent", "class": "form-control"}) }}
+                {{ selectTreeByModel("App\\Modules\\Menu\\Models\\MenuItem", item.__prt, {"null":true, 'disabled':[item.__id]}, {"name":"parent", "class": "form-control"}) }}
                 {% endif %}
                 <i></i>
             </div>

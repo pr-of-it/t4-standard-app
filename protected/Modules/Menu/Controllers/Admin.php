@@ -2,7 +2,7 @@
 
 namespace App\Modules\Menu\Controllers;
 
-use App\Modules\Menu\Models\Menu;
+use App\Modules\Menu\Models\MenuItem;
 use T4\Core\Exception;
 use App\Components\Admin\Controller;
 
@@ -12,27 +12,27 @@ class Admin
 
     public function actionDefault()
     {
-        $this->data->items = Menu::findAllTree();
+        $this->data->items = MenuItem::findAllTree();
     }
 
     public function actionEdit($id = null, $parent = null)
     {
         if (null === $id || 'new' == $id) {
-            $this->data->item = new Menu();
+            $this->data->item = new MenuItem();
             if (null !== $parent) {
                 $this->data->item->parent = $parent;
             }
         } else {
-            $this->data->item = Menu::findByPK($id);
+            $this->data->item = MenuItem::findByPK($id);
         }
     }
 
     public function actionSave()
     {
         if (!empty($this->app->request->post->id)) {
-            $item = Menu::findByPK($this->app->request->post->id);
+            $item = MenuItem::findByPK($this->app->request->post->id);
         } else {
-            $item = new Menu();
+            $item = new MenuItem();
         }
         $item
             ->fill($this->app->request->post)
@@ -42,7 +42,7 @@ class Admin
 
     public function actionDelete($id)
     {
-        $item = Menu::findByPK($id);
+        $item = MenuItem::findByPK($id);
         if ($item)
             $item->delete();
         $this->redirect('/admin/menu/');
@@ -50,7 +50,7 @@ class Admin
 
     public function actionUp($id)
     {
-        $item = Menu::findByPK($id);
+        $item = MenuItem::findByPK($id);
         if (empty($item))
             $this->redirect('/menu/admin/');
         $sibling = $item->getPrevSibling();
@@ -62,7 +62,7 @@ class Admin
 
     public function actionDown($id)
     {
-        $item = Menu::findByPK($id);
+        $item = MenuItem::findByPK($id);
         if (empty($item))
             $this->redirect('/menu/admin/');
         $sibling = $item->getNextSibling();
@@ -75,11 +75,11 @@ class Admin
     public function actionMoveBefore($id, $to)
     {
         try {
-            $item = Menu::findByPK($id);
+            $item = MenuItem::findByPK($id);
             if (empty($item)) {
                 throw new Exception('Source element does not exist');
             }
-            $destination = Menu::findByPK($to);
+            $destination = MenuItem::findByPK($to);
             if (empty($destination)) {
                 throw new Exception('Destination element does not exist');
             }
@@ -94,11 +94,11 @@ class Admin
     public function actionMoveAfter($id, $to)
     {
         try {
-            $item = Menu::findByPK($id);
+            $item = MenuItem::findByPK($id);
             if (empty($item)) {
                 throw new Exception('Source element does not exist');
             }
-            $destination = Menu::findByPK($to);
+            $destination = MenuItem::findByPK($to);
             if (empty($destination)) {
                 throw new Exception('Destination element does not exist');
             }
