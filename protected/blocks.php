@@ -13,6 +13,10 @@ return [
         'options' => [],
     ],
 
+    /**
+     * News module
+     */
+
     '/News//' => [
         'title' => 'Главная страница новостей',
         'desc' => 'Главная страница модуля Новости в блоке',
@@ -34,6 +38,10 @@ return [
 
     ],
 
+    /**
+     * Pages module
+     */
+
     '/Pages//PageByUrl' => [
         'title' => 'Страница сайта',
         'desc' => 'Выводит выбранную страницу',
@@ -47,6 +55,10 @@ return [
         ],
         'cache' => ['time' => 60],
     ],
+
+    /**
+     * Maps module
+     */
 
     '/Maps//Map' => [
         'title' => 'Карта',
@@ -62,12 +74,20 @@ return [
         'cache' => ['time' => 60],
     ],
 
+    /**
+     * Menu module
+     */
+
     '/Menu//' => [
         'title'=> 'Меню сайта',
         'desc' => 'Главное меню',
         'options' => [],
         'cache' => ['time' => 60],
     ],
+
+    /**
+     * Contact module
+     */
 
     '/Contact//' => [
         'title'=> 'Форма обратной связи',

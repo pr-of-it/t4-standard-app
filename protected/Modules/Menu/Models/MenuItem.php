@@ -5,7 +5,7 @@ namespace App\Modules\Menu\Models;
 
 use T4\Orm\Model;
 
-class Menu
+class MenuItem
     extends Model
 {
     static protected $schema = [
