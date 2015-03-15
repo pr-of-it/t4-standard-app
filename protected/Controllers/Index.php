@@ -54,12 +54,16 @@ class Index
         }
     }
 
-    public function actionCaptcha()
+    public function actionCaptcha($config = null)
     {
-        $this->app->extensions->captcha->generateImage();
+        if (null !== $config) {
+            $config = $this->app->config->extensions->captcha->$config;
+        }
+        $this->app->extensions->captcha->generateImage($config);
         die;
     }
 
+    /*
     public function actionRestorePassword($restore = null)
     {
         if (null !== $restore) {
@@ -109,5 +113,6 @@ class Index
             $this->data->step = 0;
         }
     }
+    */
 
 }

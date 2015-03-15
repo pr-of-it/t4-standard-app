@@ -15,11 +15,6 @@ class Identity
     const ERROR_INVALID_TIME = 104;
     const AUTH_COOKIE_NAME = 'T4auth';
 
-    private function regular_expression($expression)
-    {
-        return preg_match('~^[a-zA-Z0-9_]{6,}$~', $expression);
-    }
-
     public function authenticate($data)
     {
         $errors = new MultiException();
@@ -95,16 +90,6 @@ class Identity
             $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
         }
 
-        if (0==$this->regular_expression($data->password)) {
-            $errors->add('Пароль не отвечает условиям сложности');
-        }
-
-        if (Application::getInstance()->config->extensions->captcha->register) {
-            if (!Application::getInstance()->extensions->captcha->checkKeyString($data->captcha)) {
-                $errors->add('Не правильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
-            }
-        }
-
         if (!$errors->isEmpty())
             throw $errors;
 
@@ -116,64 +101,26 @@ class Identity
         if (!$errors->isEmpty())
             throw $errors;
 
+        $app = Application::getInstance();
+        if ($app->config->extensions->captcha->register) {
+            if (empty($data->captcha)) {
+                $errors->add('Не введена строка с картинки', self::ERROR_INVALID_CAPTCHA);
+            } else {
+                if (!$app->extensions->captcha->checkKeyString($data->captcha)) {
+                    $errors->add('Неверные символы с картинки', self::ERROR_INVALID_CAPTCHA);
+                }
+            }
+        }
+
+        if (!$errors->isEmpty())
+            throw $errors;
+
         $user = new User();
         $user->email = $data->email;
         $user->password = \T4\Crypt\Helpers::hashPassword($data->password);
         $user->save();
 
         return $user;
-    }
-
-    public function restorePassword($data)
-    {
-        $errors = new MultiException();
-
-        if (empty($data->email)) {
-            $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
-        }
-
-        $user = User::findByEmail($data->email);
-        if (empty($user)) {
-            $errors->add('Пользователь с e-mail ' . $data->email . ' не существует', self::ERROR_INVALID_EMAIL);
-        }
-
-        if ($data->step == 1) {
-
-            if (Session::get('controlstring')['controlstring']['string'] != $data->code) {
-                $errors->add('Неправильный код', self::ERROR_INVALID_CODE);
-            }
-
-            if (time() - Session::get('controlstring')['controlstring']['start_time'] > 240) {
-                $errors->add('Истекло время ожидания', self::ERROR_INVALID_TIME);
-            }
-
-        }
-        if (!$errors->isEmpty())
-            throw $errors;
-
-        if ($data->step == 2) {
-            if (empty($data->password)) {
-                $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
-            }
-
-            if (empty($data->password2)) {
-                $errors->add('Не введено подтверждение пароля', self::ERROR_INVALID_PASSWORD);
-            }
-
-            if ($data->password2 != $data->password) {
-                $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
-            }
-
-            if (!$errors->isEmpty())
-                throw $errors;
-
-            $user = new User();
-            $user->email = $data->email;
-            $user->password = \T4\Crypt\Helpers::hashPassword($data->password);
-            $user->save();
-
-            return $user;
-        }
     }
 
     /**
