@@ -60,3 +60,13 @@
     </form>
 </div>
 {% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function () {
+        $('a.confirmable').click(function () {
+            return confirm('Вы уверены?');
+        });
+    });
+</script>
+{% endblock %}
