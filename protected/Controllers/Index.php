@@ -16,6 +16,10 @@ class Index
     {
     }
 
+    public function action404()
+    {
+    }
+
     public function actionLogin($login = null)
     {
         if (null !== $login) {
