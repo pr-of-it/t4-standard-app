@@ -20,22 +20,6 @@ class Index
     {
     }
 
-    public function actionRegister($register = null)
-    {
-        if (null !== $register) {
-            try {
-                $identity = new Identity();
-                $user = $identity->register($register);
-                $identity->login($user);
-                $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
-                $this->redirect('/');
-            } catch (\App\Components\Auth\MultiException $e) {
-                $this->data->errors = $e;
-            }
-            $this->data->email = $register->email;
-        }
-    }
-
     public function actionCaptcha($config = null)
     {
         if (null !== $config) {
