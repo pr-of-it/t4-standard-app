@@ -10,11 +10,12 @@ class m_1425813475_createGalleryAlbums
 
     public function up()
     {
-        $this->createTable('album',[
+        $this->createTable('albums',[
             'title' => ['type'=>'string'],
             'a_published' => ['type'=>'datetime'],
+            '__photo_id' => ['type'=>'link']
         ], [
-
+            'cover'=>['columns'=>['__photo_id']]
         ]);
     }
 

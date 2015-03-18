@@ -18,17 +18,22 @@ class Admin
         $this->data->itemsCount = Photo::countAll();
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
-        if ($id) {
-            $this->data->items = Photo::findAllByColumn('__album_id', $id,
-                ['offset' => ($page - 1) * self::PAGE_SIZE,
-                    'limit' => self::PAGE_SIZE
-                ]);
-        } else {
-            $this->data->items = Photo::findAll([
-                'offset' => ($page - 1) * self::PAGE_SIZE,
-                'limit' => self::PAGE_SIZE
-            ]);
-        }
+        $this->data->items = Album::findAll('__album_id', $id, [
+            'offset' => ($page - 1) * self::PAGE_SIZE,
+            'limit' => self::PAGE_SIZE
+        ]);
+    }
+
+    public function actionPhotos($id = null, $page = 1)
+    {
+        $this->data->album = Album::findByPK($id);
+        $this->data->itemsCount = Photo::countAll();
+        $this->data->pageSize = self::PAGE_SIZE;
+        $this->data->activePage = $page;
+        $this->data->items = Photo::findAllByColumn('__album_id', $id, [
+            'offset' => ($page - 1) * self::PAGE_SIZE,
+            'limit' => self::PAGE_SIZE
+        ]);
     }
 
     public function actionEdit($id = null)
@@ -48,13 +53,6 @@ class Admin
         } else {
             $item = new Photo();
         }
-        /*
-        if($this->app->request->post->is_mail)
-        {
-            $main = Photo::findByColumn('is_main','1');
-            $main->update('is_main','null');
-
-        }*/
         $item->fill($this->app->request->post);
         $item
             ->uploadImage('image')
@@ -62,34 +60,20 @@ class Admin
         $this->redirect('/admin/gallery/');
     }
 
+    public function actionCover(){
+
+    }
+
     public function actionDelete($id)
     {
         $item = Photo::findByPK($id);
         $item->delete();
-        $this->redirect('/admin/gallery/');
-    }
-
-//не работает
-    public function actionDeleteImage($id)
-    {
-        $item = Photo::findByPK($id);
-        if ($item) {
-            $item->deleteImage();
-            $item->save();
-            $this->data->result = true;
-        } else {
-            $this->data->result = false;
-        }
+        $this->redirect('/admin/gallery/photos');
     }
 
     /**
      * Albums
      */
-
-    public function actionAlbums()
-    {
-        $this->data->items = Album::findAll();
-    }
 
     public function actionAlbumEdit($id = null)
     {
@@ -109,7 +93,7 @@ class Admin
         }
         $item->fill($this->app->request->post);
         $item->save();
-        $this->redirect('/admin/gallery/albums/');
+        $this->redirect('/admin/gallery/');
     }
 
     public function actionAlbumDelete($id)
@@ -118,6 +102,6 @@ class Admin
         if ($item) {
             $item->delete();
         }
-        $this->redirect('/admin/gallery/albums/');
+        $this->redirect('/admin/gallery/');
     }
 }

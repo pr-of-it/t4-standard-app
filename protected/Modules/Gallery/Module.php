@@ -9,10 +9,7 @@ class Module
     public function getAdminMenu()
     {
         return [
-            ['title' => 'Галерея', 'icon' => '<i class="glyphicon glyphicon-picture"></i>', 'sub' => [
-                ['title' => 'Альбомы', 'url' => '/admin/gallery/albums'],
-                ['title' => 'Фотографии', 'url' => '/admin/gallery/'],
-            ]],
+            ['title' => 'Галерея', 'icon' => '<i class="glyphicon glyphicon-picture"></i>','url' => '/admin/gallery/' ],
         ];
     }
 

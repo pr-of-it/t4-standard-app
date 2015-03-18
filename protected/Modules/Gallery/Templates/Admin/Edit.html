@@ -4,7 +4,7 @@
 <ol class="breadcrumb">
     <li><a href="/admin/">Админ-панель</a></li>
     <li><a href="/admin/gallery/">Галерея</a></li>
-    <li>{% if item.isNew %}Добавление фотографии{% else %}Редактирование фотографии<{% endif %}</li>
+    <li>{% if item.isNew %}Добавление фотографии{% else %}Редактирование фотографии{% endif %}</li>
 </ol>
 {% endblock %}
 
@@ -20,7 +20,6 @@
         {% endif %}
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label">Добавить название</label>
-
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="title" name="title" placeholder="Название" value="{{item.title}}">
             </div>
@@ -28,7 +27,6 @@
 
         <div class="form-group">
             <label for="__album_id" class="col-sm-2 control-label">Альбом</label>
-
             <div class="col-sm-10">
                 <select name="__album_id" id="__album_id" class="form-control">
                     {% for album in albums %}
@@ -46,11 +44,9 @@
                     {% if item.image %}
 
                 <p class="image">
-                    <img src="{{item.image}}" class="img-responsive" style="max-width: 200px; max-height: 200px;">
-                    <a href="#" class="item-image-delete" data-id="{{item.Pk}}"><i class="glyphicon glyphicon-remove text-danger"></i>&nbsp;</a>
+                    <img src="{{ item.image }}" class="img-responsive" style="max-width: 200px; max-height: 200px;">
                 </p>
                 {% endif %}
-                <input type="checkbox" name="is_main" value="1">Сделать обложкой альбома
                 </p>
                 {{element('file', 'image', {'text':'Выберите файл'})}}
 
@@ -59,7 +55,7 @@
 
         <div class="row">
             <footer class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}
+                <button type="submit" class="btn btn-primary">{% if item.isNew %}Загрузить{% else %}Сохранить{% endif %}
                 </button>
                 <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
                 {% if not item.isNew %}<a href="/admin/gallery/deleteAlbum/?id={{item.Pk}}" class="confirmable">
@@ -78,20 +74,6 @@
         $('a.confirmable').click(function() {
             return confirm('Вы уверены?');
         });
-
-        $('.item-image-delete').click( function () {
-            var $this = $(this);
-            var id = $this.attr('data-id');
-            if (0 != id) {
-                $.post('/admin/news/deleteImage.json', {"id":id}, function (r) {
-                    if (r.result) {
-                        $this.parent().remove();
-                    }
-                });
-            }
-            return false;
-        });
-
     });
 </script>
 

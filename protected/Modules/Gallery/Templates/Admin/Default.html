@@ -3,58 +3,43 @@
 {% block breadcrumbs %}
 <ol class="breadcrumb">
     <li><a href="/admin/">Админ-панель</a></li>
-    <li>Галерея</li>
+    <li><a href="/admin/news/">Галерея</a></li>
+    <li>Альбомы</li>
 </ol>
 {% endblock %}
 
 {% block toolbar %}
-<a class="btn btn-primary" id="file" href="/admin/gallery/edit"><i class="glyphicon glyphicon-plus-sign"></i> Добавить фотографии</a>
+<a class="btn btn-primary" href="/admin/gallery/albumEdit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить альбом</a>
 {% endblock %}
 
 {% block header %}
-Фотографии
+Альбомы
+
 {% endblock %}
 
 {% block content %}
 <table class="table table-striped table-hover">
     <tr>
-        <th class="col-sm-1">#</th>
-        <th class="col-sm-2">Фотография</th>
-        <th class="col-sm-2">Название</th>
-        <th class="col-sm-2">Создана</th>
+        <th>#</th>
+        <th class="col-sm-2">Альбом</th>
+        <th class="col-sm-2">Создан</th>
+        <th></th>
         <th></th>
     </tr>
     {% for item in items %}
     <tr>
         <td>{{item.Pk}}</td>
-        <td><img class="img-responsive" src="{{item.image}}" width="80" alt="{{ item.title }}"/></td>
-        <td>{{ item.title }}</td>
-        <td>{{item.published|date('d.m.Y H:i')}}</td>
+        <td><a href="/admin/gallery/photos?id={{item.Pk}}"> {{item.title}} </a></td>
+        <td>{{item.a_published|date('d.m.Y H:i')}}</td>
+        <td></td>
         <td style="white-space: nowrap">
-            <a class="btn btn-primary btn-sm" href="/admin/gallery/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
-            <a class="btn btn-danger btn-sm" href="/admin/gallery/delete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
+            <a class="btn btn-primary btn-sm" href="/admin/gallery/albumEdit?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
+            <a class="btn btn-danger btn-sm" href="/admin/gallery/albumDelete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
         </td>
     </tr>
     {% endfor %}
 </table>
-
-<div class="row">{{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/gallery/?page=%d'})}}</div>
 {% endblock %}
 
-{% block pagescript %}
-<script type="text/javascript">
 
-    $(function() {
-        $('a.confirmable').click(function() {
-            return confirm('Вы уверены?');
-        });
 
-        $('#news-preview').on('show.bs.modal', function (e) {
-            var id = $(e.relatedTarget).attr('data-id');
-            $(this).find('.modal-body').load('/admin/gallery/view?id='+id);
-        })
-
-    });
-
-</script>
-{% endblock %}

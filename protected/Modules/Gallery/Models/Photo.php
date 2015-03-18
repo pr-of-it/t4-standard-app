@@ -12,15 +12,14 @@ use T4\Orm\Model;
 class Photo extends Model {
 
     static protected $schema = [
-        'table'=>'photos',
         'columns'=>[
             'title'=>['type'=>'string', 'default'=>''],
             'image'=>['type'=>'string'],
             'published' => ['type'=>'datetime'],
-            'is_main'=>['type'=>'int(1)']
         ],
         'relations' => [
             'album' => ['type'=>self::BELONGS_TO, 'model'=>Album::class],
+            'album_cover' => ['type' => self::BELONGS_TO, 'model' => Album::class],
         ]
     ];
 

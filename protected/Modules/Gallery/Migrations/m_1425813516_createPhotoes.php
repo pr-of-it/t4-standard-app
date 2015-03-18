@@ -13,7 +13,6 @@ class m_1425813516_createPhotoes
         $this->createTable('photos',[
             'title'=>['type'=>'string'],
             'image'=>['type'=>'string'],
-            'is_main'=>['type'=>'int(1)'],
             'published' => ['type'=>'datetime'],
             '__album_id' => ['type'=>'link'],
         ], [
