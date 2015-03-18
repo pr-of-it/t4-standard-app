@@ -5,11 +5,14 @@ namespace App\Components\Auth;
 use App\Models\User;
 use App\Models\UserSession;
 use T4\Mvc\Application;
+use T4\Core\Session;
 
 class Identity
     extends \T4\Auth\Identity
 {
     const  ERROR_INVALID_CAPTCHA = 102;
+    const ERROR_INVALID_CODE = 103;
+    const ERROR_INVALID_TIME = 104;
     const AUTH_COOKIE_NAME = 'T4auth';
 
     public function authenticate($data)
@@ -87,22 +90,26 @@ class Identity
             $errors->add('Введенные пароли не совпадают', self::ERROR_INVALID_PASSWORD);
         }
 
-        if (0 == preg_match('~^[a-zA-Z0-9_]{6,}$~', $data->password)) {
-            $errors->add('Пароль не отвечает условиям сложности');
-        }
-
-        if (Application::getInstance()->config->extensions->captcha->register) {
-            if (!Application::getInstance()->extensions->captcha->checkKeyString($data->captcha)) {
-                $errors->add('Не правильно введены символы с картинки', self::ERROR_INVALID_CAPTCHA);
-            }
-        }
-
         if (!$errors->isEmpty())
             throw $errors;
 
         $user = User::findByEmail($data->email);
         if (!empty($user)) {
             $errors->add('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
+        }
+
+        if (!$errors->isEmpty())
+            throw $errors;
+
+        $app = Application::getInstance();
+        if ($app->config->extensions->captcha->register) {
+            if (empty($data->captcha)) {
+                $errors->add('Не введена строка с картинки', self::ERROR_INVALID_CAPTCHA);
+            } else {
+                if (!$app->extensions->captcha->checkKeyString($data->captcha)) {
+                    $errors->add('Неверные символы с картинки', self::ERROR_INVALID_CAPTCHA);
+                }
+            }
         }
 
         if (!$errors->isEmpty())

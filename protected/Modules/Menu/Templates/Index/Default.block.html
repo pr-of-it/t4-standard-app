@@ -1,0 +1,31 @@
+{% set level = items[0].__lvl %}
+{% set count = 0 %}
+{% if items.count %}
+<ul class="list-unstyled">
+
+    {% for key, item in items %}
+
+    {% set current = item.__lvl %}
+    {% if current == level %}
+    {% if count > 0 %}</li>{% endif %}
+    {% endif %}
+
+    {% if current > level %}
+    <ul>
+    {% set level = current %}
+    {% endif %}
+
+    {% if current < level %}
+    {{"</li></ul>"|repeat(level-current)|raw}}</li>
+    {% set level = current %}
+    {% endif %}
+
+    <li data-id="{{item.Pk}}">
+        <a href="{{item.url}}">{{item.title}}</a>
+
+    {% set count = count + 1 %}
+
+    {% endfor %}
+    {{"</li></ul>"|repeat(current)|raw}}</li>
+</ul>
+{% endif %}

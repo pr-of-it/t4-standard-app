@@ -43,8 +43,11 @@ return [
         'sxgeo' => [
         ],
         'captcha' => [
-            'register' => false,
+            'register' => true,
             'message' => true,
         ],
+    ],
+    'errors' => [
+        404 => '///404',
     ],
 ];

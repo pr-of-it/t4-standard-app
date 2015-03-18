@@ -72,12 +72,13 @@ class Admin
         }
     }
 
-    public function actionCheckPassword($id, $password = null)
+    public function actionChangePassword($id, $password = null)
     {
         $user = User::findByPK($id);
         $this->data->user = $user;
         $this->data->resalt = false;
-        if (isset($_POST['submit'])) {
+
+        if (isset($this->app->request->post['submit'])) {
             if (null == $password) {
                 $this->data->message = "Пароль не может быть пустым";
             } else {

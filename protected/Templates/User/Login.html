@@ -2,14 +2,14 @@
 
 {% block content %}
 
+<h2>Вход на сайт</h2>
+
 {% for error in errors %}
 <div class="alert alert-danger" role="alert">{{error.message}}</div>
 {% endfor %}
 
-<h2>Вход на сайт</h2>
-
 {% if not app.user %}
-<t4:block path="///Login" />
+{% include '__login.form.html' %}
 {% else %}
 Вы уже вошли как {{app.user.email}}
 {% endif %}
