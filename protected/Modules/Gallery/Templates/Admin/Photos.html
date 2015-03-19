@@ -32,7 +32,7 @@
     <tr>
         <td>{{item.Pk}}</td>
         <td>
-            <a data-toggle="modal" href="#myModal">
+            <a data-toggle="modal" href="#view-pic" data-id="{{item.Pk}}">
             <img class="img-responsive" src="{{ item.image }}" width="80" alt="{{ item.title }}"/>
                 </a>
         </td>
@@ -48,19 +48,14 @@
 <div class="row">{{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/gallery/?page=%d'})}}</div>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="view-pic" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    {% for item in items %}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="news-preview-title">{{ item.title }}</h4>
+                    <h4 class="modal-title" id="news-preview-title">Фотография</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-image">
-                        <img class="img-responsive" src="{{item.image}}" />
-                        {% endfor %}
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -79,6 +74,12 @@
         $('a.confirmable').click(function() {
             return confirm('Вы уверены?');
         });
+
+        $('#view-pic').on('show.bs.modal', function (e) {
+            var id = $(e.relatedTarget).attr('data-id');
+            $(this).find('.modal-body').load('/admin/gallery/view?id='+id);
+        })
+
 
     });
 

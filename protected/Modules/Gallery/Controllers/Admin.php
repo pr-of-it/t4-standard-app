@@ -36,6 +36,11 @@ class Admin
         ]);
     }
 
+    public function actionView($id)
+    {
+        $this->data->item = Photo::findByPK($id);
+    }
+
     public function actionEdit($id = null)
     {
         if (null === $id || 'new' == $id) {
