@@ -19,7 +19,6 @@ class Photo extends Model {
         ],
         'relations' => [
             'album' => ['type'=>self::BELONGS_TO, 'model'=>Album::class],
-            'album_cover' => ['type' => self::BELONGS_TO, 'model' => Album::class],
         ]
     ];
 

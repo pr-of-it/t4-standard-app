@@ -16,7 +16,6 @@ class Album
         ],
         'relations' => [
             'photos' => ['type' => self::HAS_MANY, 'model' => Photo::class],
-            'cover_photo' => ['type' => self::HAS_ONE, 'model' => Photo::class],
         ]
     ];
 

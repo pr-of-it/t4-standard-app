@@ -1,0 +1,8 @@
+{% extends 'index.html'%}
+
+{% block content %}
+
+{% for item in items %}
+<a href="#"><img class="img-responsive" src="{{ item.image }}" width="300" height="300"></a>
+{% endfor %}
+{% endblock %}

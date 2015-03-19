@@ -12,20 +12,17 @@
 
 
 {% block toolbar %}
-<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/gallery/admin/cover/">
 <a class="btn btn-primary" id="file" href="/admin/gallery/edit"><i class="glyphicon glyphicon-plus-sign"></i> Добавить фотографии</a>
-<input type="button" name="submit" value="Сохранить обложку">
 {% endblock %}
 
 {% block header %}
-{{ album.title }} / Фотографии
+{{ album.title }}
 {% endblock %}
 
 {% block content %}
 <table class="table table-striped table-hover">
     <tr>
         <th class="col-sm-1">#</th>
-        <th class="col-sm-2">Обложка</th>
         <th class="col-sm-2">Фотография</th>
         <th class="col-sm-2">Название</th>
         <th class="col-sm-2">Создана</th>
@@ -33,9 +30,12 @@
     </tr>
     {% for item in items %}
     <tr>
-        <td>{{item.Pk}}
-        <td><input type="checkbox" name="__photo_id" value="{{ item.Pk }}"></td>
-        <td><img class="img-responsive" src="{{item.image}}" width="80" alt="{{ item.title }}"/></td>
+        <td>{{item.Pk}}</td>
+        <td>
+            <a data-toggle="modal" href="#myModal">
+            <img class="img-responsive" src="{{ item.image }}" width="80" alt="{{ item.title }}"/>
+                </a>
+        </td>
         <td>{{ item.title }}</td>
         <td>{{item.published|date('d.m.Y H:i')}}</td>
         <td style="white-space: nowrap">
@@ -45,8 +45,31 @@
     </tr>
     {% endfor %}
 </table>
-</form>
 <div class="row">{{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/gallery/?page=%d'})}}</div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {% for item in items %}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="news-preview-title">{{ item.title }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-image">
+                        <img class="img-responsive" src="{{item.image}}" />
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
 
 {% block pagescript %}
@@ -56,11 +79,6 @@
         $('a.confirmable').click(function() {
             return confirm('Вы уверены?');
         });
-
-        $('#news-preview').on('show.bs.modal', function (e) {
-            var id = $(e.relatedTarget).attr('data-id');
-            $(this).find('.modal-body').load('/admin/gallery/view?id='+id);
-        })
 
     });
 

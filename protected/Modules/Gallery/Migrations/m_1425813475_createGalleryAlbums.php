@@ -13,10 +13,9 @@ class m_1425813475_createGalleryAlbums
         $this->createTable('albums',[
             'title' => ['type'=>'string'],
             'a_published' => ['type'=>'datetime'],
-            '__photo_id' => ['type'=>'link']
         ], [
-            'cover'=>['columns'=>['__photo_id']]
-        ]);
+        ]
+        );
     }
 
     public function down()

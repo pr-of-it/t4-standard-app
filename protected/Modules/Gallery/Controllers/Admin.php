@@ -24,7 +24,7 @@ class Admin
         ]);
     }
 
-    public function actionPhotos($id = null, $page = 1)
+    public function actionPhotos($id, $page = 1)
     {
         $this->data->album = Album::findByPK($id);
         $this->data->itemsCount = Photo::countAll();
@@ -58,10 +58,6 @@ class Admin
             ->uploadImage('image')
             ->save();
         $this->redirect('/admin/gallery/');
-    }
-
-    public function actionCover(){
-
     }
 
     public function actionDelete($id)
