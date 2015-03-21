@@ -2,12 +2,12 @@
 
 return [
 
-    '///Login' => [
+    '//User/Login' => [
         'title' => 'Форма входа',
         'desc' => 'Форма входа на сайт',
         'options' => [],
     ],
-    '///Register' => [
+    '//User/Register' => [
         'title' => 'Форма регистрации',
         'desc' => 'Форма регистрации пользователя',
         'options' => [],

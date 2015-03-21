@@ -47,4 +47,7 @@ return [
             'message' => true,
         ],
     ],
+    'errors' => [
+        404 => '///404',
+    ],
 ];
