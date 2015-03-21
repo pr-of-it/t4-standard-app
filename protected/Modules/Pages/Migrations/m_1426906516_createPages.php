@@ -4,7 +4,7 @@ namespace App\Modules\Pages\Migrations;
 
 use T4\Orm\Migration;
 
-class m_1423651650_createPages
+class m_1426906516_createPages
     extends Migration
 {
 
@@ -25,11 +25,9 @@ class m_1423651650_createPages
                 ],
             ],
             [
-                ['columns' => ['url']],
             ],
             ['tree']
         );
-        $this->insert('pages', ['title' => 'Главная страница', 'url' => 'index', 'text' => 'Добро пожаловать на ваш новый сайт!']);
     }
 
 
