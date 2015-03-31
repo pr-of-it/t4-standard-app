@@ -9,16 +9,17 @@ use T4\Http\Uploader;
 use T4\Mvc\Application;
 use T4\Orm\Model;
 
-class Photo extends Model {
+class Photo extends Model
+{
 
     static protected $schema = [
-        'columns'=>[
-            'title'=>['type'=>'string', 'default'=>''],
-            'image'=>['type'=>'string'],
-            'published' => ['type'=>'datetime'],
+        'columns' => [
+            'title' => ['type' => 'string', 'default' => ''],
+            'image' => ['type' => 'string'],
+            'published' => ['type' => 'datetime'],
         ],
         'relations' => [
-            'album' => ['type'=>self::BELONGS_TO, 'model'=>Album::class],
+            'album' => ['type' => self::BELONGS_TO, 'model' => Album::class],
         ]
     ];
 

@@ -4,7 +4,7 @@ namespace App\Modules\Gallery\Migrations;
 
 use T4\Orm\Migration;
 
-class m_1425813516_createPhotoes
+class m_1425813516_createPhotos
     extends Migration
 {
 

@@ -1,0 +1,42 @@
+{% extends 'Admin/Blank.html' %}
+{% import 'Admin/Macros/Tree.html' as Tree %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="/admin/">Админ-панель</a></li>
+    <li><a href="/admin/gallery/">Галерея</a></li>
+    <li>Альбомы</li>
+</ol>
+{% endblock %}
+
+{% block toolbar %}
+<a class="btn btn-primary" href="/admin/gallery/albumEdit?id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить альбом</a>
+{% endblock %}
+
+{% block header %}
+Альбомы
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {{ Tree.listSortable(items, '/admin/gallery/album') }}
+</div>
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $(function() {
+
+        $('a.confirmable').click(function() {
+            return confirm('Вы уверены?');
+        });
+
+        {{ Tree.listSortableJs('/admin/gallery/album') }}
+    });
+</script>
+{% endblock %}
+
+
+
+
+

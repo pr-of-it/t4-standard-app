@@ -5,6 +5,7 @@ namespace App\Modules\Gallery\Controllers;
 use App\Components\Admin\Controller;
 use App\Modules\Gallery\Models\Album;
 use App\Modules\Gallery\Models\Photo;
+use T4\Core\Exception;
 
 
 class Admin
@@ -18,37 +19,45 @@ class Admin
         $this->data->itemsCount = Photo::countAll();
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
-        $this->data->items = Album::findAll('__album_id', $id, [
+        $this->data->items = Photo::findAll([
+            'order' => 'published DESC',
             'offset' => ($page - 1) * self::PAGE_SIZE,
             'limit' => self::PAGE_SIZE
         ]);
-    }
+        }
 
-    public function actionPhotos($id, $page = 1)
+
+    public function actionPhoto($page = 1)
     {
-        $this->data->album = Album::findByPK($id);
-        $this->data->itemsCount = Photo::countAll();
+        $id = (int)$this->app->request->post->parent;
+        $album = Album::findByColumn('__id', $this->app->request->post->parent);
+        $this->data->itemsCount = count(Album::findByPK($id)->photos->collect('__id'));
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
-        $this->data->items = Photo::findAllByColumn('__album_id', $id, [
+        $this->data->albums = Album::findAllByQuery('SELECT __id, title FROM albums WHERE __lft >'.$album->__lft.' AND __rgt <'.$album->__rgt);
+        $this->data->photos = Photo::findAllByColumn('__album_id', $id, [
+            'order' => 'published DESC',
             'offset' => ($page - 1) * self::PAGE_SIZE,
             'limit' => self::PAGE_SIZE
         ]);
+        var_dump($this->data->albums);
     }
+
+
 
     public function actionView($id)
     {
         $this->data->item = Photo::findByPK($id);
     }
 
-    public function actionEdit($id = null)
+    public function actionEdit( $__album_id, $id = null)
     {
         if (null === $id || 'new' == $id) {
             $this->data->item = new Photo();
         } else {
             $this->data->item = Photo::findByPK($id);
         }
-        $this->data->albums = Album::findAll();
+        $this->data->album = $__album_id;
     }
 
     public function actionSave()
@@ -75,6 +84,11 @@ class Admin
     /**
      * Albums
      */
+    public function actionAlbums()
+    {
+        $this->data->items = Album::findAllTree();
+    }
+
 
     public function actionAlbumEdit($id = null)
     {
@@ -94,7 +108,7 @@ class Admin
         }
         $item->fill($this->app->request->post);
         $item->save();
-        $this->redirect('/admin/gallery/');
+        $this->redirect('/admin/gallery/albums');
     }
 
     public function actionAlbumDelete($id)
@@ -103,6 +117,68 @@ class Admin
         if ($item) {
             $item->delete();
         }
-        $this->redirect('/admin/gallery/');
+        $this->redirect('/admin/gallery/albums');
+    }
+
+    public function actionAlbumUp($id)
+    {
+        $item = Album::findByPK($id);
+        if (empty($item))
+            $this->redirect('/admin/gallery/albums');
+        $sibling = $item->getPrevSibling();
+        if (!empty($sibling)) {
+            $item->insertBefore($sibling);
+        }
+        $this->redirect('/admin/gallery/albums');
+    }
+
+    public function actionAlbumDown($id)
+    {
+        $item = Album::findByPK($id);
+        if (empty($item))
+            $this->redirect('/admin/gallery/albums');
+        $sibling = $item->getNextSibling();
+        if (!empty($sibling)) {
+            $item->insertAfter($sibling);
+        }
+        $this->redirect('/admin/gallery/albums');
+    }
+
+    public function actionAlbumMoveBefore($id, $to)
+    {
+        try {
+            $item = Album::findByPK($id);
+            if (empty($item)) {
+                throw new Exception('Source element does not exist');
+            }
+            $destination = Album::findByPK($to);
+            if (empty($destination)) {
+                throw new Exception('Destination element does not exist');
+            }
+            $item->insertBefore($destination);
+            $this->data->result = true;
+        } catch (Exception $e) {
+            $this->data->result = false;
+            $this->data->error = $e->getMessage();
+        }
+    }
+
+    public function actionAlbumMoveAfter($id, $to)
+    {
+        try {
+            $item = Album::findByPK($id);
+            if (empty($item)) {
+                throw new Exception('Source element does not exist');
+            }
+            $destination = Album::findByPK($to);
+            if (empty($destination)) {
+                throw new Exception('Destination element does not exist');
+            }
+            $item->insertAfter($destination);
+            $this->data->result = true;
+        } catch (Exception $e) {
+            $this->data->result = false;
+            $this->data->error = $e->getMessage();
+        }
     }
 }

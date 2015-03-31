@@ -11,7 +11,7 @@ class Album
     protected static $schema = [
         'columns' => [
             'title' => ['type'=>'string'],
-            'a_published' => ['type'=>'datetime'],
+            'published' => ['type'=>'datetime'],
 
         ],
         'relations' => [
@@ -19,16 +19,25 @@ class Album
         ]
     ];
 
+    static protected $extensions = ['tree'];
+
     public function beforeSave()
     {
         if ($this->isNew()) {
-            $this->a_published = date('Y-m-d H:i:s', time());
+            $this->published = date('Y-m-d H:i:s', time());
         }
-        return true;
+
+        return parent::beforeSave() ;
     }
 
     public function afterDelete()
     {
         $this->photos->delete();
     }
+
+    public function albumCover($id)
+    {
+        $this->data->cover = Photo::findByQuery('SELECT image FROM photos WHERE __album_id='.$id.'AND __id=LAST_INSERT_ID');
+    }
+
 }

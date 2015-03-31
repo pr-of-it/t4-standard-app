@@ -12,15 +12,17 @@ class m_1425813475_createGalleryAlbums
     {
         $this->createTable('albums',[
             'title' => ['type'=>'string'],
-            'a_published' => ['type'=>'datetime'],
+            'published' => ['type'=>'datetime'],
         ], [
-        ]
-        );
+
+        ], [
+            'tree'
+        ]);
     }
 
     public function down()
     {
-        $this->dropTable('album');
+        $this->dropTable('albums');
     }
 
 }

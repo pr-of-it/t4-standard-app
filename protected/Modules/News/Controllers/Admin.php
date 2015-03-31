@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Modules\News\Controllers;
 
 use App\Components\Admin\Controller;
@@ -7,11 +6,9 @@ use App\Modules\News\Models\Story;
 use App\Modules\News\Models\Topic;
 use T4\Core\Exception;
 
-
 class Admin
     extends Controller
 {
-
     const PAGE_SIZE = 20;
 
     public function actionDefault($page = 1)
@@ -19,11 +16,10 @@ class Admin
         $this->data->itemsCount = Story::countAll();
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
-
         $this->data->items = Story::findAll([
             'order' => 'published DESC',
-            'offset'=> ($page-1)*self::PAGE_SIZE,
-            'limit'=> self::PAGE_SIZE
+            'offset' => ($page - 1) * self::PAGE_SIZE,
+            'limit' => self::PAGE_SIZE
         ]);
     }
 
@@ -77,7 +73,6 @@ class Admin
     /**
      * TOPICS
      */
-
     public function actionTopics()
     {
         $this->data->items = Topic::findAllTree();
@@ -174,5 +169,4 @@ class Admin
             $this->data->error = $e->getMessage();
         }
     }
-
 }
