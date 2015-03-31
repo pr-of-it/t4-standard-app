@@ -14,7 +14,7 @@ class Admin
 
     const PAGE_SIZE = 20;
 
-    public function actionDefault($id = null, $page = 1)
+    public function actionDefault($page = 1)
     {
         $this->data->itemsCount = Photo::countAll();
         $this->data->pageSize = self::PAGE_SIZE;
@@ -27,11 +27,13 @@ class Admin
         }
 
 
-    public function actionPhoto($page = 1)
+    public function actionPhoto($id = null,$page = 1)
     {
-        $id = (int)$this->app->request->post->parent;
-        $album = Album::findByColumn('__id', $this->app->request->post->parent);
-        $this->data->itemsCount = count(Album::findByPK($id)->photos->collect('__id'));
+        if($id == null){
+            $id = $this->app->request->post->parent;
+        }
+        $album = Album::findByColumn('__id', $id);
+        $this->data->itemsCount= Album::countAll();
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
         $this->data->albums = Album::findAllByQuery('SELECT __id, title FROM albums WHERE __lft >'.$album->__lft.' AND __rgt <'.$album->__rgt);
@@ -40,7 +42,7 @@ class Admin
             'offset' => ($page - 1) * self::PAGE_SIZE,
             'limit' => self::PAGE_SIZE
         ]);
-        var_dump($this->data->albums);
+        $this->data->item = Album::findByColumn('__id', $id);
     }
 
 

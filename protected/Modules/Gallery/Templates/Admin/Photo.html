@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block toolbar %}
-<a class="btn btn-primary" href="/gallery/admin/edit?__album_id={% for album in albums %}{{ album.Pk }}{% endfor %}&id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить фотографию</a>
+<a class="btn btn-primary" href="/gallery/admin/edit?__album_id={{item.Pk }}&id=new"><i class="glyphicon glyphicon-plus-sign"></i> Добавить фотографию</a>
 {% endblock %}
 
 {% block content%}
@@ -25,19 +25,19 @@
         <th class="col-sm-2">Создана</th>
         <th></th>
     </tr>
-    {% for item in items %}
+    {% for photo in photos %}
     <tr>
         <td>{{item.Pk}}</td>
         <td>
             <a data-toggle="modal" href="#view-pic" data-id="{{item.Pk}}">
-                <img class="img-responsive" src="{{ item.image }}" width="80" alt="{{ item.title }}"/>
+                <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ item.title }}"/>
             </a>
         </td>
         <td>{{ item.title }}</td>
         <td>{{item.published|date('d.m.Y H:i')}}</td>
         <td style="white-space: nowrap">
-            <a class="btn btn-primary btn-sm" href="/admin/gallery/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
-            <a class="btn btn-danger btn-sm" href="/admin/gallery/delete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
+            <a class="btn btn-primary btn-sm" href="/gallery/admin/edit/?id={{item.Pk}}&__album_id={{item.Pk }}"><i class="glyphicon glyphicon-edit"></i></a>
+            <a class="btn btn-danger btn-sm" href="/gallery/admin/delete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
         </td>
     </tr>
     {% endfor %}

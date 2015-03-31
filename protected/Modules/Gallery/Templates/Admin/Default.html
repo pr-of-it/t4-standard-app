@@ -6,7 +6,6 @@
 <ol class="breadcrumb">
     <li><a href="/admin/">Админ-панель</a></li>
     <li><a href="/admin/gallery/">Галерея</a></li>
-    <li>{{ album.title }}</li>
 </ol>
 {% endblock %}
 
@@ -47,8 +46,8 @@
         <td>{{ item.title }}</td>
         <td>{{item.published|date('d.m.Y H:i')}}</td>
         <td style="white-space: nowrap">
-            <a class="btn btn-primary btn-sm" href="/admin/gallery/edit/?id={{item.Pk}}"><i class="glyphicon glyphicon-edit"></i></a>
-            <a class="btn btn-danger btn-sm" href="/admin/gallery/delete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
+            <a class="btn btn-primary btn-sm" href="/gallery/admin/edit/?id={{item.Pk}}&__album_id={{ item.album.Pk }}"><i class="glyphicon glyphicon-edit"></i></a>
+            <a class="btn btn-danger btn-sm" href="/gallery/admin/delete/?id={{item.Pk}}"><i class="glyphicon glyphicon-remove"></i></a>
         </td>
     </tr>
     {% endfor %}
