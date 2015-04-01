@@ -21,6 +21,15 @@ class Index extends Controller{
         ]);
     }
 
+    public function actionFoto(){
+
+       $this->app->config->extensions->fotorama;
+        //var_dump($congif);
+        $this->data->items = Photo::findAll( [
+            'order' => 'published DESC',
+        ]);
+    }
+
     public function actionPhoto($id, $page = 1)
     {
         $this->data->itemsCount = Photo::countAll();

@@ -8,6 +8,11 @@
 </ol>
 {% endblock %}
 
+
+{% block header %}
+{{ item.title }}
+{% endblock %}
+
 {% block toolbar %}
 <div class="col-sm-10">
     <a class="btn btn-primary" href="/gallery/admin/edit?__album_id={{item.Pk }}&id=new"><i
@@ -34,14 +39,14 @@
     </tr>
     {% for photo in photos %}
     <tr>
-        <td>{{item.Pk}}</td>
+        <td>{{photo.Pk}}</td>
         <td>
             <a data-toggle="modal" href="#view-pic" data-id="{{item.Pk}}">
                 <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ item.title }}"/>
             </a>
         </td>
-        <td>{{ item.title }}</td>
-        <td>{{item.published|date('d.m.Y H:i')}}</td>
+        <td>{{ photo.title }}</td>
+        <td>{{photo.published|date('d.m.Y H:i')}}</td>
         <td style="white-space: nowrap">
             <a class="btn btn-primary btn-sm" href="/gallery/admin/edit/?id={{item.Pk}}&__album_id={{item.Pk }}"><i
                     class="glyphicon glyphicon-edit"></i></a>
@@ -51,6 +56,9 @@
     </tr>
     {% endfor %}
 </table>
+
+<div class="row">{{widget('pager', {'total': itemsCount, 'size': pageSize, 'active': activePage, 'url': '/admin/gallery/photo?page=%d'})}}</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="view-pic" tabindex="-1" role="dialog" aria-hidden="true">

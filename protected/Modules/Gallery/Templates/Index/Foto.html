@@ -1,0 +1,17 @@
+{% extends 'index.html'%}
+
+{% block head %}
+<meta name="viewport" content="width=device-width">
+
+<link href="lib/css/fotorama.css" rel="stylesheet">
+<script src="lib/js/fotorama.js"></script>
+
+{%endblock%}
+
+{% block content %}
+<div class="fotorama" data-nav="thumbs" data-width="700" data-ratio="700/467" data-max-width="100%">
+    {% for item in items %}
+    <img class="img-responsive" src="{{item.image}}">
+    {% endfor %}
+</div>
+{% endblock %}
