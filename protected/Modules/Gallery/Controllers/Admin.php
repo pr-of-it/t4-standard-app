@@ -6,7 +6,7 @@ use App\Components\Admin\Controller;
 use App\Modules\Gallery\Models\Album;
 use App\Modules\Gallery\Models\Photo;
 use T4\Core\Exception;
-
+use T4\Http\Uploader;
 
 class Admin
     extends Controller
@@ -24,27 +24,29 @@ class Admin
             'offset' => ($page - 1) * self::PAGE_SIZE,
             'limit' => self::PAGE_SIZE
         ]);
-        }
+    }
 
 
-    public function actionPhoto($id = null,$page = 1)
+    public function actionPhoto($id = null, $page = 1)
     {
-        if($id == null){
+        if ($id == null) {
             $id = $this->app->request->post->parent;
         }
-        $album = Album::findByColumn('__id', $id);
-        $this->data->itemsCount= Album::countAll();
+        $this->data->url = $this->app->request->getPath() . '/?page=%d&id=' . $id;
+        $album = $this->data->item = Album::findByColumn('__id', $id);
+        if ($album->__prt) {
+            $this->data->albumParent = Album::findByColumn('__id', $album->__prt);
+        }
+        $this->data->itemsCount = count(Album::findByPK($id)->photos->collect('__id'));
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
-        $this->data->albums = Album::findAllByQuery('SELECT __id, title FROM albums WHERE __lft >'.$album->__lft.' AND __rgt <'.$album->__rgt);
+        $this->data->albums = Album::findAllByQuery('SELECT __id, title FROM albums WHERE __lft >' . $album->__lft . ' AND __rgt <' . $album->__rgt);
         $this->data->photos = Photo::findAllByColumn('__album_id', $id, [
             'order' => 'published DESC',
             'offset' => ($page - 1) * self::PAGE_SIZE,
             'limit' => self::PAGE_SIZE
         ]);
-        $this->data->item = Album::findByColumn('__id', $id);
     }
-
 
 
     public function actionView($id)
@@ -52,29 +54,62 @@ class Admin
         $this->data->item = Photo::findByPK($id);
     }
 
-    public function actionEdit( $__album_id, $id = null)
+    public function actionEdit($__album_id, $id = null)
     {
         if (null === $id || 'new' == $id) {
             $this->data->item = new Photo();
         } else {
             $this->data->item = Photo::findByPK($id);
         }
-        $this->data->album = $__album_id;
+        $this->data->album = Album::findByColumn('__id', $this->app->request->post->__album_id);
+    }
+
+    public function actionEditUploadedFiles()
+    {
+        $request = $this->app->request;
+        if ($request->isUploadedArray('image')) {
+            $uploader = new Uploader('image');
+            $uploader->setPath('/public/gallery/photos');
+            $images = $uploader();
+            $num = count($images);
+            foreach ($images as $image) {
+                $item = new Photo();
+                $item->fill($this->app->request->post);
+                $item->image = $image;
+                $item->save();
+            }
+        } else {
+            $num = 1;
+            if (!empty($this->app->request->post->id)) {
+                $item = Photo::findByPK($this->app->request->post->id);
+            } else {
+                $item = new Photo();
+            }
+            $item->fill($this->app->request->post);
+            $item
+                ->uploadImage('image')
+                ->save();
+        }
+        $album = $this->data->album = Album::findByColumn('__id', $this->app->request->post->__album_id);
+        if ($album->__prt) {
+            $this->data->albumParent = Album::findByColumn('__id', $album->__prt);
+        }
+        $album_id = $this->data->album_id = $this->app->request->post->__album_id;
+        $this->data->items = Photo::findAllByQuery('SELECT * FROM photos WHERE __album_id=' . $album_id . ' ORDER BY published DESC LIMIT ' . $num);
     }
 
     public function actionSave()
     {
-        if (!empty($this->app->request->post->id)) {
-            $item = Photo::findByPK($this->app->request->post->id);
-        } else {
-            $item = new Photo();
+        foreach ($this->app->request->post->id as $id) {
+            static $num = 0;
+            $item = Photo::findByPK($id);
+            $item->title = $this->app->request->post->title[$num];
+            $item->save();
+            $num++;
         }
-        $item->fill($this->app->request->post);
-        $item
-            ->uploadImage('image')
-            ->save();
         $this->redirect('/admin/gallery/');
     }
+
 
     public function actionDelete($id)
     {

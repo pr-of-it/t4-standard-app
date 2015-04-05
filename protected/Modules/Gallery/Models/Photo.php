@@ -26,9 +26,8 @@ class Photo extends Model
     public function uploadImage($formFieldName)
     {
         $request = Application::getInstance()->request;
-        if (!$request->existsFilesData() || !$request->isUploaded($formFieldName) || $request->isUploadedArray($formFieldName))
+        if (!$request->existsFilesData() || !$request->isUploaded($formFieldName))
             return $this;
-
         try {
             $uploader = new Uploader($formFieldName);
             $uploader->setPath('/public/gallery/photos');
@@ -69,4 +68,5 @@ class Photo extends Model
         }
         return true;
     }
+
 }

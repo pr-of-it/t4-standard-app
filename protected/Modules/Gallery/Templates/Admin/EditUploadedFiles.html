@@ -18,6 +18,7 @@
 
 {% block content %}
 <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/gallery/admin/save/">
+    {% for item in items %}
     <input type="hidden" name="id[]" value="{{item.Pk}}">
     <input type="hidden" name="image[]" value="{{item.image}}">
     <div class="media">
@@ -32,6 +33,7 @@
             </div>
         </div>
     </div>
+    {% endfor %}
     <br>
     <div class="row">
         <footer class="col-sm-offset-2 col-sm-10">

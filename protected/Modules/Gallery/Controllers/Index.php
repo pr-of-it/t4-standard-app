@@ -6,6 +6,7 @@ use App\Modules\Gallery\Models\Album;
 use App\Modules\Gallery\Models\Photo;
 use T4\Mvc\Controller;
 
+
 class Index extends Controller{
 
     const PAGE_SIZE = 20;
@@ -39,5 +40,20 @@ class Index extends Controller{
             'offset' => ($page - 1) * self::PAGE_SIZE,
             'limit' => self::PAGE_SIZE
         ]);
+    }
+
+    public function actionLastAddedPhoto()
+    {
+        $this->data->item = Photo::findByQuery('SELECT * FROM photos ORDER BY published DESC');
+    }
+
+    public function actionLastAddedPhotos($album_id, $num)
+    {
+       $this->data->items = Photo::findAllByQuery('SELECT * FROM photos WHERE __album_id='.$album_id.' ORDER BY published DESC LIMIT ' .$num);
+    }
+
+    public function actionRandomPhoto($album_id)
+    {
+        $this->data->item = Photo::findByQuery('SELECT * FROM photos WHERE __album_id='.$album_id.' ORDER BY rand()');
     }
 }
