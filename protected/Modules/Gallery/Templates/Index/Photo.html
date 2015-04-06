@@ -14,7 +14,7 @@
     {% if albumParent %}
     <li><a href="/admin/gallery/photo?id={{albumParent.Pk}}">{{ albumParent.title }}</a></li>
     {% endif %}
-    <li>{{ item.title }}</li>
+    <li>{{ album.title }}</li>
 </ol>
 
 <div class="fotorama" data-nav="thumbs" data-width="700" data-ratio="700/467" data-max-width="100%">

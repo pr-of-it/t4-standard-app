@@ -28,14 +28,22 @@ class Index extends Controller
     {
 
         $this->app->config->extensions->fotorama;
-        $this->data->item = Album::findByColumn('__id', $id);
-        $album = $this->data->item = Album::findByColumn('__id', $id);
+        $album = $this->data->album = Album::findByColumn('__id', $id);
         if ($album->__prt) {
             $this->data->albumParent = Album::findByColumn('__id', $album->__prt);
         }
         $this->data->items = Photo::findAllByColumn('__album_id', $id, [
             'order' => 'published DESC',
         ]);
+    }
+
+    public function actionOne($id, $album_id)
+    {
+        $album = $this->data->album = Album::findByColumn('__id', $album_id);
+        if ($album->__prt) {
+            $this->data->albumParent = Album::findByColumn('__id', $album->__prt);
+        }
+        $this->data->item = Photo::findByColumn('__id', $id);
     }
 
 

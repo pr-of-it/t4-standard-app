@@ -1,0 +1,11 @@
+<ol class="breadcrumb" xmlns="http://www.w3.org/1999/html">
+    <li><a href="/gallery/">Галерея</a></li>
+    {% if albumParent %}
+    <li><a href="/admin/gallery/photo?id={{albumParent.Pk}}">{{ albumParent.title }}</a></li>
+    {% endif %}
+    <li>{{ album.title }}</li>
+</ol>
+
+{{item.title}}
+<img src="{{item.image}}" class="img-responsive" style="max-width: 500px; max-height: 500px;">
+<p>Добавили:</p>{{item.published}}
