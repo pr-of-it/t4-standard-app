@@ -1,0 +1,45 @@
+
+<div class="row">
+    <div class="col-md-6">
+        <section>
+            <h2> {{item.topic.title}}</h2>
+            {% for item in items1 %}
+            <article class="clearfix">
+                <h3><a href="/news/{{item.Pk}}.html">{{item.title}}</a></h3>
+                {% if item.image %}<img src="{{item.image}}" style="max-width: 100%; margin-right: 10px;"
+                                        class="img-responsive pull-left">{% endif %}
+                {{item.lead|raw}}
+            </article>
+            {% endfor %}
+        </section>
+    </div>
+
+    <div class="col-md-3">
+        <section>
+            <h2> {{item.topic.title}}</h2>
+            {% for item in items2 %}
+            <article class="clearfix" style="background-color:rgba(189, 189, 189, 0.33)">
+                <h3><a href="/news/{{item.Pk}}.html">{{item.title}}</a></h3>
+                {% if item.image %}<img src="{{item.image}}" style="max-width: 33%; margin-right: 10px;"
+                                        class="img-responsive pull-left">{% endif %}
+                {{item.lead|raw}}
+            </article>
+            {% endfor %}
+        </section>
+    </div>
+
+    <div class="col-md-3">
+        <section>
+            <h2> {{item.topic.title}}</h2>
+            {% for item in items3 %}
+            <article class="clearfix">
+                <h3><a href="/news/{{item.Pk}}.html">{{item.title}}</a></h3>
+                {% if item.image %}<img src="{{item.image}}" style="max-width: 33%; margin-right: 10px;"
+                                        class="img-responsive pull-left">{% endif %}
+                {{item.lead|raw}}
+            </article>
+            {% endfor %}
+        </section>
+
+    </div>
+</div>

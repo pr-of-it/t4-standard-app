@@ -9,6 +9,7 @@ return [
     '/admin/<1>'            => '/Admin//Module(module=<1>)',
 
     '/news/<1>' => '/News//One(id=<1>)',
+   // '/mainnews/' => '/News/Index/MainNews',
 
     '/index' => '///',
     '/pages/<1>/<2>'    => '/Pages/Index/PageByUrl(url=<2>)',
