@@ -95,8 +95,41 @@ return [
         'options' => [],
     ],
 
+    /**
+     * Gallery module
+     */
+
     '/Gallery//' => [
         'title'=> 'Альбомы',
         'options' => [],
+    ],
+
+    '/Gallery//LastAddedPhoto' => [
+        'title' => 'Последнее добавленное фото',
+        'desc' => 'Последнее добавленное в галерею фото',
+        'options' => [],
+    ],
+
+    '/Gallery//LastAddedPhotos' => [
+        'title' => 'Последние фото',
+        'desc' => 'Последние добавленные N фото из альбома X',
+        'options' => [
+            'album_id'=> [
+                'title' => 'Номер альбома'
+            ],
+            'num' => [
+                'title' => 'Количество добавленных фото'
+            ]
+        ],
+    ],
+
+    '/Gallery//RandomPhoto' => [
+        'title' => 'Случайное фото',
+        'desc' => 'Случайное фото из альбома X',
+        'options' => [
+            'album_id'=> [
+                'title' => 'Номер альбома'
+            ],
+        ],
     ],
 ];

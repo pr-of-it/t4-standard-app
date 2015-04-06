@@ -68,5 +68,4 @@ class Photo extends Model
         }
         return true;
     }
-
 }

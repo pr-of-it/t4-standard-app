@@ -1,15 +1,19 @@
 {% extends 'index.html'%}
 
 {% block content %}
-<table class="table table-striped table-hover col-sm-10">
-    <tr>
-        <th class="col-sm-1">#</th>
-        <th class="col-sm-2">Альбом</th>
-    </tr>
+
+<ol class="breadcrumb">
+    <li>Галерея</li>
+</ol>
+
+<div class="row">
     {% for item in items %}
-    <tr>
-        <td>{{item.Pk}}</td>
-        <td><a href="/gallery/photo?id={{item.Pk}}"> {{item.title}} </a></td>
+    <div class="col-sm-3">
+        <a href="/gallery/photo?id={{item.Pk}}">
+            <img src="{{item.getAlbumImage}}" class="img-responsive" style="max-width: 300px; max-height: 300px;">
+            {{item.title}}
+        </a>
+    </div>
     {% endfor %}
-</table>
+</div>
 {% endblock %}

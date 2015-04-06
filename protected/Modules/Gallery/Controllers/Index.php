@@ -7,40 +7,37 @@ use App\Modules\Gallery\Models\Photo;
 use T4\Mvc\Controller;
 
 
-class Index extends Controller{
+class Index extends Controller
+{
 
     const PAGE_SIZE = 20;
 
-    public function actionDefault($id = null, $page = 1)
+    public function actionDefault($page = 1)
     {
         $this->data->itemsCount = Photo::countAll();
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
-        $this->data->items = Album::findAll('__album_id', $id, [
+        $this->data->items = Album::findAll([
             'offset' => ($page - 1) * self::PAGE_SIZE,
-            'limit' => self::PAGE_SIZE
+            'limit' => self::PAGE_SIZE,
+            'where' => '__prt = 0',
         ]);
     }
 
-    public function actionFoto(){
+    public function actionPhoto($id)
+    {
 
-       $this->app->config->extensions->fotorama;
-        //var_dump($congif);
-        $this->data->items = Photo::findAll( [
+        $this->app->config->extensions->fotorama;
+        $this->data->item = Album::findByColumn('__id', $id);
+        $album = $this->data->item = Album::findByColumn('__id', $id);
+        if ($album->__prt) {
+            $this->data->albumParent = Album::findByColumn('__id', $album->__prt);
+        }
+        $this->data->items = Photo::findAllByColumn('__album_id', $id, [
             'order' => 'published DESC',
         ]);
     }
 
-    public function actionPhoto($id, $page = 1)
-    {
-        $this->data->itemsCount = Photo::countAll();
-        $this->data->pageSize = self::PAGE_SIZE;
-        $this->data->activePage = $page;
-        $this->data->items = Photo::findAllByColumn('__album_id', $id, [
-            'offset' => ($page - 1) * self::PAGE_SIZE,
-            'limit' => self::PAGE_SIZE
-        ]);
-    }
 
     public function actionLastAddedPhoto()
     {
@@ -49,11 +46,11 @@ class Index extends Controller{
 
     public function actionLastAddedPhotos($album_id, $num)
     {
-       $this->data->items = Photo::findAllByQuery('SELECT * FROM photos WHERE __album_id='.$album_id.' ORDER BY published DESC LIMIT ' .$num);
+        $this->data->items = Photo::findAllByQuery('SELECT * FROM photos WHERE __album_id=' . $album_id . ' ORDER BY published DESC LIMIT ' . $num);
     }
 
     public function actionRandomPhoto($album_id)
     {
-        $this->data->item = Photo::findByQuery('SELECT * FROM photos WHERE __album_id='.$album_id.' ORDER BY rand()');
+        $this->data->item = Photo::findByQuery('SELECT * FROM photos WHERE __album_id=' . $album_id . ' ORDER BY rand()');
     }
 }

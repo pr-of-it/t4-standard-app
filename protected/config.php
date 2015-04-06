@@ -47,6 +47,7 @@ return [
             'message' => true,
         ],
         'fotorama'=>[
+            'autoload' => true,
         ]
     ],
     'errors' => [

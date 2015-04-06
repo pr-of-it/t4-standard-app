@@ -6,12 +6,13 @@ namespace App\Modules\Gallery\Models;
 use T4\Orm\Model;
 
 class Album
-      extends Model {
+    extends Model
+{
 
     protected static $schema = [
         'columns' => [
-            'title' => ['type'=>'string'],
-            'published' => ['type'=>'datetime'],
+            'title' => ['type' => 'string'],
+            'published' => ['type' => 'datetime'],
 
         ],
         'relations' => [
@@ -27,7 +28,7 @@ class Album
             $this->published = date('Y-m-d H:i:s', time());
         }
 
-        return parent::beforeSave() ;
+        return parent::beforeSave();
     }
 
     public function afterDelete()
@@ -35,9 +36,10 @@ class Album
         $this->photos->delete();
     }
 
-    public function albumCover($id)
+    public function getAlbumImage()
     {
-        $this->data->cover = Photo::findByQuery('SELECT image FROM photos WHERE __album_id='.$id.'AND __id=LAST_INSERT_ID');
+        $key = array_search(max($this->photos->collect('published')), $this->photos->collect('published'));
+        return $this->photos->collect('image')[$key];
     }
 
 }

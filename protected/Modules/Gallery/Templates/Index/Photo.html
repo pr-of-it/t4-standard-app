@@ -1,8 +1,25 @@
 {% extends 'index.html'%}
 
+{% block head %}
+<meta name="viewport" content="width=device-width">
+<link href="lib/css/fotorama.css" rel="stylesheet">
+<script src="lib/js/fotorama.js"></script>
+{%endblock%}
+
 {% block content %}
 
-{% for item in items %}
-<a href="#"><img class="img-responsive" src="{{ item.image }}" width="300" height="300"></a>
-{% endfor %}
+
+<ol class="breadcrumb" xmlns="http://www.w3.org/1999/html">
+    <li><a href="/gallery/">Галерея</a></li>
+    {% if albumParent %}
+    <li><a href="/admin/gallery/photo?id={{albumParent.Pk}}">{{ albumParent.title }}</a></li>
+    {% endif %}
+    <li>{{ item.title }}</li>
+</ol>
+
+<div class="fotorama" data-nav="thumbs" data-width="700" data-ratio="700/467" data-max-width="100%">
+    {% for item in items %}
+    <img class="img-responsive" src="{{item.image}}">
+    {% endfor %}
+</div>
 {% endblock %}
