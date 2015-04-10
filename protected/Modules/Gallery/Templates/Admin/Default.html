@@ -13,8 +13,9 @@
       action="/admin/gallery/photo">
     <div class="form-group">
         <label for="parent" class="col-sm-2 control-label">Выбрать альбом</label>
+
         <div class="col-sm-10">
-            {{ selectTreeByModel("App\\Modules\\Gallery\\Models\\Album", 0, {"null":true}, {"name":"parent", "id":"albumselect", "class": "form-control"}) }}
+            {{ selectTreeByModel("App\\Modules\\Gallery\\Models\\Album", 0, {"null":true}, {"name":"parent","id":"albumselect", "class": "form-control"}) }}
         </div>
     </div>
     <noscript><input type="submit"/></noscript>
@@ -25,7 +26,7 @@
         <th class="col-sm-1">#</th>
         <th class="col-sm-2">Фотография</th>
         <th class="col-sm-2">Название</th>
-        <th class="col-sm-2">Создана</th>
+        <th class="col-sm-2">Созданаvz
         <th></th>
     </tr>
     {% for item in items %}
@@ -39,10 +40,8 @@
         <td>{{ item.title }}</td>
         <td>{{item.published|date('d.m.Y H:i')}}</td>
         <td style="white-space: nowrap">
-            <a class="btn btn-primary btn-sm" href="/gallery/admin/edit/?id={{item.Pk}}&__album_id={{ item.album.Pk }}"><i
-                    class="glyphicon glyphicon-edit"></i></a>
-            <a class="btn btn-danger btn-sm" href="/gallery/admin/delete/?id={{item.Pk}}"><i
-                    class="glyphicon glyphicon-remove"></i></a>
+            <a class="btn btn-primary btn-sm" href="/admin/gallery/edit/?id={{ item.Pk }}&__album_id={{ item.album.Pk }}"><i class="glyphicon glyphicon-edit"></i></a>
+            <a class="btn btn-danger btn-sm" href="/admin/gallery/delete/?id={{ item.Pk }}"><i class="glyphicon glyphicon-remove"></i></a>
         </td>
     </tr>
     {% endfor %}

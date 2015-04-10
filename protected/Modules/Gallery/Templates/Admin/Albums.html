@@ -25,13 +25,13 @@
 
 {% block pagescript %}
 <script type="text/javascript">
-    $(function() {
+    $(function () {
 
-        $('a.confirmable').click(function() {
+        $('a.confirmable').click(function () {
             return confirm('Вы уверены?');
         });
 
-        {{ Tree.listSortableJs('/admin/gallery/album') }}
+        {{ Tree.listSortableJs('/admin/gallery/album')}}
     });
 </script>
 {% endblock %}

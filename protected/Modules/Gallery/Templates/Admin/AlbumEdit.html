@@ -23,27 +23,35 @@
 
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label">Название</label>
+
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Название" value="{{item.title}}">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Название"
+                       value="{{item.title}}">
             </div>
         </div>
 
         <div class="form-group">
             <label for="parent" class="col-sm-2 control-label">Родительский альбом</label>
+
             <div class="col-sm-10">
                 {% if item.isNew %}
-                {{ selectTreeByModel("App\\Modules\\Gallery\\Models\\Album", 0, {"null":true}, {"name":"parent", "class": "form-control"}) }}
+                {{ selectTreeByModel("App\\Modules\\Gallery\\Models\\Album", 0, {"null":true}, {"name":"parent",
+                "class": "form-control"}) }}
                 {% else %}
-                {{ selectTreeByModel("App\\Modules\\Gallery\\Models\\Album", item.parent.Pk, {"null":true, 'disabled':[item.Pk]}, {"name":"parent", "class": "form-control"}) }}
+                {{ selectTreeByModel("App\\Modules\\Gallery\\Models\\Album", item.parent.Pk, {"null":true,
+                'disabled':[item.Pk]}, {"name":"parent", "class": "form-control"}) }}
                 {% endif %}
                 <i></i>
             </div>
         </div>
 
         <footer class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}</button>
+            <button type="submit" class="btn btn-primary">{% if item.isNew %}Создать{% else %}Сохранить{% endif %}
+            </button>
             <button type="button" class="btn btn-default" onclick="window.history.back();">Отменить</button>
-            {% if not item.isNew %}<a href="/admin/gallery/deleteAlbum/?id={{item.Pk}}" class="confirmable"><button type="button" class="btn btn-danger">Удалить</button></a>{% endif %}
+            {% if not item.isNew %}<a href="/admin/gallery/deleteAlbum/?id={{item.Pk}}" class="confirmable">
+            <button type="button" class="btn btn-danger">Удалить</button>
+        </a>{% endif %}
         </footer>
 
     </form>
@@ -55,7 +63,7 @@
 <script type="text/javascript">
     $(function () {
 
-        $('a.confirmable').click(function() {
+        $('a.confirmable').click(function () {
             return confirm('Вы уверены?');
         });
 

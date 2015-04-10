@@ -7,19 +7,33 @@
 {%endblock%}
 
 {% block content %}
-
+<link href="{{ asset('/Modules/Gallery/Templates/assets/css/gallery.css') }}" rel="stylesheet">
 
 <ol class="breadcrumb" xmlns="http://www.w3.org/1999/html">
     <li><a href="/gallery/">Галерея</a></li>
     {% if albumParent %}
-    <li><a href="/admin/gallery/photo?id={{albumParent.Pk}}">{{ albumParent.title }}</a></li>
+    <li><a href="/gallery/photo?id={{albumParent.Pk}}">{{ albumParent.title }}</a></li>
     {% endif %}
-    <li>{{ album.title }}</li>
+    <li></li>
 </ol>
 
-<div class="fotorama" data-nav="thumbs" data-width="700" data-ratio="700/467" data-max-width="100%">
+<h1>{{ album.title }}</h1>
+{% if album.__rgt - album.__lft > 1  %}
+<div class="row">
     {% for item in items %}
-    <img class="img-responsive" src="{{item.image}}">
+    <div class="col-sm-3">
+        <a href="/gallery/photo?id={{item.Pk}}">
+            <img src="{{item.getAlbumImage}}" class="img-responsive" style="max-width: 300px; max-height: 300px;">
+            <p>{{item.title}}</p>
+        </a>
+    </div>
     {% endfor %}
 </div>
+{% else %}
+<div class="fotorama" data-keyboard="true" data-nav="thumbs" data-ratio="700/467" data-max-width="700px">
+    {% for item in items %}
+    <div data-img="{{item.image}}"><p class="album-title">{{item.title}}</p></div>
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}

@@ -38,8 +38,18 @@ class Album
 
     public function getAlbumImage()
     {
-        $key = array_search(max($this->photos->collect('published')), $this->photos->collect('published'));
-        return $this->photos->collect('image')[$key];
+        if (is_array($this->photos->collect('published'))) {
+            $key = array_search(max($this->photos->collect('published')), $this->photos->collect('published'));
+            return $this->photos->collect('image')[$key];
+        } else {
+            return $this->photos->collect('image');
+        }
+
+    }
+
+    public function countPhotos()
+    {
+        return count($this->photos->collect('image'));
     }
 
 }

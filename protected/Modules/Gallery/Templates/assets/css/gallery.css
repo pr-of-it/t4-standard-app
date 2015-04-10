@@ -1,0 +1,16 @@
+a.album-link {
+    text-decoration: none;
+}
+
+p.album-title {
+    font-size: 50px;
+    color: #fff;
+    text-shadow: 0 1px 0 #000;
+    font-family: Georgia, serif;
+    text-align: center;
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 360px;
+    line-height: normal;
+
+}

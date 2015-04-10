@@ -10,13 +10,13 @@ class m_1425813516_createPhotos
 
     public function up()
     {
-        $this->createTable('photos',[
-            'title'=>['type'=>'string'],
-            'image'=>['type'=>'string'],
-            'published' => ['type'=>'datetime'],
-            '__album_id' => ['type'=>'link'],
+        $this->createTable('photos', [
+            'title' => ['type' => 'string'],
+            'image' => ['type' => 'string'],
+            'published' => ['type' => 'datetime'],
+            '__album_id' => ['type' => 'link'],
         ], [
-            'album'=>['columns'=>['__album_id']]
+            'album' => ['columns' => ['__album_id']]
         ]);
     }
 
