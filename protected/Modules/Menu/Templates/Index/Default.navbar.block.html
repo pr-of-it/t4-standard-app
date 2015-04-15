@@ -11,7 +11,7 @@
     {% endif %}
 
     {% if current > level %}
-    <ul>
+    <ul class="dropdown-menu" role="menu">
     {% set level = current %}
     {% endif %}
 
@@ -20,12 +20,15 @@
     {% set level = current %}
     {% endif %}
 
-    <li data-id="{{item.Pk}}">
-        <a href="{{item.url}}">{{item.title}}</a>
+    <li data-id="{{item.Pk}}"{% if item.hasChildren %} class="dropdown"{% endif %}>
+        <a href="{{item.url}}"{% if item.hasChildren %} class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"{% endif %}>
+            {{item.title}}{% if item.hasChildren %} <span class="caret"></span>{% endif %}
+        </a>
 
     {% set count = count + 1 %}
-
     {% endfor %}
+
     {{"</li></ul>"|repeat(current)|raw}}</li>
+
 </ul>
 {% endif %}
