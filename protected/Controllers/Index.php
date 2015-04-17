@@ -10,6 +10,7 @@ class Index
 
     public function actionDefault()
     {
+
     }
 
     public function action404()

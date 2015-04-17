@@ -1,5 +1,5 @@
 {% if not app.user %}
-<form class="navbar-form navbar-right" role="form" action="/user/login.html" method="post">
+<form class="navbar-form navbar-left" role="form" action="/user/login.html" method="post">
     <div class="form-group">
         <input type="text" placeholder="E-mail" class="form-control input-sm" name="login[email]">
     </div>
@@ -9,6 +9,11 @@
     <div class="form-group"><button type="submit" class="btn btn-success">Войти</button></div>
 </form>
 {% else %}
-<a href="/user/logout.html" class="navbar-right"><button class="btn btn-default btn-sm navbar-btn">Выйти</button></a>
+
+<ul class="nav navbar-nav navbar-right">
+    <li><a href="/user/logout.html" class="navbar">Выход </a></li>
+</ul>
 <p class="navbar-text navbar-right" style="padding-right: 10px;">Здравствуйте, {{app.user.email}}!</p>
+
+
 {% endif %}

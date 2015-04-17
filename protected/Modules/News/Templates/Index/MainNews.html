@@ -2,24 +2,15 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-6">
-        <section>
-            {% for item in items %}
-            <article class="clearfix">
-                <h3><a href="/news/{{item.Pk}}.html">{{item.title}}</a></h3>
-                {% if item.image %}<img src="{{item.image}}" style="max-width: 33%; margin-right: 10px;"
-                                        class="img-responsive pull-left">{% endif %}
-                {{item.lead|raw}}
-            </article>
-            {% endfor %}
-        </section>
+    <div class="col-md-4">
+        <t4:block path="/News//NewsForTopic" title="Новости"/>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
 
     </div>
 
-    <div class="col-md-3 clearfix">
+    <div class="col-md-4 clearfix">
 
     </div>
 </div>

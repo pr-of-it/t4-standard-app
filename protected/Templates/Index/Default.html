@@ -2,8 +2,16 @@
 
 {% block content  %}
 <div class="row">
-    <div class="col-xs-12">
-        <t4:block path="/Pages//PageByUrl" url="index" />
+    <div class="col-md-4">
+        <t4:block path="/News//NewsForTopic" title="Первая"/>
+    </div>
+
+    <div class="col-md-4" style="background-color: #f6f6f6">
+        <t4:block path="/News//NewsForTopic" title="Вторая"/>
+    </div>
+
+    <div class="col-md-4 clearfix">
+
     </div>
 </div>
 {% endblock  %}

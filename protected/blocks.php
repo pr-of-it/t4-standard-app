@@ -5,7 +5,7 @@ return [
     '//User/Login' => [
         'title' => 'Форма входа',
         'desc' => 'Форма входа на сайт',
-        'options' => [],
+          'options' => [],
     ],
     '//User/Register' => [
         'title' => 'Форма регистрации',

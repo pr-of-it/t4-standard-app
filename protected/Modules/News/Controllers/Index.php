@@ -21,17 +21,10 @@ class Index
         );
     }
 
-    public function actionMainNews()
+    public function actionNewsForTopic($title)
     {
-        $this->data->items1=Topic::findByPK(1)->stories;
-        foreach($this->data->items1 as $topic)
-            var_dump($topic);
-        var_dump($topic->topic);
-        //var_dump($this->data->topic=$this->data->items[0]);
-        //var_dump($this->data->topic->Collection[0]);
-        die;
-        $this->data->items2=Topic::findByPK(2)->stories;
-        $this->data->items3=Topic::findByPK(3)->stories;
+        $this->data->items=Topic::findByTitle($title)->stories;
+
     }
     public function actionOne($id)
     {
