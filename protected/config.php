@@ -46,6 +46,8 @@ return [
             'register' => true,
             'message' => true,
         ],
+        'fotorama' => [
+        ],
     ],
     'errors' => [
         404 => '///404',

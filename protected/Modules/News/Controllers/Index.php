@@ -24,6 +24,9 @@ class Index
     public function actionNewsForTopic($title)
     {
         $this->data->items=Topic::findByTitle($title)->stories;
+        if (empty($this->data->items)) {
+            throw new E404Exception('Рубрика не найдена');
+        }
 
     }
     public function actionOne($id)
