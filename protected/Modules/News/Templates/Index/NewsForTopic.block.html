@@ -1,7 +1,8 @@
 
 <section>
+    <p>{{items[0].title}}</p>
     {% for item in items %}
-    <p>{{item.topic.title}}</p>
+
     <article class="clearfix">
         <h3><a href="/news/{{item.Pk}}.html">{{item.title}}</a></h3>
         {% if item.image %}<img src="{{item.image}}" style="max-width: 33%; margin-right: 10px;"
