@@ -62,8 +62,8 @@ class Story
     {
         if ($this->image) {
             try {
-                $this->image = '';
                 Helpers::removeFile(ROOT_PATH_PUBLIC . $this->image);
+                $this->image = '';
             } catch (\T4\Fs\Exception $e) {
                 return false;
             }
