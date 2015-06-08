@@ -47,16 +47,20 @@ class m_0000000001_CreateWebApp
                 '__role_id' => ['type' => 'link'],
             ]);
 
-            $role = new Role();
-            $role->name = 'admin';
-            $role->title = 'Администратор';
-            $role->save();
+            $roleAdminId = $this->insert('__user_roles', [
+                'name' => 'admin',
+                'title' => 'Администратор',
+            ]);
 
-            $user = new User();
-            $user->email = 'admin@t4.org';
-            $user->password = \T4\Crypt\Helpers::hashPassword('123456');
-            $user->roles->append($role);
-            $user->save();
+            $userAdminId = $this->insert('__users', [
+                'email' => 'admin@t4.org',
+                'password' => \T4\Crypt\Helpers::hashPassword('123456'),
+            ]);
+
+            $this->insert('__user_roles_to___users', [
+                '__user_id' => $userAdminId,
+                '__role_id' => $roleAdminId,
+            ]);
 
             $this->createTable('__user_sessions', [
                 'hash'          => ['type'=>'string'],
