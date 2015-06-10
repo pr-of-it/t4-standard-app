@@ -31,7 +31,7 @@
         <tr>
             <td>{{item.email}}</td>
             <td><a class="btn btn-primary" href="/admin/users/ChangePassword?id={{item.Pk}}">Сменить пароль</a></td>
-            <td><a class="btn btn-primary" href="/admin/users/roleuser?id={{item.Pk}}">Роли пользователя</a></td>
+            <td><a class="btn btn-primary" href="/admin/users/RoleUser?id={{item.Pk}}">Роли пользователя</a></td>
             {% if item.email!="admin@t4.org" %}
             <td><a class="btn btn-danger" href="/admin/users/DeleteUser?id={{item.Pk}}">Удалить пользователя</a></td>
             {% endif %}
